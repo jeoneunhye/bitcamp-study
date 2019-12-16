@@ -20,7 +20,7 @@ public class Exam7 {
     System.out.println("Hello,\tworld!"); // 탭 공간을 추가
     // 결과값 Hello,  world!
     System.out.println("Hello,\fworld!"); // formfeed 추가 (인쇄 관련)
-    System.out.println("Hello,\"w\"orld!"); // \"(더블 코테이션) 추가
+    System.out.println("Hello,\"w\"orld!"); // \"(더블 코테이션) 추가 결과값 Hello,"w"orld!
     System.out.println("Hello,'w'orld!"); // '(싱글 코테이션) 추가 ""안에서 '문자는 그냥 적는다
     System.out.println('\'');  // ''안에서 ' 문자를 출력할 때는 앞에 \가 필요
     System.out.println('"');  // ''안에서 " 문자는 그냥 적는다

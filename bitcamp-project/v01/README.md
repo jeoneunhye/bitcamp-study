@@ -15,6 +15,7 @@ src/
   main/
     java/
     resources/
+    
   test/
     java/
     resources/
