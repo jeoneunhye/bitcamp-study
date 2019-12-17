@@ -12,16 +12,23 @@ public class Test02 {
   public static void main(String[] args) {
     Scanner keyScan = new Scanner(System.in);
 
-    int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+    int min = 0, max = 0;
 
     System.out.print("입력? ");
-    while (true) {
+    
+    for (int i = 0; i < 5; i++) {
       int no = keyScan.nextInt();
-      if (no == 0)  // 입력하고 싶은 갯수만큼 집어 넣고 0을 넣으면 멈춘다.
-        break;  // 단점 : 입력값을 0으로 넣지 못한다.
-      min = no < min ? no : min; // no가 min보다 작으면 no에 min을 넣어라
-      max = no > max ? no : max; // no가 max보다 크면 no에 max를 넣어라
-
+      
+      if (i == 0) {
+        min = no;
+        max = no;
+      } else {
+      if (no < min) {
+        min = no;
+      } else if (no > max) {
+        max = no;
+      }
+    }
     }
 
     System.out.printf("최소값: %d\n", min);

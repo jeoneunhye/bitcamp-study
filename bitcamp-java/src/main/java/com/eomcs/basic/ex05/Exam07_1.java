@@ -7,10 +7,10 @@ public class Exam07_1 {
         
         //i = i + 20;
         i += 20; // += 연산자를 사용하면 위의 코드를 축약할 수 있다.
-        System.out.println(i);
+        System.out.println(i);  // 22
 
         i = 2;
-        i *= 5;
-        System.out.println(i);
+        i *= 5; // i = i * 5;
+        System.out.println(i);  // 10
     }
 }

@@ -1,0 +1,62 @@
+package com.eomcs.basic.ex05.assignment;
+
+import java.util.Scanner;
+
+// # 과제2 : 다섯 개의 정수 값을 입력받고 최소, 최대값을 구하라.
+// 실행 예)
+// 입력? 4 17 -1 6 9
+// 최소값: -01
+// 최대값: 17
+
+public class Test02 {
+  public static void main(String[] args) {
+    Scanner keyScan = new Scanner(System.in);
+
+    int[] no = new int[5];  //no가 reference 리모컨 역할
+
+    System.out.print("입력? ");
+    for (int i = 0; i < 5; i++) {
+      no[i] = keyScan.nextInt();
+    }
+    //    no[0] = keyScan.nextInt();
+    //    no[1] = keyScan.nextInt();
+    //    no[2] = keyScan.nextInt();
+    //    no[3] = keyScan.nextInt();
+    //    no[4] = keyScan.nextInt();
+
+
+    int min = no[0], max = no[0];
+
+    for (int i = 1; i < 5; i++) {
+      if (no[i] < min) {
+        min = no[i];
+      } else if (no[i] > max) {
+        max = no[i];
+      }
+    }
+    //    if (no2 < min) {
+    //      min = no2;
+    //    } else if (no2 > max) {
+    //      max = no2;
+    //    }
+    //    if (no3 < min) {
+    //      min = no3;
+    //    } else if (no3 > max) {
+    //      max = no3;
+    //    }
+    //    if (no4 < min) {
+    //      min = no4;
+    //    } else if (no4 > max) {
+    //      max = no4;
+    //    }
+    //    if (no5 < min) {
+    //      min = no5;
+    //    } else if (no5 > max) {
+    //      max = no5;
+    //    }
+
+    System.out.printf("최소값: %d\n", min);
+    System.out.printf("최대값: %d\n", max);
+    keyScan.close();
+  }
+}

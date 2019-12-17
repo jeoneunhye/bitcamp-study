@@ -8,6 +8,7 @@ public class Exam02_1 {
         int a = 10;
         int b = 20;
         boolean r1 = a < b; // true
+        
         //★int r2 = a < b; // 컴파일 오류!
 
         System.out.println(a < b); // true
