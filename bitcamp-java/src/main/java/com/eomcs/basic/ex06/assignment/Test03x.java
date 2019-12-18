@@ -2,7 +2,7 @@ package com.eomcs.basic.ex06.assignment;
 
 import java.util.Scanner;
 
-public class Test03 {
+public class Test03x {
     public static void main(String[] args) {
         Scanner keyScan = new Scanner(System.in);
         System.out.print("밑변의 길이? ");

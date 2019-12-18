@@ -13,6 +13,7 @@ public class Test02 {
     Scanner keyScan = new Scanner(System.in);
 
     int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+    // 처음 입력한 값을 min, max에 집어 넣고 그 다음 입력받는 값과 비교하기 위해!!!!!
 
     System.out.print("입력? ");
     while (true) {
@@ -21,9 +22,9 @@ public class Test02 {
         break;  // 단점 : 입력값을 0으로 넣지 못한다.
       min = no < min ? no : min; // no가 min보다 작으면 no에 min을 넣어라
       max = no > max ? no : max; // no가 max보다 크면 no에 max를 넣어라
-
     }
 
+    
     System.out.printf("최소값: %d\n", min);
     System.out.printf("최대값: %d\n", max);
     keyScan.close();

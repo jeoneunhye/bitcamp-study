@@ -22,9 +22,9 @@ public class Exam4_4 {
 
     System.out.println("----------------------");
 
-    // for 문에 컬렉션도 적용할 수 있다.
+    // for 문에 컬렉션도 적용할 수 있다.    index를 가지고 조작할 때에는 while문보다 for문을 써라!
     // for (변수 선언 : 컬렉션객체) 문장;
-    for (Object value : list) 
+    for (Object value : list) // Object: 문자열, 부동소수점, true/false, 정수 어떤 값이든 출력이 가능하다
       System.out.println(value);
   }
 }

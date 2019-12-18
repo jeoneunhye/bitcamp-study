@@ -8,7 +8,7 @@ public class Exam3 {
     System.out.println("애노테이션");
     }
     
-    @Override // <== 컴파일러에게 기능을 재정의함을 알리는 명령어
+    @Override // <== 컴파일러나 JVM에게 기능을 재정의함을 알리는 명령어
     public String toString() {
       return "okok";
     }

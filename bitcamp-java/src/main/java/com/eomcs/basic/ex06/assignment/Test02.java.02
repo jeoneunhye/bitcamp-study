@@ -1,0 +1,53 @@
+package com.eomcs.basic.ex06.assignment;
+
+import java.util.Scanner;
+
+// 사용자로부터 마름모의 가로 길이를 숫자를 입력 받아 '*' 문자로 그려라. 단 마름모의 절반만 그린다.
+// 반복문을 사용할 때는 while 또는 do ~ while 문만을 사용하라!
+// 실행 결과
+/*
+```
+밑변 길이? 5
+ *
+ **
+ ***
+ ****
+ *****
+ ****
+ ***
+ **
+ *
+```
+ */
+// 현재 과제와 유사한 결과를 내는 기존 소스를 가져온다.
+public class Test02 {
+  public static void main(String[] args) {
+    Scanner keyScan = new Scanner(System.in);
+
+    System.out.print("밑변 길이? ");
+    int width = keyScan.nextInt();
+
+    int line = 0;
+    while (line++ < width) {
+      //line++; 위가 아니라 여기 있으면 line 넘버가 4까지 가서 (5는 위의 식이 성립되지 않아 탈락) ++로 인해 5로 나옴
+      int x = 0;
+      while (x++ < line) {  
+        System.out.print("*");
+      }
+      System.out.println(); 
+    }
+    line--; // 위 width 문의 조건식때문에 line 넘버가 5까지 가서 ++로 인해 6으로 나왔기 때문에 하나를 줄여줘야 함
+    
+    // 줄어드는 별 line 시작
+    // ★★★★★앞에 line의 값을 0으로 초기화하지 않는 대신 --로 줄여주는 방식을 사용
+    while (--line > 0) {    // 1이 될 때까지 = 0보다 클 때까지
+      int x = 0;
+      while (x++ < line) {   
+        System.out.print("*");
+      }
+      System.out.println();
+    }
+
+    keyScan.close();
+  }
+}

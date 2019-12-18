@@ -2,7 +2,7 @@ package com.eomcs.basic.ex06.assignment;
 
 import java.util.Scanner;
 
-public class Test02 {
+public class Test02x {
     public static void main(String[] args) {
         Scanner keyScan = new Scanner(System.in);
         System.out.print("가로 길이? ");
