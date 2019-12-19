@@ -30,7 +30,7 @@ public class Test01 {
     Scanner keyScan = new Scanner(System.in);
     int width = keyScan.nextInt();
     keyScan.close();
-    return width;
+    return width;   // ★int로 선언한 메서드는 무조건 값을 리턴해야 한다. 안하면 오류!!
   }
 
   static void drawLine(int length) {

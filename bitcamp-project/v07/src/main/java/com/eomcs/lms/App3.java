@@ -17,7 +17,7 @@ public class App3 {
     
     final int SIZE = 100;
     
-    Board[] boards = new Board[SIZE];   // 클래스 지정하고 그 다음에 와야함!
+    Board[] boards = new Board[SIZE];
     // Board 레퍼런스 배열에 인스턴스의 주소를 담을 members 레퍼런스 배열 생성(준비)
 
 //    for (int i = 0; i < SIZE; i++) {          -> Board board = new Board();
@@ -50,7 +50,7 @@ public class App3 {
       board.date = new Date(System.currentTimeMillis());
       board.viewCount = 0;
       
-      boards[i] = board;  // board의 값을 다시 boards 배열 레퍼런스에 넣어준다(주석처리하고 출력시 NullPointException)
+      boards[i] = board;
       // 게시물 데이터가 보관된 Board 인스턴스의 주소를 레퍼런스 배열에 저장한다
       // 쓸 데 없이 100개를 만들지 않고 사용한 만큼만 만들어지도록
       count++;

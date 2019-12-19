@@ -10,12 +10,12 @@ public class App2 {
   static Member[] members = new Member[SIZE];
   
   static int[] no = new int[SIZE];
-//  static String[] name = new String[SIZE];
-//  static String[] email = new String[SIZE];
-//  static String[] password = new String[SIZE];
-//  static String[] photo = new String[SIZE];
-//  static String[] tel = new String[SIZE];
-//  static Date[] registeredDate = new Date[SIZE];
+  static String[] name = new String[SIZE];
+  static String[] email = new String[SIZE];
+  static String[] password = new String[SIZE];
+  static String[] photo = new String[SIZE];
+  static String[] tel = new String[SIZE];
+  static Date[] registeredDate = new Date[SIZE];
 
   static public class Member {  //static 붙여줌
     int no;
@@ -37,12 +37,12 @@ public class App2 {
   static void inputUsers() {
     
     Scanner keyboard = new Scanner(System.in);
-//    for (int i = 0; i < SIZE; i++) {
-//      members[i] = new Member();        // 인스턴스 생성 new 설계도명;
-//    }
     for (int i = 0; i < SIZE; i++) {
-      //Member member = members[i];       // 간결화
-      Member member = new Member();
+      members[i] = new Member();        // 인스턴스 생성 new 설계도명;
+    }
+    for (int i = 0; i < SIZE; i++) {
+      Member member = members[i];       // 간결화
+      
       System.out.print("번호? ");
       member.no = keyboard.nextInt();
       keyboard.nextLine();
@@ -58,9 +58,7 @@ public class App2 {
       member.tel = keyboard.nextLine();
       //System.out.print("가입일? ");
       member.registeredDate = new Date(System.currentTimeMillis());  // 현재 날짜에 대한 밀리초를 날짜 형식으로 변경
-      
-      members[i] = member;
-      // 회원 정보가 담겨있는 인스턴스의 주소(멤버 객체)를 레퍼런스 배열에 보관한다.
+      //members[i] = member; 뭐야?
 
       count ++; // 입력받은 만큼만 출력하기 위해
 
@@ -74,8 +72,8 @@ public class App2 {
   }
 
   static void printUsers() {
-    for (int i = 0; i < count; i++) {
-      Member member = members[i];
+    for (int j = 0; j < count; j++) {
+      Member member = members[j];
       System.out.printf("%d, %s, %s, %s, %s\n",
           member.no, member.name, member.email, member.tel, member.registeredDate);
     }

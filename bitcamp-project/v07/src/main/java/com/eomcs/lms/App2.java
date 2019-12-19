@@ -10,12 +10,12 @@ public class App2 {
   static Member[] members = new Member[SIZE];
   
   static int[] no = new int[SIZE];
-//  static String[] name = new String[SIZE];
-//  static String[] email = new String[SIZE];
-//  static String[] password = new String[SIZE];
-//  static String[] photo = new String[SIZE];
-//  static String[] tel = new String[SIZE];
-//  static Date[] registeredDate = new Date[SIZE];
+  static String[] name = new String[SIZE];
+  static String[] email = new String[SIZE];
+  static String[] password = new String[SIZE];
+  static String[] photo = new String[SIZE];
+  static String[] tel = new String[SIZE];
+  static Date[] registeredDate = new Date[SIZE];
 
   static public class Member {  //static 붙여줌
     int no;
@@ -41,8 +41,8 @@ public class App2 {
 //      members[i] = new Member();        // 인스턴스 생성 new 설계도명;
 //    }
     for (int i = 0; i < SIZE; i++) {
-      //Member member = members[i];       // 간결화
-      Member member = new Member();
+      Member member = members[i];       // 간결화
+      
       System.out.print("번호? ");
       member.no = keyboard.nextInt();
       keyboard.nextLine();
@@ -74,8 +74,8 @@ public class App2 {
   }
 
   static void printUsers() {
-    for (int i = 0; i < count; i++) {
-      Member member = members[i];
+    for (int j = 0; j < count; j++) {
+      Member member = members[j];
       System.out.printf("%d, %s, %s, %s, %s\n",
           member.no, member.name, member.email, member.tel, member.registeredDate);
     }
