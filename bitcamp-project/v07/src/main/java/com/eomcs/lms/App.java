@@ -5,12 +5,12 @@ import java.util.Scanner;
 import com.eomcs.lms.App2.Member;
 public class App {
   static final int SIZE = 100;
-  
-  static int[] no = new int[SIZE];
-  static String[] title = new String[SIZE];
-  static Date[] startDate = new Date[SIZE];
-  static Date[] endDate = new Date[SIZE];
-  static int[] totalHours = new int[SIZE];
+
+//  static int[] no = new int[SIZE];
+//  static String[] title = new String[SIZE];
+//  static Date[] startDate = new Date[SIZE];
+//  static Date[] endDate = new Date[SIZE];
+//  static int[] totalHours = new int[SIZE];
   static int count = 0; // 최대 100개(size) 중 몇 개를 입력했는지 보기 위해
   static Lesson[] lessons = new Lesson[SIZE];
   // 강의 정보를 담을  메모리의 설계도를 만든다.
@@ -34,18 +34,18 @@ public class App {
     System.out.println();
     printBoards();
   }
-   static void inputBoards() { 
+  static void inputBoards() { 
     Scanner keyboard = new Scanner(System.in);   
     String[] description = new String[SIZE];
     int[] dayHours = new int[SIZE];
-    
+
     String response;
-    Lesson[] lessons = new Lesson[SIZE];  //SIZE만큼 레퍼런스를 만들겠다
-    
+    //Lesson[] lessons = new Lesson[SIZE];  //SIZE만큼 레퍼런스를 만들겠다
+
     for (int i = 0; i < SIZE; i++) {
       lessons[i] = new Lesson();          //SIZE만큼 인스턴스를 만들겠다
     }
-    
+
     for (int i = 0; i < SIZE; i++) {
       //Lesson lesson = lessons[i];   // 변수 간결화
       Lesson lesson = new Lesson();     // lesson[i] = lesson;로 입력한 만큼만 저장되게
@@ -65,12 +65,12 @@ public class App {
       System.out.print("일수업시간? ");
       lesson.dayHours = keyboard.nextInt();
       keyboard.nextLine();  // ★일수업시간 입력값 다음 남아있는 줄바꿈 값 제거
-      
+
       // 수업 정보를 담고있는 인스턴스의 주소를 나중에 사용할 수 있도록
       // 레퍼런스 배열에 보관해둔다
       count++;
       lessons[i] = lesson;  // count++ 뒤에 와야 한다?
-      
+
       System.out.println("계속 입력하시겠습니까?(Y/n)");
       response = keyboard.nextLine();
       if (!response.equalsIgnoreCase("y")) {    // response가 Y가 아니라면 break를 실행해라
@@ -78,13 +78,13 @@ public class App {
       }
     }
     keyboard.close();
-   }
+  }
 
-    static void printBoards() {
+  static void printBoards() {
     for (int i = 0; i < count; i++) {   // size(전체)가 아닌 count(입력된 갯수)까지 반복하라!
       Lesson lesson = lessons[i];   // 변수 간결화
-    System.out.printf("%d, %s, %s ~ %s, %d\n",
-        lesson.no, lesson.title, lesson.startDate, lesson.endDate, lesson.totalHours);
+      System.out.printf("%d, %s, %s ~ %s, %d\n",
+          lesson.no, lesson.title, lesson.startDate, lesson.endDate, lesson.totalHours);
     }
   }
 }

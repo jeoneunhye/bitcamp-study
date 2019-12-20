@@ -9,6 +9,7 @@ public class Exam0510 {
   // public static void main(String[] 변수명)
   // 
   public static void main(String[] 변수명은상관없다) {
+    // 반드시 모든 단어가 다 있어야 함 public 공개  -> 안하면 오류는 아니나 Run as 실행 안 됨
     System.out.println("Hello!");
   }
 }

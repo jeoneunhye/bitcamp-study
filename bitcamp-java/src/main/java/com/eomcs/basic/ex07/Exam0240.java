@@ -18,6 +18,6 @@ public class Exam0240 {
     System.out.println(r);
 
     // 리턴 값을 안 받아도 된다.
-    hello("임꺽정", 30); // 리턴 값은 버려진다.
+    hello("임꺽정", 30); // 리턴 값은 버려진다. 호출하는 쪽 마음
   }
 }

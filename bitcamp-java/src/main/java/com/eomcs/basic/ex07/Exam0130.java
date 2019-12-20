@@ -18,8 +18,8 @@ public class Exam0130 {
     }
   }
 
-  // 코드를 유지보수하기 쉽도록 가능한 기능 별로 묶어 둔다.
-  // 그래서 Exam01_2에 있던 코드 중에서 공백을 계산하는 코드를 
+  // 코드를 유지보수하기 쉽도록 가능한 기능 별로 묶어서 코드 구조를 개선한다 : refactoring
+  // 그래서 Exam0120에 있던 코드 중에서 공백을 계산하는 코드를 
   // 별도의 블록으로 분리하여 이름을 부여한다.
   public static int getSpaceLength(int totalStar, int displayStar) {
     return (totalStar - displayStar) / 2;

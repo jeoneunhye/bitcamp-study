@@ -3,7 +3,7 @@ package com.eomcs.basic.ex07;
 import java.util.Scanner;
 
 //# 메서드 : 사용 전
-//
+
 public class Exam0110 {
   public static void main(String[] args) {
     Scanner keyScan = new Scanner(System.in);

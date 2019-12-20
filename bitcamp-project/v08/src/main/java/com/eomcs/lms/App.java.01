@@ -1,0 +1,84 @@
+package com.eomcs.lms;
+
+import java.sql.Date;
+import java.util.Scanner;
+import com.eomcs.lms.App2.Member;
+public class App {
+  static final int SIZE = 100;
+
+
+  static int count = 0;
+  static Lesson[] lessons = new Lesson[SIZE];
+
+  static public class Lesson {
+    int no;
+    String title;
+    String description;
+    Date startDate;
+    Date endDate;
+    int totalHours;
+    int dayHours;
+  }
+  public static void main(String[] args) {
+    inputBoards();
+    System.out.println();
+    printBoards();
+  }
+  static void inputBoards() { 
+    
+    Scanner keyboard = new Scanner(System.in);   
+    System.out.print("명령> ");
+    /*
+    String[] description = new String[SIZE];
+    int[] dayHours = new int[SIZE];
+
+    String response;
+    //Lesson[] lessons = new Lesson[SIZE];  //SIZE만큼 레퍼런스를 만들겠다
+
+    for (int i = 0; i < SIZE; i++) {
+      lessons[i] = new Lesson();          //SIZE만큼 인스턴스를 만들겠다
+    }
+
+    for (int i = 0; i < SIZE; i++) {
+      //Lesson lesson = lessons[i];   // 변수 간결화
+      Lesson lesson = new Lesson();     // lesson[i] = lesson;로 입력한 만큼만 저장되게
+      System.out.print("번호? ");    
+      lesson.no = keyboard.nextInt();
+      keyboard.nextLine();    
+      System.out.print("수업명? ");
+      lesson.title = keyboard.nextLine();
+      System.out.print("수업내용? ");
+      lesson.description = keyboard.nextLine();
+      System.out.print("시작일? ");
+      lesson.startDate = Date.valueOf(keyboard.next());
+      System.out.print("종료일? ");
+      lesson.endDate = Date.valueOf(keyboard.next());
+      System.out.print("총수업시간? ");
+      lesson.totalHours = keyboard.nextInt();
+      System.out.print("일수업시간? ");
+      lesson.dayHours = keyboard.nextInt();
+      keyboard.nextLine(); 
+
+      // 수업 정보를 담고있는 인스턴스의 주소를 나중에 사용할 수 있도록
+      // 레퍼런스 배열에 보관해둔다
+      count++;
+      lessons[i] = lesson;
+
+      System.out.println("계속 입력하시겠습니까?(Y/n)");
+      response = keyboard.nextLine();
+      if (!response.equalsIgnoreCase("y")) {  
+        break;
+      }
+    }
+    keyboard.close();
+    */
+  }
+
+  static void printBoards() {
+    for (int i = 0; i < count; i++) {
+      Lesson lesson = lessons[i];   // 변수 간결화
+      System.out.printf("%d, %s, %s ~ %s, %d\n",
+          lesson.no, lesson.title, lesson.startDate, lesson.endDate, lesson.totalHours);
+    }
+  }
+}

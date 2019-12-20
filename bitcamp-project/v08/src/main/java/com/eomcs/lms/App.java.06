@@ -1,0 +1,112 @@
+package com.eomcs.lms;
+
+import java.sql.Date;
+import java.util.Scanner;
+import com.eomcs.lms.App2.Member;
+public class App {
+  static final int SIZE = 100;
+
+  static Scanner keyboard = new Scanner(System.in);   
+
+  static int count = 0;
+  static Lesson[] lessons = new Lesson[SIZE];
+
+  static public class Lesson {
+    int no;
+    String title;
+    String description;
+    Date startDate;
+    Date endDate;
+    int totalHours;
+    int dayHours;
+  }
+  public static void main(String[] args) {
+    String command; // while문에서도 사용하기 때문에 밖에서 변수 선언
+    do {
+      System.out.print("\n명령> ");
+      command = keyboard.nextLine();    // 사용자로부터 한 줄을 입력받겠다
+      switch (command) { //정수 문자 다 가능 단순값이기 때문에 if대신 사용
+        case "/lesson/add":
+          inputBoards();
+          break;
+        case "/lesson/list":
+          printBoards();
+          break;
+        case "/member/add":     //App2 연결 준비
+          break;
+        case "/member/list":
+          break;
+        default:
+          //System.out.println("실행할 수 없는 명령입니다.");
+          // quit을 입력했을 때도 이 문구가 뜬다
+          if (!command.equalsIgnoreCase("quit")) {
+            System.out.println("실행할 수 없는 명령입니다.");
+          }
+      }
+    } while (!command.equalsIgnoreCase("quit"));
+    System.out.println("안녕!");
+    // quit 명령이 입력되기 전까지 계속 입력받도록!
+    // quit이 아니라면 do문을 반복하라
+    // while문만 써서 command가 quit이라면 break;를 사용하는 방법도 가능하다
+  }
+  static void inputBoards() { 
+    Lesson lesson = new Lesson();     // lesson[i] = lesson;로 입력한 만큼만 저장되게
+
+    System.out.print("번호? ");    
+    lesson.no = keyboard.nextInt();
+    keyboard.nextLine();    
+    System.out.print("수업명? ");
+    lesson.title = keyboard.nextLine();
+    System.out.print("수업내용? ");
+    lesson.description = keyboard.nextLine();
+    System.out.print("시작일? ");
+    lesson.startDate = Date.valueOf(keyboard.next());
+    System.out.print("종료일? ");
+    lesson.endDate = Date.valueOf(keyboard.next());
+    System.out.print("총수업시간? ");
+    lesson.totalHours = keyboard.nextInt();
+    System.out.print("일수업시간? ");
+    lesson.dayHours = keyboard.nextInt();
+    keyboard.nextLine(); 
+
+    // 수업 정보를 담고있는 인스턴스의 주소를 나중에 사용할 수 있도록
+    // 레퍼런스 배열에 보관해둔다
+    //count++;
+    //lessons[i] = lesson;
+    lessons[count++] = lesson;
+    System.out.println("저장하였습니다.");
+
+
+    /*
+    String[] description = new String[SIZE];
+    int[] dayHours = new int[SIZE];
+
+    String response;
+    //Lesson[] lessons = new Lesson[SIZE];  //SIZE만큼 레퍼런스를 만들겠다
+
+    for (int i = 0; i < SIZE; i++) {
+      lessons[i] = new Lesson();          //SIZE만큼 인스턴스를 만들겠다
+    }
+
+    for (int i = 0; i < SIZE; i++) {
+      //Lesson lesson = lessons[i];   // 변수 간결화
+
+
+      System.out.println("계속 입력하시겠습니까?(Y/n)");
+      response = keyboard.nextLine();
+      if (!response.equalsIgnoreCase("y")) {  
+        break;
+      }
+    }
+    keyboard.close();
+     */
+  }
+
+  static void printBoards() {
+    for (int i = 0; i < count; i++) {
+      Lesson lesson = lessons[i];   // 변수 간결화
+      System.out.printf("%d, %s, %s ~ %s, %d\n",
+          lesson.no, lesson.title, lesson.startDate, lesson.endDate, lesson.totalHours);
+    }
+  }
+}

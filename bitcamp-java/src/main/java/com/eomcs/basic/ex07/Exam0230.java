@@ -14,7 +14,9 @@ public class Exam0230 {
   static String hello() {
     // 값을 리턴하는 문법
     // return 값;
-    return "안녕하세요!";
+    return "안녕하세요!";    // ★맨 마지막 줄에. return 명령을 실행하고 나면 메서드 수행을 끝낸다.
+    // int a;   // 컴파일 오류 메서드를 리턴한 후에 작업을 수행할 수 없다
+    //System.out.println(); // 컴파일 오류 메서드를 리턴한 후에 작업을 수행할 수 없다
   }
 
   public static void main(String[] args) {
@@ -25,9 +27,9 @@ public class Exam0230 {
 
     // 메서드가 값을 리턴한다고 해서 반드시 그 값을 변수에 받아야 하는 것은 아니다.
     // 변수에 받을 지 여부는 호출하는 쪽의 마음이다.
-    hello(); // 이때 값을 받을 변수가 없기 때문에 리턴 값은 버려진다.
+    hello(); // 이때★ 값을 받을 변수가 없기 때문에 리턴 값은 버려진다.
 
     // 리턴 타입과 다른 타입의 변수로 값을 받으려 하면 컴파일 오류!
-    //int r2 = hello(); // 컴파일 오류!
+    //int r2 = hello(); // 컴파일 오류! String으로 받지 않아서
   }
 }
