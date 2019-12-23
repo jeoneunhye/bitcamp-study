@@ -20,19 +20,16 @@ public class Test02 {
   // sort 오름차순 정렬 메소드 생성
   static void sort(int[] values) throws Exception {
     // 다음 반복문을 한 번 돌면 가장 큰 수가 맨 오른쪽에 놓인다.
-    // 이 반복문을 여러 번 반복하면 된다. ~> bubble sort
+    // 이 반복문을 여러 번 반복하면 된다.
     for (int x = values.length - 1; x > 0; x--) {   // x가 줄어들면서 1일 때까지 반복
       int temp = 0;
       for (int i = 0; i < values.length - 1; i++) {
-        Thread.currentThread().sleep(1000);   // 교체 전 출력
-        printValues(values, i);
-        
         if (values[i] > values[i + 1]) {
           temp = values[i];
           values[i] = values[i + 1];
           values[i + 1] = temp;
         }
-        Thread.currentThread().sleep(1000);   // 교체 후 출력
+        Thread.currentThread().sleep(1000);   // 1000밀리초(1초)마다
         printValues(values, i);
       }
     }

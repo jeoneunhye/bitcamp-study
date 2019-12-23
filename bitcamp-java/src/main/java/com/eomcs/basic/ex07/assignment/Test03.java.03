@@ -15,11 +15,10 @@ public class Test03 {
   static void reverse(int[] values) {
     int count = values.length >> 1;
     int temp = 0;
-    int endPos = values.length - 1; // endPosition. j를 values.length - 1로 표현한 것
-    for (int i = 0; i < count; i++) {    // j는 좌표가 거꾸로 온다 i와 j값 교차
+    for (int i = 0, j = values.length - 1; i < count; i++, j--) {    // j는 좌표가 거꾸로 온다 i와 j값 교차
       temp = values[i];
-      values[i] = values[endPos - i];    // i와 교환할 것 j에 i를 빼준다 (동일하게 교차되는 위치와 교체하기 위해)
-      values[endPos - i] = temp;
+      values[i] = values[j];
+      values[j] = temp;
     }
   }
 

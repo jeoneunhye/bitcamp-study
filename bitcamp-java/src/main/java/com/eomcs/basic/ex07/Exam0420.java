@@ -6,7 +6,7 @@ public class Exam0420 {
 
   static int[] getArray() {
     int[] arr = new int[] {100, 200, 300};
-    return arr;
+    return arr; // 주소값을 리턴
   }
 
   public static void main(String[] args) {
