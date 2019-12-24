@@ -1,40 +1,36 @@
-# 09 - 메서드의 존재 이유
+# 13 - 인스턴스 필드와 인스턴스 메서드가 필요한 이유
 
 ## 학습 목표
 
-- 메서드를 활용하여 코드를 기능 단위로 분리할 수 있다.
-- 리팩토링의 개념을 이해한다.
-- 리팩토링 기법 중에서 '메서드 추출(Extract Method)'이라는 것을 수행할 수 있다.
+- 인스턴스 필드와 인스턴스 메서드를 사용할 수 있다.
+- 스태틱 필드와 인스턴스 필드의 차이점과 용도를 설명할 수 있다.
+- 스태틱 메서드와 인스턴스 메서드의 차이점과 용도를 설명할 수 있다.
 
 ## 실습 소스 및 결과
 
+- src/main/java/com/eomcs/lms/handler/BoardHandler.java 변경
+- src/main/java/com/eomcs/lms/handler/LessonHandler.java 변경
+- src/main/java/com/eomcs/lms/handler/MemberHandler.java 변경
+- src/main/java/com/eomcs/lms/handler/BoardHandler2.java 삭제
 - src/main/java/com/eomcs/lms/App.java 변경
 
 ## 실습
 
-### 작업1) 수업 데이터를 처리하는 코드를 메서드로 분리하라.
+### 작업1) 인스턴스 멤버를 활용하여 새 게시판을 추가하라.
 
+- BoardHandler.java
+    - 게시판 마다 게시글을 개별적으로 다룰 수 있도록 필드를 인스턴스 멤버로 전환한다.
+    - 인스턴스 필드를 다루기 위해 클래스 메서드를 인스턴스 메서드로 전환한다.
 - App.java (App.java.01)
-    - 수업 등록 코드를 addLesson() 메서드로 분리한다.
-    - 수업 목록 출력 코드를 listLesson() 메서드로 분리한다.
-    - 두 메서드가 공통으로 사용하는 변수를 `클래스 변수`로 전환한다.
+    - `BoardHandler` 클래스의 변화에 맞추어 코드를 변경한다.
+- BoardHandler2.java
+    - 삭제한다.
 
-### 작업2) 회원 데이터를 처리하는 코드를 메서드로 분리하라.
+### 작업2) 핸들러의 스태틱 멤버를 인스턴스 필드와 인스턴스 메서드로 전환하라.
 
-- App.java (App.java.02)
-    - 회원 등록 코드를 addMember() 메서드로 분리한다.
-    - 회원 목록 출력 코드를 listMember() 메서드로 분리한다.
-    - 두 메서드가 공통으로 사용하는 변수를 `클래스 변수`로 전환한다.
-
-
-### 작업3) 게시물 데이터를 처리하는 코드를 메서드로 분리하라.
-
+- LessonHandler.java
+    - 필드와 메서드를 인스턴스 멤버로 전환한다.
+- MemberHandler.java    
+    - 필드와 메서드를 인스턴스 멤버로 전환한다.
 - App.java
-    - 게시물 등록 코드를 addBoard() 메서드로 분리한다.
-    - 게시물 목록 출력 코드를 listBoard() 메서드로 분리한다.
-    - 두 메서드가 공통으로 사용하는 변수를 `클래스 변수`로 전환한다.
-
-### 작업4) 사용자 입력을 처리하는 코드를 메서드로 분리하라.
-
-- App.java
-    - 키보드로부터 입력 받는 코드를 prompt() 메서드로 분리한다.
+    - `LessonHandler`와 `MemberHandler` 클래스의 변화에 맞추어 코드를 변경한다.

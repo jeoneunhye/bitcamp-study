@@ -2,6 +2,11 @@ package com.eomcs.lms;
 
 import java.util.Scanner;
 import com.eomcs.lms.handler.BoardHandler;
+import com.eomcs.lms.handler.BoardHandler2;
+import com.eomcs.lms.handler.BoardHandler3;
+import com.eomcs.lms.handler.BoardHandler4;
+import com.eomcs.lms.handler.BoardHandler5;
+import com.eomcs.lms.handler.BoardHandler6;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
 public class App {
@@ -16,19 +21,11 @@ public class App {
     // main이 쓰는 Keyboard 값을 넘겨준다
     MemberHandler.keyboard = keyboard;
     BoardHandler.keyboard = keyboard;
-
-    // BoardHandler의 메서드가 사용할 메모리만 게시판마다 따로 생성한다.
-    BoardHandler 게시판1 = new BoardHandler();
-    BoardHandler 게시판2 = new BoardHandler();
-    BoardHandler 게시판3 = new BoardHandler();
-    BoardHandler 게시판4 = new BoardHandler();
-    BoardHandler 게시판5 = new BoardHandler();
-    BoardHandler 게시판6 = new BoardHandler();
-    // new 명령 -> non-static field를 heap 메모리에 생성하라!
-    LessonHandler 정규수업 = new LessonHandler();
-    MemberHandler 회원 = new MemberHandler();
-    // 하나만 쓸건데 왜 인스턴스 필드로 지정하냐?
-    // 나중에 혹시 모를 확장 가능성을 대비하여
+    BoardHandler2.keyboard = keyboard;
+    BoardHandler3.keyboard = keyboard;
+    BoardHandler4.keyboard = keyboard;
+    BoardHandler5.keyboard = keyboard;
+    BoardHandler6.keyboard = keyboard;
     
     String command;
     do {
@@ -36,73 +33,72 @@ public class App {
       command = keyboard.nextLine();
       switch (command) {
         case "/lesson/add":
-          LessonHandler.addLesson(정규수업);
+          LessonHandler.addLesson();
           // 다른 클래스로 분리한 메서드를 호출할 때는
           // 클래스 이름을 지정해야 한다.
           break;
         case "/lesson/list":
-          LessonHandler.listLesson(정규수업);
+          LessonHandler.listLesson();
           break;
         case "/member/add":
-          MemberHandler.addMember(회원);
+          MemberHandler.addMember();
           break;
         case "/member/list":
-          MemberHandler.listMember(회원);
+          MemberHandler.listMember();
           break;
         case "/board/add":
-          BoardHandler.addBoard(게시판1);
+          BoardHandler.addBoard();
           break;
         case "/board/list":
-          BoardHandler.listBoard(게시판1);
+          BoardHandler.listBoard();
           break;
         case "/board/detail":
-          BoardHandler.detailBoard(게시판1);
+          BoardHandler.detailBoard();
           break;
-          // 같은 메서드 사용하나, 다른 파라미터 값을 준다
         case "/board2/add":
-          BoardHandler.addBoard(게시판2);
+          BoardHandler2.addBoard();
           break;
         case "/board2/list":
-          BoardHandler.listBoard(게시판2);
+          BoardHandler2.listBoard();
           break;
         case "/board2/detail":
-          BoardHandler.detailBoard(게시판2);
+          BoardHandler2.detailBoard();
           break;
         case "/board3/add":
-          BoardHandler.addBoard(게시판3);
+          BoardHandler3.addBoard();
           break;
         case "/board3/list":
-          BoardHandler.listBoard(게시판3);
+          BoardHandler3.listBoard();
           break;
         case "/board3/detail":
-          BoardHandler.detailBoard(게시판3);
+          BoardHandler3.detailBoard();
           break;
         case "/board4/add":
-          BoardHandler.addBoard(게시판4);
+          BoardHandler4.addBoard();
           break;
         case "/board4/list":
-          BoardHandler.listBoard(게시판4);
+          BoardHandler4.listBoard();
           break;
         case "/board4/detail":
-          BoardHandler.detailBoard(게시판4);
+          BoardHandler4.detailBoard();
           break;
         case "/board5/add":
-          BoardHandler.addBoard(게시판5);
+          BoardHandler5.addBoard();
           break;
         case "/board5/list":
-          BoardHandler.listBoard(게시판5);
+          BoardHandler5.listBoard();
           break;
         case "/board5/detail":
-          BoardHandler.detailBoard(게시판5);
+          BoardHandler5.detailBoard();
           break;
         case "/board6/add":
-          BoardHandler.addBoard(게시판6);
+          BoardHandler6.addBoard();
           break;
         case "/board6/list":
-          BoardHandler.listBoard(게시판6);
+          BoardHandler6.listBoard();
           break;
         case "/board6/detail":
-          BoardHandler.detailBoard(게시판6);
+          BoardHandler6.detailBoard();
           break;
         default:
           if (!command.equalsIgnoreCase("quit")) {
@@ -110,7 +106,6 @@ public class App {
           }
       }
     } while (!command.equalsIgnoreCase("quit"));
-    
     System.out.println("안녕!");
   }
 }

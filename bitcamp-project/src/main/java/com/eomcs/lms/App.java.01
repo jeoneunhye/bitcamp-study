@@ -16,7 +16,11 @@ public class App {
     // main이 쓰는 Keyboard 값을 넘겨준다
     MemberHandler.keyboard = keyboard;
     BoardHandler.keyboard = keyboard;
-
+//    BoardHandler2.keyboard = keyboard; 삭제
+//    BoardHandler3.keyboard = keyboard; 삭제
+//    BoardHandler4.keyboard = keyboard; 삭제
+//    BoardHandler5.keyboard = keyboard; 삭제
+//    BoardHandler6.keyboard = keyboard; 삭제
     // BoardHandler의 메서드가 사용할 메모리만 게시판마다 따로 생성한다.
     BoardHandler 게시판1 = new BoardHandler();
     BoardHandler 게시판2 = new BoardHandler();
@@ -25,10 +29,6 @@ public class App {
     BoardHandler 게시판5 = new BoardHandler();
     BoardHandler 게시판6 = new BoardHandler();
     // new 명령 -> non-static field를 heap 메모리에 생성하라!
-    LessonHandler 정규수업 = new LessonHandler();
-    MemberHandler 회원 = new MemberHandler();
-    // 하나만 쓸건데 왜 인스턴스 필드로 지정하냐?
-    // 나중에 혹시 모를 확장 가능성을 대비하여
     
     String command;
     do {
@@ -36,18 +36,18 @@ public class App {
       command = keyboard.nextLine();
       switch (command) {
         case "/lesson/add":
-          LessonHandler.addLesson(정규수업);
+          LessonHandler.addLesson();
           // 다른 클래스로 분리한 메서드를 호출할 때는
           // 클래스 이름을 지정해야 한다.
           break;
         case "/lesson/list":
-          LessonHandler.listLesson(정규수업);
+          LessonHandler.listLesson();
           break;
         case "/member/add":
-          MemberHandler.addMember(회원);
+          MemberHandler.addMember();
           break;
         case "/member/list":
-          MemberHandler.listMember(회원);
+          MemberHandler.listMember();
           break;
         case "/board/add":
           BoardHandler.addBoard(게시판1);
@@ -110,7 +110,6 @@ public class App {
           }
       }
     } while (!command.equalsIgnoreCase("quit"));
-    
     System.out.println("안녕!");
   }
 }
