@@ -1,4 +1,5 @@
 package com.eomcs.basic.ex07.assignment;
+//191223
 //과제: 재귀호출을 이용하여 n!을 계산하라.
 //실행)
 //입력? 5
@@ -10,30 +11,31 @@ public class Test04 {
   public static void main(String[] args) {
     // 사용자로부터 정수 값을 입력 받는다.
     Scanner sc = new Scanner(System.in);
+
     System.out.print("입력? ");
     int n = sc.nextInt();
 
+    sc.close();
     // n! 을 계산한다.
     int result = factorial(n);
 
     // 결과 값을 출력한다.
-    System.out.printf("%d! = ", n);   
-    for (int i = 1; i <= n; i++) {
-      System.out.print(i + " * ");
-    }
-    System.out.print("= " + result);
+    System.out.printf("%d! = ", n); // '5! = '
+    for (int i = 1; i < n; i++) {
+      System.out.printf("%d * ", i);    // '1 * 2 * 3 * 4 * '
+      }
+    System.out.printf("%d = ", n);  // '5 = '
+    System.out.println(result); // 120
   }
+
   static int factorial(int n) {
     // 코드를 완성하시오!
-    if (n <= 1)
-      return n;
-    else
-      return factorial(n-1) * n;
+    // 식 : f(n) = n * f(n - 1)
 
-    //   int fac = 1;
-    //   for (int i = 1; i <= n; i++) {
-    //     fac *= i;
-    //   }
-    //   return fac;
+    // 언제 멈출까
+    if (n == 1)
+      return 1;
+
+    return n * factorial(n - 1);
   }
 }
