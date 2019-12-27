@@ -6,13 +6,14 @@ import java.util.Scanner;
 public class Exam0220 {
     
     static class Math {
-        // 다음 메서드와 같이 인스턴스 변수를 사용하지 않고 
+        // 다음 메서드와 같이 인스턴스 변수를 사용하지 않고, 
         // 파라미터 값을 가지고 작업하는 경우에 보통 클래스 메서드로 정의한다.
         public static int abs(int value) {
-            if (value < 0)
-                return value * -1;
+            if (value < 0)  // value가 양수면
+                return value * -1;  // 음수로 만들어라
             return value;
         }
+        // 숫자를 입력받아 바꾸는 작업
     }
     
     public static void main(String[] args) {
@@ -20,10 +21,10 @@ public class Exam0220 {
         System.out.print("숫자를 입력하세요> ");
         int value = keyScan.nextInt();
         
+        int result = Math.abs(value);
         // 이렇게 특정 인스턴스의 변수를 다루는 것이 아니라
         // 외부에서 전달한 파라미터 값을 가지고 작업을 수행하는 메서드인 경우
         // 클래스 메서드로 정의하면 사용하기 편하다!
-        int result = Math.abs(value);
         
         // 만약 abs() 메서드가 인스턴스 메서드라면,
         // 다음과 같이 인스턴스를 만든 후에 호출해야 한다.
@@ -37,12 +38,3 @@ public class Exam0220 {
         System.out.printf("절대값=%d\n", result);
     }
 }
-
-
-
-
-
-
-
-
-

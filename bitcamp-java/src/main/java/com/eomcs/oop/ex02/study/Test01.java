@@ -18,7 +18,7 @@ public class Test01 {
     System.out.println(s.aver);
 
     //static을 떼면(인스턴스 메서드)
-    //Score s2 - new Score(); 새 인스턴스 주소를 생성하고 값을 저장한 뒤
+    //Score s2 = new Score(); 새 인스턴스 주소를 생성하고 값을 저장한 뒤
     //s2 값을 이용하여 메서드를 사용하는 것이 가능하다. s2.calculate();
   }
 }

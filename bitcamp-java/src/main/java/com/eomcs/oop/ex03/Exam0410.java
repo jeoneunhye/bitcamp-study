@@ -2,10 +2,9 @@
 package com.eomcs.oop.ex03;
 
 public class Exam0410 {
-    
-    // Exam04_1 클래스 조차도 기본 생성자가 자동으로 추가된다.
+    // Exam0410 클래스 조차도 기본 생성자가 자동으로 추가된다.
     // 즉 다음의 생성자를 컴파일러가 자동으로 붙일 것이다.
-    //Exam04_1() {}
+    // public Exam0410() {}
     
     static class Score {
         String name;
@@ -15,6 +14,10 @@ public class Exam0410 {
         int sum;
         float average;
         
+        // 다음과 같이 파라미터가 없는 생성자가 기본 생성자이다.(default constructor)
+        Score() {
+          System.out.println("Score()");  // 생성자가 두 번 호출된다 s1, s3
+        }
         // 생성자
         // => 클래스 이름과 같은 이름으로 메서드를 만든다.
         // => 리턴 타입을 선언하지 않는다. 즉 값을 리턴하지 않는다.
@@ -23,11 +26,7 @@ public class Exam0410 {
         // => 만약 개발자가 생성자를 만들지 않으면 컴파일러가 기본 생성자를 자동으로 생성해준다.
         //    모든 클래스는 반드시 한 개 이상의 생성자가 있다.
         // => 보통 인스턴스를 만든 후에 인스턴스 변수를 초기화시키는 용도로 정의한다.
-        // => 다음과 파라미터가 없는 생성자가 기본 생성자이다.(default constructor)
-        Score() {
-            System.out.println("Score()");
-        }
-        
+        // => 생성된 인스턴스가 제대로 쓰일 수 있도록 유효한 값으로 초기화시키는 일을 한다.
         
         public void compute() {
             this.sum = this.kor + this.eng + this.math;
@@ -48,11 +47,3 @@ public class Exam0410 {
         Score s3 = new Score();
     }
 }
-
-
-
-
-
-
-
-

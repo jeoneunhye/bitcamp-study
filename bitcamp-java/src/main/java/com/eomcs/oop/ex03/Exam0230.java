@@ -15,7 +15,7 @@ public class Exam0230 {
         
         // 다음 메서드와 같이 인스턴스 변수를 사용하는 경우 인스턴스 메서드로 정의한다.
         public void compute() {
-            // 내장 변수 this에는 compute()를 호출할 때 넘겨준 인스턴스 주소가 들어 있다.
+            // 내장 변수 this에는 compute()를 호출할 때 넘겨준 인스턴스 주소 s*가 들어 있다.
             this.sum = this.kor + this.eng + this.math;
             this.average = this.sum / 3f;
         }
@@ -50,12 +50,3 @@ public class Exam0230 {
                 s2.name, s2.kor, s2.eng, s2.math, s2.sum, s2.average);
     }
 }
-
-
-
-
-
-
-
-
-

@@ -15,7 +15,7 @@ public class Exam0140 {
         
         A p = new A(); // 이제 v2 변수는 Heap에 생성되었다.
         // A클래스의 인스턴스를 만들 때 
-        // static 이 안붙은 변수가 그 대상이다.
+        // static이 안붙은 변수가 그 대상이다.
         
         // v2 인스턴스 변수는 인스턴스 주소를 통해 사용해야 한다.
         // 클래스이름으로 사용할 수 없다.
@@ -28,7 +28,7 @@ public class Exam0140 {
         p2.v2 = 300;
         
         System.out.printf("A.v1=%d, p.v2=%d, p2.v2=%d\n",
-                A.v1, p.v2, p2.v2);
+                A.v1, p.v2, p2.v2); // 100 200 300
     }
 }
 
