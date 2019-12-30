@@ -15,7 +15,6 @@ public class Exam0520 {
   }
   
   public static void main(String[] args) {
-    // 초기화 문장들
     System.out.println(A.a);    // 100
 
     A obj = new A();

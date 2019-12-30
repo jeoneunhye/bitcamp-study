@@ -2,22 +2,18 @@
 package com.eomcs.oop.ex04.singleton;
 
 public class Car2 {
-    // Car2 객체를 생성하면 다음 스태틱 변수에 보관해둔다.
-    private static Car2 instance;
-    
+  private static Car2 instance;
+  // Car2 객체를 생성하면 다음 스태틱 변수에 보관해둔다.
+
+  private Car2() {
     // 외부에서 생성자를 호출하지 못하도록 private으로 접근을 제한한다.
-    private Car2() {
-        System.out.println("Car2()");
-    }
-    
-    public static Car2 getInstance() {
-        if (instance == null)
-            instance = new Car2();
-        return instance;
-    }
+    System.out.println("Car2()");
+  }
+
+  public static Car2 getInstance() {
+    // 객체를 대신 생성해주는 메서드를 만든다.
+    if (Car2.instance == null)
+      Car2.instance = new Car2();
+    return Car2.instance;  // 내부에서는 Car2에 접근이 가능하다.
+  }
 }
-
-
-
-
-
