@@ -70,6 +70,7 @@ public class Test01 {
     //    Score.compute(s1);
     s1.compute(); // s1 객체에 대해 compute라는 연산자를 실행한다.
     Score.increase();
+   
 
     Score s2 = new Score("임꺽정", 90, 80, 70);
     System.out.println("--------");

@@ -5,26 +5,23 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
+  Board[] boards;
+  int boardCount = 0;
 
-BoardList boardList;
   Scanner input;
-  
-//  {
-//    boardList = new BoardList();    // 생성자의 처음 부분에 가서 인스턴스 생성
-//  }
-  
+
+  static final int BOARD_SIZE = 100;
+
   public BoardHandler(Scanner input) {
     this.input = input;
-    boardList = new BoardList();
-  //  this.boards = new Board[BOARD_SIZE];
+    this.boards = new Board[BOARD_SIZE];
   }
 
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    boardList = new BoardList(capacity);
-  //  if (capacity < BOARD_SIZE || capacity < 10000)
-  //  this.boards = new Board[BOARD_SIZE];
-  //  this.boards = new Board[capacity];
+    if (capacity < BOARD_SIZE || capacity < 10000)
+      this.boards = new Board[BOARD_SIZE];
+    this.boards = new Board[capacity];
   }
   
   public void addBoard() {
@@ -40,19 +37,13 @@ BoardList boardList;
     board.setDate(new Date(System.currentTimeMillis()));
     board.setViewCount(0);
 
-    // this.boards[this.boardCount++] = board;
-    boardList.add(board);
-    
+    this.boards[this.boardCount++] = board;
     System.out.println("저장하였습니다.");
   }
 
   public void listBoard() {
-    Board[] boards = boardList.toArray();
-    // Board 배열 저장된 만큼 주세요
-    
-    for (Board b : boards) {
-    // for (int i = 0; i < this.boardCount; i++) {
-    // Board b = this.boards[i];
+    for (int i = 0; i < this.boardCount; i++) {
+      Board b = this.boards[i];
       System.out.printf("%d, %s, %s, %d\n",
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }
@@ -62,16 +53,14 @@ BoardList boardList;
     System.out.println("게시물 번호? ");
     int no = input.nextInt();
     input.nextLine();
-    
-    Board board = boardList.get(no);
-// --BoardList.get(); 로 이동
-//    Board board = null;
-//    for (int i = 0; i < this.boardCount; i++) {
-//      if (this.boards[i].getNo() == no) {
-//        board = this.boards[i];
-//        break;
-//      }
-//    }
+
+    Board board = null;
+    for (int i = 0; i < this.boardCount; i++) {
+      if (this.boards[i].getNo() == no) {
+        board = this.boards[i];
+        break;
+      }
+    }
     if (board == null) {
       System.out.println("게시물 번호가 유효하지 않습니다.");
       return;

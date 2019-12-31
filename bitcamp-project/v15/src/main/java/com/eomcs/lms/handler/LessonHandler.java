@@ -5,19 +5,18 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonHandler {
-
-  //  int lessonCount = 0;
-  //  Lesson[] lessons;
-  LessonList lessonList;
+  
+  int lessonCount = 0;
+  Lesson[] lessons;
+  
   public Scanner input;
-  //  static final int LESSON_SIZE = 100;
-
+  static final int LESSON_SIZE = 100;
+  
   public LessonHandler(Scanner input) {
     this.input = input;
-    //    this.lessons = new Lesson[LESSON_SIZE];
-    lessonList = new LessonList();
+    this.lessons = new Lesson[LESSON_SIZE];
   }
-
+  
   public void addLesson() {
     Lesson lesson = new Lesson();
 
@@ -38,19 +37,15 @@ public class LessonHandler {
     lesson.setDayHours(input.nextInt());
     input.nextLine(); 
 
-    // this.lessons[this.lessonCount++] = lesson;
-    lessonList.add(lesson);
+    this.lessons[this.lessonCount++] = lesson;
     System.out.println("저장하였습니다.");
   }
 
   public void listLesson() {
-    // for (int i = 0; i < this.lessonCount; i++) {
-    // Lesson l = this.lessons[i];
-    Lesson[] lessons = lessonList.toArray();
-    for (Lesson l : lessons) {
+    for (int i = 0; i < this.lessonCount; i++) {
+      Lesson l = this.lessons[i];
       System.out.printf("%d, %s, %s ~ %s, %d\n",
           l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate(), l.getTotalHours());
     }
-    // }
   }
 }

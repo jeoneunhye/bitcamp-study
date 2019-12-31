@@ -6,24 +6,17 @@ import com.eomcs.lms.domain.Member;
 
 public class MemberHandler {
 
-  //  int memberCount = 0;
-  //  Member[] members;
+  int memberCount = 0;
+  Member[] members;
 
   static final int MEMBER_SIZE = 100;
   public Scanner input;
-  MemberList memberList;
-
+  
   public MemberHandler(Scanner input) {
     this.input = input;
-    // this.members = new Member[MEMBER_SIZE];
-    memberList = new MemberList();
+    this.members = new Member[MEMBER_SIZE];
   }
-
-  public MemberHandler(Scanner input, int capacity) {
-    this.input = input;
-    memberList = new MemberList(capacity);
-  }
-
+  
   public void addMember() {
     Member member = new Member();
     System.out.print("번호? ");
@@ -41,19 +34,15 @@ public class MemberHandler {
     member.setTel(input.nextLine());
     member.setRegisteredDate(new Date(System.currentTimeMillis()));
 
-    // this.members[this.memberCount++] = member;
-    memberList.add(member);
+    this.members[this.memberCount++] = member;
     System.out.println("저장하였습니다.");
   }
 
   public void listMember() {
-    // for (int i = 0; i < this.memberCount; i++) {
-    // Member m = this.members[i];
-    Member[] members = memberList.toArray();
-    for (Member m : members) {
+    for (int i = 0; i < this.memberCount; i++) {
+      Member m = this.members[i];
       System.out.printf("%d, %s, %s, %s, %s\n",
           m.getNo(), m.getName(), m.getEmail(), m.getTel(), m.getRegisteredDate());
     }
   }
-  //  }
 }
