@@ -1,6 +1,6 @@
 package com.eomcs.oop.ex05.h;
 
 // 자바는 다중 상속을 지원하지 않는다.
-public class C extends A, B {
-    int v3;
+public class C extends A, B {   // A 또는 B 하나만 가능
+  int v3;
 }

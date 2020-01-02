@@ -1,13 +1,11 @@
 package com.eomcs.basic.ex07;
 
 //# 메서드 : 가변 파라미터의 단점
-//
 public class Exam0270 {
-
   // 가변 파라미터는 여러 개 선언할 수 없다.
   // => 아규먼트의 시작과 끝을 구분할 수 없다.
   //    예) m1("aaa", "bbb", "ccc", "ddd");
-  //    어느 값이 names 배열에 들어가고, 어느 값이 names2 배열에 들어가는가?
+  //    어느 값이 names 배열에 들어가고, 어느 값이 emails 배열에 들어가는가?
   //static void m1(String... names, String... emails) {} // 컴파일 오류!
   //static void m1(String... names, int a, String... emails) {}// 컴파일 오류!
   // 위의 메서드는 값을 구분할 수 있을 것 같은데?

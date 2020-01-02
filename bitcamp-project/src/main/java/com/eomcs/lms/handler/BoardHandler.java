@@ -6,25 +6,17 @@ import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
 
-BoardList boardList;
+  ArrayList/*BoardList*/ boardList;
   Scanner input;
-  
-//  {
-//    boardList = new BoardList();    // 생성자의 처음 부분에 가서 인스턴스 생성
-//  }
   
   public BoardHandler(Scanner input) {
     this.input = input;
-    boardList = new BoardList();
-  //  this.boards = new Board[BOARD_SIZE];
+    boardList = new ArrayList/*BoardList*/();
   }
 
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    boardList = new BoardList(capacity);
-  //  if (capacity < BOARD_SIZE || capacity < 10000)
-  //  this.boards = new Board[BOARD_SIZE];
-  //  this.boards = new Board[capacity];
+    boardList = new ArrayList/*BoardList*/(capacity);
   }
   
   public void addBoard() {
@@ -40,40 +32,35 @@ BoardList boardList;
     board.setDate(new Date(System.currentTimeMillis()));
     board.setViewCount(0);
 
-    // this.boards[this.boardCount++] = board;
     boardList.add(board);
     
     System.out.println("저장하였습니다.");
   }
 
   public void listBoard() {
-    Board[] boards = boardList.toArray();
-    // Board 배열 저장된 만큼 주세요
+    Object/*Board*/[] arr/*boards*/ = this.boardList.toArray();
     
-    for (Board b : boards) {
-    // for (int i = 0; i < this.boardCount; i++) {
-    // Board b = this.boards[i];
+    for (Object obj : arr/*Board b : boards*/) {
+      Board b = (Board)obj;
+      // 형변환 추가! 사용 전에 obj가 가리키는 것이 Board라고 알려주는 것
+      // 위 두 줄 변수 설정 잘하기
       System.out.printf("%d, %s, %s, %d\n",
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }
   }
 
   public void detailBoard() {
-    System.out.println("게시물 번호? ");
-    int no = input.nextInt();
+    System.out.println("게시물 인덱스? "); // 번호-> 인덱스로 변경 0부터 시작
+    int index/*no*/ = input.nextInt();
     input.nextLine();
     
-    Board board = boardList.get(no);
-// --BoardList.get(); 로 이동
-//    Board board = null;
-//    for (int i = 0; i < this.boardCount; i++) {
-//      if (this.boards[i].getNo() == no) {
-//        board = this.boards[i];
-//        break;
-//      }
-//    }
+    Board board = (Board)this.boardList.get(index);
+    // 추가! 꺼낸 것은 보드다 말해주는 것->형변환(typecasting)
+    // 원래 데이터타입의 변수에 담아서 써야 한다.
+    // Board board = boardList.get(no);
+    
     if (board == null) {
-      System.out.println("게시물 번호가 유효하지 않습니다.");
+      System.out.println("게시물 인덱스가 유효하지 않습니다.");
       return;
     }
     System.out.printf("번호: %d\n", board.getNo());

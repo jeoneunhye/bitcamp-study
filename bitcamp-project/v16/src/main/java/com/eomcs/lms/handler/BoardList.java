@@ -6,7 +6,7 @@ import com.eomcs.lms.domain.Board;
 public class BoardList {
   private static final int DEFAULT_CAPACITY = 3; // BOARD_SIZE
 
-  private Board[] list; // boards/ 배열의 주소를 담음
+  private Board[] list; // boards/ 배열의 주소를 담음 아직 사용 불가!
   private int size; // boardCount/ 자동으로 0으로 초기화! ! !
 
   public BoardList() {  // 생성자 이용하여 null이었던 배열을 생성해줌
@@ -22,7 +22,7 @@ public class BoardList {
     }
   }
 
-  public Board[] toArray() {
+  public Board[] toArray() {    // 입력한 객체 주소만큼만 가져와서 return 
     /*
     Board[] arr = new Board[this.size];
     // Board 배열을 사이즈 갯수만큼 만들어라
@@ -49,7 +49,7 @@ public class BoardList {
       /*
       Board[] arr = new Board[newCapacity];
       // 기존의 배열 갯수에 반 만큼을 더 추가
-      // 새로 생길 때마다 기존의 배열은 garbage가 된다->linkedList
+      // 새로 생길 때마다 기존의 배열은 garbage가 된다->linkedList로 해결
       for (int i = 0; i < this.list.length; i++) {
         arr[i] = this.list[i];
       }
@@ -57,10 +57,12 @@ public class BoardList {
       // -----아래의 한 줄로 한 번에 실행이 가능하다
       */
       this.list = Arrays.copyOf(this.list, newCapacity);
+      // 기존 배열에 증가시키는 것이 아닌 새 배열에 newCapacity를 기존 배열보다 크게 만든 후
+      // 그만큼 복사하는 것이기 때문에 기존 배열은 garbage가 된다.
       System.out.printf("새 배열을 %d개 생성하였음!\n", newCapacity);
     }
     this.list[this.size++] = board;
-    // 현재 사이즈 갯수를 그대로 지정한 후 따로 증가시킴
+    // this.size++: 현재 방번호를 그대로 집어넣고 다음 방에서 증가시킴
   }
 
   public Board get(int no) {

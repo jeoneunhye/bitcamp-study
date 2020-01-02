@@ -1,9 +1,9 @@
 package com.eomcs.oop.ex05.a;
 
 public class Car {
-    public String model;
-    public String maker;
-    public int capacity;
+    public String model; // 차종
+    public String maker; // 제조사
+    public int capacity; // 수용 인원
     
     public Car() {}
     
