@@ -1,5 +1,5 @@
 package com.eomcs.oop.ex06.c;
-
+// +Exam0120.java
 public class A2 extends A {
     int age;
     
