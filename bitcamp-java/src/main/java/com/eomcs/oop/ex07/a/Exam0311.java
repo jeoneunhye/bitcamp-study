@@ -77,7 +77,7 @@ class Score4 {
   }
 }
 
-public class Exam00311 {
+public class Exam0311 {
   public static void main(String[] args) {
     Score4 s1 = new Score4();
     s1.setName("홍길동");

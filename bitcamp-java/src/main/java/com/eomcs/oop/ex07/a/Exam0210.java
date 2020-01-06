@@ -36,7 +36,7 @@ class Score2 {
   // => 그리고 이런 getter는 공개한다.
 }
 
-public class Exam00210 {
+public class Exam0210 {
   public static void main(String[] args) {
     Score2 s1 = new Score2();
     s1.name = "홍길동";

@@ -63,7 +63,7 @@ class Score3 {
   }
 }
 
-public class Exam00310 {
+public class Exam0310 {
   public static void main(String[] args) {
     Score3 s1 = new Score3();
     s1.name = "홍길동";

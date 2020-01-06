@@ -14,7 +14,7 @@ class Score {
   }
 }
 
-public class Exam00110 {
+public class Exam0110 {
   public static void main(String[] args) {
     Score s1 = new Score();
     s1.name = "홍길동";

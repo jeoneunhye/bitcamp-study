@@ -1,7 +1,7 @@
 package com.eomcs.oop.ex07.a;
 // 캡슐화 문법 사용 전 - 개발자가 클래스를 작성한 사람의 의도와 다르게 사용할 때
 // Score 클래스 Exam0110에
-public class Exam00111 {
+public class Exam0111 {
   public static void main(String[] args) {
     Score s1 = new Score();
     s1.name = "홍길동";

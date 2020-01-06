@@ -1,7 +1,7 @@
 package com.eomcs.oop.ex07.a;
 // 캡슐화 문법 사용 후 - 개발자가 특정 필드를 직접 접근하지 못하게 막기
 //Score2 클래스 Exam0210에
-public class Exam00211 {
+public class Exam0211 {
   public static void main(String[] args) {
     Score2 s1 = new Score2();
     s1.name = "홍길동";
