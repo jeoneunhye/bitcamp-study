@@ -1,11 +1,8 @@
 package com.eomcs.basic.ex07;
-
+//# 메서드 : 리팩토링
 import java.util.Scanner;
 
-//# 메서드 : 리팩토링
-//
 public class Exam0130 {
-
   public static void printSpaces(int len) {
     for (int i = 0; i < len; i++) {
       System.out.print(" ");

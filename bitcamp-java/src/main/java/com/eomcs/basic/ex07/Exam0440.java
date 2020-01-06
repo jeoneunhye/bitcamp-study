@@ -1,9 +1,7 @@
 package com.eomcs.basic.ex07;
 
 //# 메서드 : 스택 메모리 응용 I
-//
 public class Exam0440 {
-
   static int m1(int value) {
     int r1 = m2(value);
     int r2 = m3(value);
@@ -23,6 +21,7 @@ public class Exam0440 {
     System.out.println(r);
   }
 }
+
 // JVM Stack 메모리의 사용
 // 0) 시작
 // 1) main()

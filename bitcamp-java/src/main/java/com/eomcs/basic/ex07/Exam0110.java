@@ -1,8 +1,6 @@
 package com.eomcs.basic.ex07;
-
-import java.util.Scanner;
-
 //# 메서드 : 사용 전
+import java.util.Scanner;
 
 public class Exam0110 {
   public static void main(String[] args) {

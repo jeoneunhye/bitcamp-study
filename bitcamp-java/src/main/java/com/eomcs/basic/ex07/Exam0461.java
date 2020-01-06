@@ -1,9 +1,6 @@
 package com.eomcs.basic.ex07;
-
 //# 메서드 : 스택 오버플로우 예외
-//
 public class Exam0461 {
-
   static int sum(int value) {
     if (value == 1)
       return 1;
@@ -21,16 +18,16 @@ public class Exam0461 {
     // 따라서 호출 단계가 깊지 않은 작은 수를 다룰 경우에는 
     // 재귀호출을 써도 되지만,
     // 호출 단계가 많은 큰 수를 다룰 때는 재귀호출 대신 반복문을 사용하라!
-    System.out.println(sum(100000));  // error stackoverflow
+    //System.out.println(sum(100000));  // error stackoverflow
     
     // 메소드 호출이 너무 깊어지는 경우는 재귀호출 대신 다른 방법을 사용하라.
-    /*
+    ///*
     long sum = 0;
     for (int i = 0; i <= 100000; i++) {
       sum += i;
     }
     System.out.println(sum);    // 5000050000
-     */
+     //*/
   }
 }
   
@@ -45,7 +42,7 @@ public class Exam0461 {
 //                                       => 1
 // 3) main()
 // 4) 종료!
-//
+
 // 재귀호출(recursive call)
 // - 수학식을 코드를 표현하기가 편하다.
 // - 코드가 간결하다.
@@ -55,4 +52,3 @@ public class Exam0461 {
 //   이런 사태를 "stackoverflow"라 부른다.
 // - 그래서 큰 수(즉 많이 호출되는 경우)에 대해서 
 //   재귀호출을 할 때 스택오버플로우가 자주 발생한다.
-// 

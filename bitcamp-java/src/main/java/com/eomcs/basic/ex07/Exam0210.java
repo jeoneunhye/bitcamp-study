@@ -1,11 +1,8 @@
 package com.eomcs.basic.ex07;
-
+//# 메서드 : 개념 및 기본 문법
 import java.util.Scanner;
 
-//# 메서드 : 개념 및 기본 문법
-//
 public class Exam0210 {
-
   // 문법
   // [리턴값의 타입] 함수명(파라미터선언, ...) {명령어들}
   // - 리턴 값(return value)의 타입?
@@ -23,7 +20,6 @@ public class Exam0210 {
   }
 
   public static void main(String[] args) {
-
     // 메서드를 사용하는 방법
     // [리턴값을 받을 변수] = 메서드명(아규먼트);
     // - 아규먼트(argument)?
@@ -49,7 +45,6 @@ public class Exam0210 {
     // hello() {} 블록의 명령을 실행한 후 다시 원래의 위치로 돌아와서
     // 다음 명령을 실행한다.
     System.out.println("hello() 실행 완료!");
-
 
     // hello 메서드는 파라미터 변수가 없기 때문에 호출할 때 값을 넣으면 
     //hello(100);// 컴파일 오류!

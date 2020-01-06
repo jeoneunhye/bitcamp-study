@@ -1,9 +1,7 @@
 package com.eomcs.basic.ex07;
 
 //# 메서드 : 스택 메모리 응용 II - 재귀호출
-//
 public class Exam0450 {
-
   static int sum(int value) {
     if (value == 1)
       return 1;
@@ -17,6 +15,7 @@ public class Exam0450 {
     System.out.println(sum(5));   // 15
   }
 }
+
 // JVM Stack 메모리의 사용
 // 0) 시작
 // 1) main()
@@ -28,7 +27,7 @@ public class Exam0450 {
 //                                       => 1
 // 3) main()
 // 4) 종료!
-//
+
 // 재귀호출(recursive call)
 // - 수학식을 코드를 표현하기가 편하다.
 // - 코드가 간결하다.
@@ -38,4 +37,3 @@ public class Exam0450 {
 //   이런 사태를 "stackoverflow"라 부른다.
 // - 그래서 큰 수(즉 많이 호출되는 경우)에 대해서 
 //   재귀호출을 할 때 스택오버플로우가 자주 발생한다.
-// 

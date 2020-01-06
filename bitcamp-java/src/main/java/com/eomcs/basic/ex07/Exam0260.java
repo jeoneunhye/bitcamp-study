@@ -1,9 +1,6 @@
 package com.eomcs.basic.ex07;
-
 //# 메서드 : 가변 파라미터 vs 배열 파라미터
-//
 public class Exam0260 {
-
   // 가변 파라미터
   static void hello(String... names) {
     for (int i = 0; i < names.length; i++) {
@@ -19,7 +16,6 @@ public class Exam0260 {
   }
 
   public static void main(String[] args) {
-
     // 가변 파라미터의 메서드를 호출할 때는 
     // => 다음과 같이 낱개의 값을 여러 개 줄 수도 있고,
     hello("홍길동", "임꺽정", "유관순"); 

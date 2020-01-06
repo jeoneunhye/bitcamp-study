@@ -1,9 +1,6 @@
 package com.eomcs.basic.ex07;
-
 //# 메서드 : call by value
-//
 public class Exam0310 {
-
   static void swap(int a, int b) {
     System.out.printf("swap(): a=%d, b=%d\n", a, b);  // a=100, b=200
     int temp = a;

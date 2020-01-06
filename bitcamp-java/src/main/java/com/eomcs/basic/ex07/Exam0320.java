@@ -1,9 +1,6 @@
 package com.eomcs.basic.ex07;
-
 //# 메서드 : call by reference
-
 public class Exam0320 {
-
   static void swap(int[] arr) { // 값을 받는 대신 주소를 받는다
     System.out.printf("swap(): arr[0]=%d, arr[1]=%d\n", arr[0], arr[1]);
     int temp = arr[0];
