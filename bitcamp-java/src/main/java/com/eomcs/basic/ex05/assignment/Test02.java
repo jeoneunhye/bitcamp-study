@@ -24,7 +24,6 @@ public class Test02 {
       max = no > max ? no : max; // no가 max보다 크면 no에 max를 넣어라
     }
 
-    
     System.out.printf("최소값: %d\n", min);
     System.out.printf("최대값: %d\n", max);
     keyScan.close();

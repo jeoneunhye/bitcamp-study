@@ -7,7 +7,6 @@ import java.util.Scanner;   // 가져오는 것이 아니고 선언하는 것
 // 입력? 2 5
 // 2에서 5까지의 합은 14입니다.
 
-
 public class Test01 {
   public static void main(String[] args) {
     Scanner keyScan = new Scanner(System.in);   // System.in자리 : data의 inputstream을 위한 도구
