@@ -8,85 +8,59 @@ public class App {
   static Scanner keyboard = new Scanner(System.in);   
 
   public static void main(String[] args) {
-    BoardHandler 게시판1 = new BoardHandler(keyboard);
-    BoardHandler 게시판2 = new BoardHandler(keyboard, 200);
-    BoardHandler 게시판3 = new BoardHandler(keyboard, 1000);
-    BoardHandler 게시판4 = new BoardHandler(keyboard);
-    BoardHandler 게시판5 = new BoardHandler(keyboard, 9000);
-    BoardHandler 게시판6 = new BoardHandler(keyboard, 20000);
-    LessonHandler 정규수업 = new LessonHandler(keyboard);
-    MemberHandler 회원 = new MemberHandler(keyboard);
-    
+    BoardHandler boardHandler = new BoardHandler(keyboard);
+    LessonHandler lessonHandler = new LessonHandler(keyboard);
+    MemberHandler memberHandler = new MemberHandler(keyboard);
+    //java.util.ArrayList list;
     String command;
     do {
       System.out.print("\n명령> ");
       command = keyboard.nextLine();
       switch (command) {
         case "/lesson/add":
-          정규수업.addLesson();
+          lessonHandler.addLesson();
           break;
         case "/lesson/list":
-          정규수업.listLesson();
+          lessonHandler.listLesson();
+          break;
+        case "/lesson/detail":
+          lessonHandler.detailLesson();
+          break;
+        case "/lesson/update":
+          lessonHandler.updateLesson();
+          break;
+        case "/lesson/delete":
+          lessonHandler.deleteLesson();
           break;
         case "/member/add":
-          회원.addMember();
+          memberHandler.addMember();
           break;
         case "/member/list":
-          회원.listMember();
+          memberHandler.listMember();
+          break;
+        case "/member/detail":
+          memberHandler.detailMember();
+          break;
+        case "/member/update":
+          memberHandler.updateMember();
+          break;
+        case "/member/delete":
+          memberHandler.deleteMember();
           break;
         case "/board/add":
-          게시판1.addBoard();
+          boardHandler.addBoard();
           break;
         case "/board/list":
-          게시판1.listBoard();
+          boardHandler.listBoard();
           break;
         case "/board/detail":
-          게시판1.detailBoard();
+          boardHandler.detailBoard();
           break;
-        case "/board2/add":
-          게시판2.addBoard();
+        case "/board/update":
+          boardHandler.updateBoard();
           break;
-        case "/board2/list":
-          게시판2.listBoard();
-          break;
-        case "/board2/detail":
-          게시판2.detailBoard();
-          break;
-        case "/board3/add":
-          게시판3.addBoard();
-          break;
-        case "/board3/list":
-          게시판3.listBoard();
-          break;
-        case "/board3/detail":
-          게시판3.detailBoard();
-          break;
-        case "/board4/add":
-          게시판4.addBoard();
-          break;
-        case "/board4/list":
-          게시판4.listBoard();
-          break;
-        case "/board4/detail":
-          게시판4.detailBoard();
-          break;
-        case "/board5/add":
-          게시판5.addBoard();
-          break;
-        case "/board5/list":
-          게시판5.listBoard();
-          break;
-        case "/board5/detail":
-          게시판5.detailBoard();
-          break;
-        case "/board6/add":
-          게시판6.addBoard();
-          break;
-        case "/board6/list":
-          게시판6.listBoard();
-          break;
-        case "/board6/detail":
-          게시판6.detailBoard();
+        case "/board/delete":
+          boardHandler.deleteBoard();
           break;
         default:
           if (!command.equalsIgnoreCase("quit")) {
