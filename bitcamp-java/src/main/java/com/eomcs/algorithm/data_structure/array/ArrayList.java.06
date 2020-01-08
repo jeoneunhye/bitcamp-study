@@ -1,0 +1,16 @@
+package com.eomcs.util;
+
+public class ArrayList {
+  private static final int DEFAULT_CAPACITY = 10;
+  // 값을 고정 final, 인스턴스마다 값이 바뀔 일이 없기 때문에 static, 내부 클래스에서 사용 private
+  Object[] elementData;
+  int size;
+  
+  public ArrayList() {
+    this.elementData = new Object[DEFAULT_CAPACITY]; // 생성자기 때문에 앞에 ArrayList. 클래스 경로 생략 가능
+  }
+  
+  public ArrayList(int initialCapacity) {
+    this.elementData = new Object[initialCapacity];
+  }
+}

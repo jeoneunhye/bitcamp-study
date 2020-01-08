@@ -1,0 +1,20 @@
+package com.eomcs.util;
+
+public class ArrayList {
+  private static final int DEFAULT_CAPACITY = 10;
+  Object[] elementData;
+  int size;
+
+  public ArrayList() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+  }
+
+  public ArrayList(int initialCapacity) {
+  // 초기 크기가 기본 크기보다 크다면, 초기 크기로 배열을 만든다.
+    if (initialCapacity < DEFAULT_CAPACITY) {
+      Object[] elementData = new Object[DEFAULT_CAPACITY];
+    } else {
+      Object[] elementData = new Object[initialCapacity];
+    }
+  }
+}

@@ -1,0 +1,71 @@
+package com.eomcs.util;
+
+import java.util.Arrays;
+
+public class ArrayList {
+  private static final int DEFAULT_CAPACITY = 15;
+  Object[] elementData;
+  int size;
+
+  public ArrayList() {
+   this.elementData = new Object[DEFAULT_CAPACITY];
+  }
+
+  public ArrayList(int initialCapacity) {
+    if (initialCapacity < DEFAULT_CAPACITY) {
+      this.elementData = new Object[DEFAULT_CAPACITY];
+    } else {
+      this.elementData = new Object[initialCapacity];
+    }
+  }
+  
+  public void add(Object e) {
+    if (this.size == this.elementData.length) {
+      int oldSize = this.elementData.length;
+      int newSize = oldSize + (oldSize >> 1);
+      
+      this.elementData = Arrays.copyOf(this.elementData, newSize);
+    }
+    
+    this.elementData[this.size++] = e;
+  }
+  
+  public Object get(int index) {
+    if (index < 0 || index >= this.size) {
+      return null;
+    }
+    return this.elementData[index];
+  }
+  
+  public Object set(int index, Object e) {
+    if (index < 0 || index >= this.size) {
+      return null;
+    }
+    Object oldValue = this.elementData[index];
+    this.elementData[index] = e;
+    return oldValue;
+  }
+  
+  public Object remove(int index) {
+    if (index < 0 || index >= this.size) {
+      return null;
+    }
+    
+    Object oldValue = this.elementData[index];
+    
+    System.arraycopy(this.elementData, index + 1, this.elementData, index, this.size - (index + 1));
+    // (elementData의 index + 1번부터 this.size - (index + 1) 만큼을 elementData의 index에서부터 복사
+    // 전체 0~5번 배열 중 2번을 지울거면 3번부터 5번까지를 앞으로 당겨라
+    /* 위와 같은 문장
+    for (int i = index + 1; i < this.size; i++) {
+      this.elementData[i - 1] = this.elementData[i];
+    }
+     */
+    this.size--;
+    return oldValue;
+  }
+  
+  public int size() {
+    return this.size;
+  }
+}

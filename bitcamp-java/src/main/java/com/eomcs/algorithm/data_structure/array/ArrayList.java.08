@@ -1,0 +1,28 @@
+package com.eomcs.util;
+
+public class ArrayList {
+  private static final int DEFAULT_CAPACITY = 10;
+  Object[] elementData;
+  int size;
+
+  public ArrayList() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+  }
+
+  public ArrayList(int initialCapacity) {
+    if (initialCapacity < DEFAULT_CAPACITY) {
+      this.elementData = new Object[DEFAULT_CAPACITY];
+    } else {
+      this.elementData = new Object[initialCapacity];
+    }
+  }
+  
+  public void add(Object e) {
+    this.elementData[this.size++] = e;
+    /*
+        위와 같은 문장. 현재 size의 값을 넣고 그 다음 size를 따로 증가시킴
+    this.elementData[this.size] = e;
+    this.size++;
+    */
+  }
+}

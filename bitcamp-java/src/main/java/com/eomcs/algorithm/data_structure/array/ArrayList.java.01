@@ -1,0 +1,5 @@
+package com.eomcs.util;
+// 여러 객체의 주소를 꺼내 추가, 변경, 삭제하는 기능을 하는 클래스 ArrayList
+public class ArrayList { // util 패키지 외 다른 패키지에서도 사용이 가능하도록 public 설정
+
+}
