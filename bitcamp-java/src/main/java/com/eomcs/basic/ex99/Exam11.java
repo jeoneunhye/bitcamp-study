@@ -43,7 +43,7 @@ public static void main(String[] args) {
 
   // 삽입될 값 지정하기
   // => %값위치$d
-  //System.out.printf("\n %d, %x, %c", 65); 컴파일 오류
+  //System.out.printf("\n %d, %x, %c", 65); // 컴파일 오류
   System.out.printf("\n %1$d, %1$x, %1$c", 65);
 
   // 논리값 삽입

@@ -1,0 +1,65 @@
+package com.eomcs.util;
+// 6. add(int, Object) 메서드를 추가한다.
+public class LinkedList {
+  Node first;
+  Node last;
+  int size;
+
+  public void add(Object value) {
+    Node newNode = new Node();
+    newNode.value = value;
+
+    if (first == null) {
+      last = first = newNode;
+    } else {
+      last.next = newNode;
+      last = newNode;
+    }
+
+    this.size++;
+  }
+
+  public Object get(int index) {
+    if (index < 0 || index >= size) 
+      return null; 
+    
+    Node cursor = first;
+    
+    for (int i = 0; i < index; i++) {
+      cursor = cursor.next;
+    }
+    return cursor.value;
+  }
+  
+  public void add(int index, Object value) { 
+    if (index < 0 || index >= size) // 유효한 인덱스가 아니면
+      return; // 메서드를 실행하지 않고 나가기
+    
+    Node newNode = new Node();
+    newNode.value = value;
+
+    Node cursor = first;
+    for (int i = 0; i < index - 1; i++) {
+      // 삽입하려는 위치의 주소는 인덱스의 한 칸 앞에 있기 때문에 -1
+      cursor = cursor.next;
+    }
+    
+    if (index == 0) { // index가 -1일 때 값이 0의 값과 같게 나오는 것을 해결
+      newNode.next = first;
+      first = newNode;
+    } else {
+    newNode.next = cursor.next;
+    // 커서가 가리키는 다음 주소를 새 노드의 다음 주소로 설정
+    
+    cursor.next = newNode;
+    // 기존 노드의 다음은 새 노드를 가리킨다.
+    }
+    
+    this.size++;
+  }
+  
+  static class Node {
+    Object value;
+    Node next;
+  }
+}

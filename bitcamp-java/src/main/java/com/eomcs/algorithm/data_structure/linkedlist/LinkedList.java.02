@@ -1,0 +1,8 @@
+package com.eomcs.util;
+// 2. 값과 다음 값의 주소를 저장할 Node 클래스를 정의한다.
+public class LinkedList {
+  static class Node {
+    Object value; // 값을 저장할 변수 선언
+    Node next; // 다음 값의 주소를 저장할 변수 선언
+  }
+}

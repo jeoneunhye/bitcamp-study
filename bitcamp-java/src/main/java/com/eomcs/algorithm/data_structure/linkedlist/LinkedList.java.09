@@ -1,0 +1,116 @@
+package com.eomcs.util;
+// 9. list를 배열로 만들어 리턴하는 toArray() 추가한다.
+public class LinkedList {
+  Node first;
+  Node last;
+  int size;
+
+  public void add(Object value) {
+    Node newNode = new Node();
+    newNode.value = value;
+
+    if (first == null) {
+      last = first = newNode;
+    } else {
+      last.next = newNode;
+      last = newNode;
+    }
+
+    this.size++;
+  }
+
+  public Object get(int index) {
+    if (index < 0 || index >= size) 
+      return null; 
+    
+    Node cursor = first;
+    
+    for (int i = 0; i < index; i++) {
+      cursor = cursor.next;
+    }
+    return cursor.value;
+  }
+  
+  public void add(int index, Object value) { 
+    if (index < 0 || index >= size)
+      return;
+    
+    Node newNode = new Node();
+    newNode.value = value;
+
+    Node cursor = first;
+    for (int i = 0; i < index - 1; i++) {
+      cursor = cursor.next;
+    }
+    
+    if (index == 0) {
+      newNode.next = first;
+      first = newNode;
+    } else {
+    newNode.next = cursor.next;
+    
+    cursor.next = newNode;
+    }
+    
+    this.size++;
+  }
+  
+  public Object remove(int index) {
+    if (index < 0 || index >= size)
+      return null;
+    
+    Node cursor = first;
+    for (int i = 0; i < index - 1; i++) {
+      cursor = cursor.next;
+    }
+    
+    Node deletedNode = null;
+    if (index == 0) {
+    deletedNode = first;
+    first = deletedNode.next;
+    } else {
+    deletedNode = cursor.next;
+    cursor.next = deletedNode.next;
+    }
+    
+    deletedNode.next = null;
+    
+    size--;
+    
+    return deletedNode.value;
+  }
+  
+  public Object set(int index, Object value) {
+    if (index < 0 || index >= size) 
+      return null; 
+    
+    Node cursor = first;
+    
+    for (int i = 0; i < index; i++) {
+      cursor = cursor.next;
+    }
+    
+    Object oldValue = cursor.value; // 찾은 cursor의 값을 oldValue에 보관
+    cursor.value = value; // 새로 입력한 값을 cursor에 넣어줌(변경)
+    
+    return oldValue;
+  }
+  
+  public Object[] toArray() {
+    Object[] arr = new Object[size]; // 현재 저장된 갯수만큼 배열 생성
+    
+    Node cursor = first;
+    
+    for (int i = 0; i < size; i++) {
+      arr[i] = cursor.value;
+      cursor = cursor.next; // 커서를 현재 커서가 가리키는 다음으로 이동
+    }
+    
+    return arr;
+  }
+  
+  static class Node {
+    Object value;
+    Node next;
+  }
+}

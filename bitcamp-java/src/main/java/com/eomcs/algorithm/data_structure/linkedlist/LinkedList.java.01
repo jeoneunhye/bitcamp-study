@@ -1,0 +1,5 @@
+package com.eomcs.util;
+// 1. 최소 클래스를 작성한다.
+public class LinkedList {
+
+}

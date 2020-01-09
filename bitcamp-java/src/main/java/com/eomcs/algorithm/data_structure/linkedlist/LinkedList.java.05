@@ -1,0 +1,40 @@
+package com.eomcs.util;
+// 5. 값을 꺼내는 get() 메서드를 추가한다.
+public class LinkedList {
+  Node first;
+  Node last;
+  int size;
+
+  public void add(Object value) {
+    Node newNode = new Node();
+    newNode.value = value;
+
+    if (first == null) {
+      last = first = newNode;
+    } else {
+      last.next = newNode;
+      last = newNode;
+    }
+
+    this.size++;
+  }
+
+  public Object get(int index) {
+    if (index < 0 || index >= size) 
+      return null; 
+    
+    Node cursor = first;
+    // 노드를 가리킬 cursor를 준비하고 첫 번째를 가리키도록 한다.
+    
+    for (int i = 0; i < index; i++) { // 찾고자하는 index까지
+      cursor = cursor.next; // cursor의 next에 있는 주소를 cursor에 놓는다.
+      // index에 해당하는 cursor의 주소를 찾을 때까지 반복
+    }
+    return cursor.value; // index의 주소에서 해당 값을 리턴
+  }
+  
+  static class Node {
+    Object value;
+    Node next;
+  }
+}
