@@ -20,14 +20,21 @@ public class Exam0210 {
     // primitive data를 포장하는 객체라고 해서 
     // "랩퍼(wrapper) 클래스"라 부른다.
 
+    // 래퍼 클래스의 주요 용도:
+    // primitive data Type의 값을 객체로 주고 받을 때 사용한다.
     // primitive data type의 값을 객체에 담아 전달하고 싶다면
     // 언제든 wrapper 클래스의 인스턴스를 만들면 된다.
 
+    // Wrapper 클래스의 인스턴스를 생성할 때에는 생성자 대신 클래스 메서드를 사용하라.
+    Byte b2 = Byte.valueOf((byte)100); // 4바이트 int 값으로 오기 때문에 byte로 형변환 필요
+    Short s2 = Short.valueOf((short)20000);
+    Integer i2 = Integer.valueOf(3000000);
+    Long l2 = Long.valueOf(6L);
+    Float f2 = Float.valueOf(3.14f);
+    Double d2 = Double.valueOf(3.14159);
+    Boolean bool2 = Boolean.valueOf(true);
+    Character c2 = Character.valueOf((char)0x41);
+    
+    // 위보다는 아래 형식으로 사용하자.
   }
 }
-
-
-
-
-
-

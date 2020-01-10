@@ -4,7 +4,7 @@ package com.eomcs.corelib.ex01;
 public class Exam0110 {
   public static void main(String[] args) {
     // Heap 메모리 영역에 String 인스턴스를 생성하는 방법
-    String s1 = new String("Hello");
+    String s1 = new String("Hello"); // H, e, l, l, o가 저장되는 char[]을 생성
     String s2 = new String("Hello");
     // => 내용물의 동일 여부를 검사하지 않고 무조건 인스턴스를 생성한다.
     // => 가비지가 되면 가비지 컬렉터에 의해 제거된다.
