@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 // 7. 값을 삭제하는 remove(int) 메서드를 추가한다.
 public class LinkedList {
   Node first;
@@ -61,7 +61,7 @@ public class LinkedList {
     
     Node cursor = first;
     for (int i = 0; i < index - 1; i++) {
-      cursor = cursor.next;
+      cursor = cursor.next; // 커서를 현재 커서가 가리키는 다음으로 이동
     }
     
     Node deletedNode = null;
@@ -77,7 +77,7 @@ public class LinkedList {
     // =삭제할 노드의 주소를 갖고있던 노드가 삭제할 노드의 다음 주소를 갖게 된다.
     }
     
-    deletedNode.next = null; // garbage 제거
+    deletedNode.next = null; // garbage가 될 수 있도록 null로 설정
     // 삭제할 노드가 갖고 있는 다음 노드의 주소를 삭제
     
     size--;

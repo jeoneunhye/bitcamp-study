@@ -1,0 +1,11 @@
+package com.eomcs.algorithm.data_structure.queue;
+// 4) poll() 메서드를 추가한다.
+public class Queue extends LinkedList<Object> {
+  public void offer(Object value) {
+    this.add(value);
+  }
+  
+  public Object poll() {
+    return this.remove(0); // 값을 조회하는 것이 아닌 꺼내는 것(!=get)
+  }
+}

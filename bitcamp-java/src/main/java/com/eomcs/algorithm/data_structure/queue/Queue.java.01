@@ -1,0 +1,5 @@
+package com.eomcs.algorithm.data_structure.queue;
+// 1) 최소 클래스를 작성한다.
+public class Queue {
+  
+}

@@ -1,0 +1,40 @@
+package com.eomcs.algorithm.data_structure.stack;
+// 8) pop() 메서드를 추가한다.
+import java.util.Arrays;
+
+public class Stack {
+  private static final int DEFAULT_CAPACITY = 10;
+
+  Object[] elementData;
+  int size;
+
+  public Stack() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+    this.size = 0;
+  }
+
+  public void push(Object value) {
+    if (this.size == this.elementData.length) {
+      grow();
+    }
+
+    this.elementData[size++] = value;
+  }
+  
+  private void grow() {
+    this.elementData = Arrays.copyOf(this.elementData, newCapacity());
+  }
+  
+  private int newCapacity() {
+    int oldCapacity = this.elementData.length;
+    return oldCapacity + (oldCapacity >> 1);
+  }
+  
+  public Object pop() {
+    if (this.size == 0) 
+      return null;
+      
+    return elementData[--this.size];
+    // 사이즈가 가리킨 다음의 위치 말고 저장된 값으로 가기 위해 size를 먼저 줄임
+  }
+}

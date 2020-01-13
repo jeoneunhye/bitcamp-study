@@ -1,5 +1,5 @@
-package com.eomcs.util;
-// 12. size를 리턴하는 size() 메서드를 추가한다.
+package com.eomcs.algorithm.data_structure.linkedlist;
+
 import java.lang.reflect.Array;
 
 public class LinkedList<E> {
@@ -113,7 +113,6 @@ public class LinkedList<E> {
   
   @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
-    
     if (arr.length < size) {
       arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), size);
     }

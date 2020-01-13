@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 // 2. 값과 다음 값의 주소를 저장할 Node 클래스를 정의한다.
 public class LinkedList {
   static class Node {

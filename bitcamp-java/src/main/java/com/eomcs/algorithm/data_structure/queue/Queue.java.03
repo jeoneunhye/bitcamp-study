@@ -1,0 +1,7 @@
+package com.eomcs.algorithm.data_structure.queue;
+// 3) offer() 메서드를 추가한다.
+public class Queue extends LinkedList<Object> {
+  public void offer(Object value) {
+    this.add(value);
+  }
+}

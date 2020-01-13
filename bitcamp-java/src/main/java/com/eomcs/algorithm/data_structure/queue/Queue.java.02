@@ -1,0 +1,5 @@
+package com.eomcs.algorithm.data_structure.queue;
+// 2) LinkedList를 상속받는다.
+public class Queue extends LinkedList<Object> {
+  
+}

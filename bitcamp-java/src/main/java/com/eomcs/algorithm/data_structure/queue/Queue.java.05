@@ -1,0 +1,25 @@
+package com.eomcs.algorithm.data_structure.queue;
+// 5) Object의 clone() 메서드를 재정의 : shallow copy
+public class Queue extends LinkedList<Object> implements Cloneable{
+  public void offer(Object value) {
+    this.add(value);
+  }
+
+  public Object poll() {
+    return this.remove(0); // 값을 조회하는 것이 아닌 아예 꺼내는 것(!=get)
+  }
+
+  // ctrl+space, public으로 확장하고 리턴 타입 Queue로 변경
+  @Override
+  public Queue clone() {
+    // 단순히 객체의 인스턴스 변수를 복제하는 'shallow copy' 수행
+    // => Object의 clone()은 'shallow copy'를 수행한다.
+    try {
+      return (Queue) super.clone();
+      // LinkedList에 clone() 메서드가 없으므로 결국 Object의 clone()을 호출
+    } catch (CloneNotSupportedException ex) {
+      System.out.println(ex);
+      return null;
+    }
+  }
+}

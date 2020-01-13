@@ -1,11 +1,9 @@
 package com.eomcs.algorithm.data_structure.array;
 
-import com.eomcs.lms.domain.Member;
-
 public class ArrayListTest {
   public static void main(String[] args) {
     //ArrayList a1 = new ArrayList(); // ArrayList의 기본 생성자를 호출
-    ArrayList<String> a1 = new ArrayList();
+    ArrayList<String> a1 = new ArrayList<>();
     //ArrayList a2 = new ArrayList(100); // ArrayList의 초기 크기를 100으로 설정하여 호출
 
     // ArrayList 클래스의 메서드를 호출할 때 어떤 인스턴스를 사용할 건지(몇 번지로 갈 건지) 앞쪽에 알려준다.

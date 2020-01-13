@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 // 4. 값을 추가하는 add() 메서드를 추가한다.
 public class LinkedList {
   Node first;

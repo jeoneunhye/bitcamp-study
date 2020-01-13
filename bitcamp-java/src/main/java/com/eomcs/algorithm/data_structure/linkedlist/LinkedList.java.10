@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 // 10. 제네릭 문법을 적용한다.
 import java.lang.reflect.Array;
 

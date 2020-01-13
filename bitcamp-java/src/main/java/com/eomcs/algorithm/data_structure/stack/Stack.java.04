@@ -1,0 +1,18 @@
+package com.eomcs.algorithm.data_structure.stack;
+// 4) push() 메서드를 추가한다.
+public class Stack {
+  private static final int DEFAULT_CAPACITY = 10;
+  
+  Object[] elementData;
+  int size;
+  
+  public Stack() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+    this.size = 0;
+  }
+  
+  public void push(Object value) {
+    this.elementData[size++] = value;
+    // 사이즈가 가리키는 방에 밸류를 집어넣고 그 다음 사이즈를 증가시킨다.
+  }
+}

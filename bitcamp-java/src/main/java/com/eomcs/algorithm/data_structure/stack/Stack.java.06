@@ -1,0 +1,31 @@
+package com.eomcs.algorithm.data_structure.stack;
+// 6) push() 변경: 배열 크기를 늘리는 코드를 별도의 메서드 grow()로 분리한다.(리팩토링)
+import java.util.Arrays;
+
+public class Stack {
+  private static final int DEFAULT_CAPACITY = 10;
+
+  Object[] elementData;
+  int size;
+
+  public Stack() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+    this.size = 0;
+  }
+
+  public void push(Object value) {
+    if (this.size == this.elementData.length) {
+      // 배열 크기를 늘린다.
+      grow();
+    }
+
+    this.elementData[size++] = value;
+  }
+
+  private void grow() { // 내부에서만 쓰일 메서드 private 설정
+    int oldCapacity = this.elementData.length;
+    int newCapacity = oldCapacity + (oldCapacity >> 1);
+
+    this.elementData = Arrays.copyOf(this.elementData, newCapacity);
+  }
+}

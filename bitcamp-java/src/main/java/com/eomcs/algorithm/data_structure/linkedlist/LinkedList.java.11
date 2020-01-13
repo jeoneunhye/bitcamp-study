@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 // 11. 파라미터로 배열을 받는 toArray(E[])를 추가한다.
 import java.lang.reflect.Array;
 

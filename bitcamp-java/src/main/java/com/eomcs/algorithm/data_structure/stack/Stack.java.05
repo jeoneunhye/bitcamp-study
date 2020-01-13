@@ -1,0 +1,26 @@
+package com.eomcs.algorithm.data_structure.stack;
+// 5) push() 변경: 배열이 꽉 찼을 때 배열의 크기를 증가시키는 코드를 추가한다.
+import java.util.Arrays;
+
+public class Stack {
+  private static final int DEFAULT_CAPACITY = 10;
+  
+  Object[] elementData;
+  int size;
+  
+  public Stack() {
+    this.elementData = new Object[DEFAULT_CAPACITY];
+    this.size = 0;
+  }
+  
+  public void push(Object value) {
+    if (this.size == this.elementData.length) {
+      int oldCapacity = this.elementData.length;
+      int newCapacity = oldCapacity + (oldCapacity >> 1);
+      
+      this.elementData = Arrays.copyOf(this.elementData, newCapacity);
+    }
+    
+    this.elementData[size++] = value;
+  }
+}

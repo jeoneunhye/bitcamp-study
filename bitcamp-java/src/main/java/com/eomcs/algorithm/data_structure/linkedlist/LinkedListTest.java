@@ -1,4 +1,4 @@
-package com.eomcs.util;
+package com.eomcs.algorithm.data_structure.linkedlist;
 
 public class LinkedListTest {
   public static void main(String[] args) {
