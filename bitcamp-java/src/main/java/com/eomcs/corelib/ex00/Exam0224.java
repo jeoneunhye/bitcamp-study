@@ -1,5 +1,5 @@
 // Wrapper 클래스 - auto-boxing/auto-unboxing 응용
-package com.eomcs.corelib.ex01;
+package com.eomcs.corelib.ex00;
 
 public class Exam0224 {
   static class Member { // toString 메서드는 한 곳에서만 사용할 목적이므로 static 클래스로 만든다.

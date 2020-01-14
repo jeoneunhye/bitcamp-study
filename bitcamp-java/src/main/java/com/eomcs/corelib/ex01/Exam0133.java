@@ -1,7 +1,7 @@
-// Object 클래스의 메서드를 오버라이딩 하기 - equals()
-package com.eomcs.oop.ex06.d;
+// Object 클래스의 메서드를 오버라이딩하기 - equals()
+package com.eomcs.corelib.ex01;
 
-public class Exam0320 {
+public class Exam0133 {
   static class Member /*extends Object */{
     String name;
     int age;
@@ -18,7 +18,7 @@ public class Exam0320 {
       if (!(obj.getClass() == Member.class)) // obj와 Member의 클래스가 일치하지 않으면
         // 클래스명.class: 클래스 정보를 불러오는 built-in 스태틱 필드
         return false;
-      
+
       Member other = (Member) obj;
 
       if (!this.name.equals(other.name))
@@ -26,6 +26,7 @@ public class Exam0320 {
 
       if (this.age != other.age)
         return false;
+
       return true;
     }
   }
@@ -44,8 +45,10 @@ public class Exam0320 {
 
 // 결론!
 // => Object로부터 상속받은 기본 메서드인 equals()는 
-//    같은 인스턴스인지를 비교하는 메서드이다.
+//    같은 인스턴스인지를 비교하는 메서드다.
 // => 인스턴스의 데이터가 같은지를 비교하고 싶다면
 //    이 메서드를 재정의(오버라이딩)해야 한다.
 // => 오버라이딩의 예:
-//    String, wrapper 클래스(Byte,Short,Integer,Long,Float,Double,Boolean,Character)
+//    String, 
+//    wropper 클래스(Byte,Short,Integer,Long,
+//    Float,Double,Boolean,Character)

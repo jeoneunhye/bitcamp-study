@@ -8,6 +8,5 @@ public class Exam0410 {
     // 결과값
     // D2의 m()
     // D의 m()
-
   }
 }

@@ -1,8 +1,7 @@
-// Object 클래스의 메서드를 오버라이딩 하기 - toString()
-package com.eomcs.oop.ex06.d;
+// Object 클래스의 메서드를 오버라이딩하기 - toString()
+package com.eomcs.corelib.ex01;
 
-public class Exam0120 {
-
+public class Exam0123 {
   static class Score {
     String name;
     int kor;
@@ -20,11 +19,12 @@ public class Exam0120 {
       this.aver = this.sum / 3f;
     }
 
-    // Object로부터 상속 받은 toString()의 리턴값이 마음에 들지 않는다면
+    // Object로부터 상속받은 toString()의 리턴 값이 마음에 들지 않는다면
     // 재정의하라!
     // => 보통 인스턴스의 내부 데이터를 문자열로 리턴하도록 변경한다.
-    // => 프로그램을 실행하는 중에 인스턴스의 내부 값을 빠르게 확인하고 싶을 때 
+    // => 프로그램을 실행하는 중에 인스턴스의 내부 값을 빠르게 확인하고 싶을 때
     //    개발자들이 종종 이 메서드를 오버라이딩한다.
+
     @Override
     public String toString() {
       // 원래 '패키지 이름을 포함한 클래스명@인스턴스 식별자'를 리턴하는데
@@ -37,7 +37,6 @@ public class Exam0120 {
 
   public static void main(String[] args) {
     Score s1 = new Score("홍길동", 100, 100, 100);
-    String str = s1.toString();
     // 위의 Score 클래스에서 Object의 toString()을 오버라이딩했기 때문에
     // Score의 toString()을 호출한다.
 
@@ -53,7 +52,7 @@ public class Exam0120 {
     System.out.println(s1);
     // 홍길동,100,100,100,300,100.0
     
-    // 그러니 println()으로 객체의 값을 출력할 때
-    // 굳이 toString()을 번거롭게 호출하지 말라! 
+    // 그러니 println()으로 객체의 값을 출력할 때 
+    // 굳이 toString()을 번거롭게 호출하지 말라!
   }
 }

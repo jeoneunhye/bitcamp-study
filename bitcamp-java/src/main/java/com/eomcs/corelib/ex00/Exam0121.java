@@ -1,5 +1,5 @@
 // StringBuffer - 문자열 비교★면접
-package com.eomcs.corelib.ex01;
+package com.eomcs.corelib.ex00;
 
 public class Exam0121 {
   public static void main(String[] args) {

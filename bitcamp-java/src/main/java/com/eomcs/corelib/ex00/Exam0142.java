@@ -1,5 +1,5 @@
 // String - 다형적 변수와 형변환, toString()
-package com.eomcs.corelib.ex01;
+package com.eomcs.corelib.ex00;
 
 public class Exam0142 {
   public static void main(String[] args) {

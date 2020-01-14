@@ -1,5 +1,5 @@
 // String - 문자열 비교
-package com.eomcs.corelib.ex01;
+package com.eomcs.corelib.ex00;
 
 public class Exam0120 {
   public static void main(String[] args) {

@@ -1,5 +1,5 @@
 // Wrapper 클래스 - auto-boxing
-package com.eomcs.corelib.ex01;
+package com.eomcs.corelib.ex00;
 
 public class Exam0221 {
   public static void main(String[] args) {

@@ -1,6 +1,6 @@
-package com.eomcs.oop.ex06.d;
+package com.eomcs.corelib.ex01;
 
-public class Exam0400 {
+public class Exam0146 {
   static class Member {
     String name;
     int age;

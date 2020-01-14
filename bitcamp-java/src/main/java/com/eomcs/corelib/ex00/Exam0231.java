@@ -1,5 +1,5 @@
 // Wrapper 클래스 - wrapper 객체의 값 비교 
-package com.eomcs.corelib.ex01;
+package com.eomcs.corelib.ex00;
 
 public class Exam0231 {
   public static void main(String[] args) {
