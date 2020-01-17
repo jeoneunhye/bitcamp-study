@@ -1,5 +1,5 @@
 // 상수 변수를 활용하여 분류 코드를 다루기
-package com.eomcs.oop.ex11.b;
+package com.eomcs.oop.ex11.c;
 
 public class Exam0110 {
     public static void main(String[] args) {
