@@ -1,5 +1,5 @@
 // Wrapper 클래스 - 종류
-package com.eomcs.corelib.ex00;
+package com.eomcs.corelib.ex02;
 
 public class Exam0210 {
   public static void main(String[] args) {

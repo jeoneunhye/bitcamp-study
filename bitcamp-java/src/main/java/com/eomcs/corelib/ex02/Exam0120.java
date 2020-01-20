@@ -1,5 +1,5 @@
 // String - 문자열 비교
-package com.eomcs.corelib.ex00;
+package com.eomcs.corelib.ex02;
 
 public class Exam0120 {
   public static void main(String[] args) {
@@ -7,13 +7,17 @@ public class Exam0120 {
     String s2 = new String("Hello");
     String s3 = "Hello";
 
+    System.out.println(s1 == s2); // false
+    System.out.println(s1 == s3); // false
+    System.out.println(s2 == s3); // false
+
     // equals()?
     // Object에 정의되어있는 메서드다.
     // 인스턴스가 같은지 비교한다.
     System.out.println(s1.equals(s2)); // true
     System.out.println(s1.equals(s3)); // true
     // s1, s2, s3가 서로 다른 인스턴스를 가리키는데 왜 결과가 true인가?
-    // String 클래스에서 equals()를 오버라이딩했기 때문이다.
+    // ★String 클래스에서 equals()를 오버라이딩했기 때문이다.
     // => 인스턴스를 비교하는 것이 아니라 인스턴스의 내용물을 비교하도록 변경하였다.
     // => s1, s2, s3의 내용물이 같기 때문에 equals()의 리턴 값은 true다.
     // 결론!

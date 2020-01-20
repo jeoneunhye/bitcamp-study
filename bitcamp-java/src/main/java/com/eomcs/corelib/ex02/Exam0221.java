@@ -1,10 +1,10 @@
 // Wrapper 클래스 - auto-boxing
-package com.eomcs.corelib.ex00;
+package com.eomcs.corelib.ex02;
 
 public class Exam0221 {
   public static void main(String[] args) {
     // 자바는 primitive data 값을 Wrapper 클래스의 인스턴스에 바로 할당할 수 있다.
-    Integer obj = 100;
+    Integer obj = 100; // Integer.valueOf(100);
     // obj는 레퍼런스인데 어떻게 가능한가?
     // 내부적으로 Integer.valueOf(100)으로 바뀐다.
     // 즉 int 값이 obj에 바로 저장되는 것이 아니라
