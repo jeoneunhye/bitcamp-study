@@ -1,7 +1,7 @@
 // Stack : LIFO. push()/pop()
-package com.eomcs.corelib.ex04;
+package com.eomcs.corelib.ex05;
 
-import com.eomcs.corelib.ex03.LinkedList;
+import com.eomcs.corelib.ex04.LinkedList;
 
 // 스택 사용의 예: 
 // - 웹브라우저의 history 다룰 때
@@ -28,7 +28,3 @@ public class Stack extends LinkedList {
     return removedBucket.value;
   }
 }
-
-
-
-

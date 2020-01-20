@@ -1,10 +1,9 @@
 // Stack 구현과 사용
-package com.eomcs.corelib.ex04;
+package com.eomcs.corelib.ex05;
 
-import com.eomcs.corelib.ex03.LinkedList;
+import com.eomcs.corelib.ex04.LinkedList;
 
 public class Exam0110 {
-
   public static void main(String[] args) {
     String s1 = new String("aaa");
     String s2 = new String("bbb");
@@ -14,25 +13,25 @@ public class Exam0110 {
 
     Stack stack = new Stack();
     stack.push(s1);
-    print(stack);
+    print(stack); // aaa
     stack.push(s2);
-    print(stack);
+    print(stack); // aaa, bbb
     stack.push(s3);
-    print(stack);
+    print(stack); // aaa, bbb, ccc
 
-    System.out.println("==>" + stack.pop()); // ccc
-    print(stack);
-    System.out.println("==>" + stack.pop()); // bbb
-    print(stack);
+    System.out.println("==>" + stack.pop()); // ==>ccc
+    print(stack); // aaa, bbb
+    System.out.println("==>" + stack.pop()); // ==>bbb
+    print(stack); // aaa
 
     stack.push(s4);
-    print(stack);
+    print(stack); // aaa, ddd
     stack.push(s5);
-    print(stack);
+    print(stack); // aaa, ddd, eee
 
     String value;
     while ((value = (String) stack.pop()) != null) {
-      System.out.println(value);
+      System.out.println(value); // eee 줄바꿈 ddd 줄바꿈 aaa (LIFO)
     }
   }
 
@@ -41,26 +40,5 @@ public class Exam0110 {
       System.out.print(list.get(i) + ", ");
     }
     System.out.println();
-  }    
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
