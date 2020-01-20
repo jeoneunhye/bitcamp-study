@@ -1,10 +1,9 @@
 // java.util.concurrent.ArrayBlockingQueue 사용
-package com.eomcs.corelib.ex05;
-
+package com.eomcs.corelib.ex06;
+// Queue는 인터페이스라서 직접 사용할 수 없다.
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Exam0120 {
-
   public static void main(String[] args) {
     String s1 = new String("aaa");
     String s2 = new String("bbb");
@@ -14,16 +13,16 @@ public class Exam0120 {
 
     ArrayBlockingQueue queue = new ArrayBlockingQueue(100);
     queue.offer(s1); // aaa,
-    print(queue); 
+    print(queue);
     queue.offer(s2); // aaa, bbb,
     print(queue);
     queue.offer(s3); // aaa, bbb, ccc,
     print(queue);
 
-    System.out.println("==>" + queue.poll()); // bbb, ccc,
-    print(queue);
-    System.out.println("==>" + queue.poll()); // ccc,
-    print(queue);
+    System.out.println("==>" + queue.poll()); // ==>aaa
+    print(queue); // bbb, ccc,
+    System.out.println("==>" + queue.poll()); // ==>bbb
+    print(queue); // ccc,
 
     queue.offer(s4); // ccc, ddd,
     print(queue);
@@ -32,7 +31,7 @@ public class Exam0120 {
 
     String value;
     while ((value = (String) queue.poll()) != null) {
-      System.out.println(value);
+      System.out.println(value); // ccc 줄바꿈 ddd 줄바꿈 eee
     }
   }
 
@@ -42,26 +41,5 @@ public class Exam0120 {
       System.out.print(value + ", ");
     }
     System.out.println();
-  }    
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

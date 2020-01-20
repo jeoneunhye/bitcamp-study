@@ -1,12 +1,11 @@
-// Queue : FIFO.
-package com.eomcs.corelib.ex05;
+// Queue : FIFO. offer()/poll()
+package com.eomcs.corelib.ex06;
 
-import com.eomcs.corelib.ex03.LinkedList;
-
+import com.eomcs.corelib.ex04.LinkedList;
 // 큐 사용의 예:
 // => 인터넷 예약 처리할 때
-// => single-thread 기반 node 서버의 요청처리 
-// => 마우스 또는 키보드 이벤트 처리(이벤트가 발생된 순서대로 처리) 
+// => single-thread 기반 node 서버의 요청처리
+// => 마우스 또는 키보드 이벤트 처리(이벤트가 발생된 순서대로 처리)
 public class Queue extends LinkedList {
   // 맨 뒤에 값을 붙인다.
   public void offer(Object value) {
@@ -18,10 +17,3 @@ public class Queue extends LinkedList {
     return this.remove(0);
   }
 }
-
-
-
-
-
-
-

@@ -1,10 +1,9 @@
 // Queue 구현과 사용
-package com.eomcs.corelib.ex05;
+package com.eomcs.corelib.ex06;
 
-import com.eomcs.corelib.ex03.LinkedList;
+import com.eomcs.corelib.ex04.LinkedList;
 
 public class Exam0110 {
-
   public static void main(String[] args) {
     String s1 = new String("aaa");
     String s2 = new String("bbb");
@@ -14,16 +13,16 @@ public class Exam0110 {
 
     Queue queue = new Queue();
     queue.offer(s1); // aaa,
-    print(queue); 
+    print(queue);
     queue.offer(s2); // aaa, bbb,
     print(queue);
     queue.offer(s3); // aaa, bbb, ccc,
     print(queue);
 
-    System.out.println("==>" + queue.poll()); // bbb, ccc,
-    print(queue);
-    System.out.println("==>" + queue.poll()); // ccc,
-    print(queue);
+    System.out.println("==>" + queue.poll()); // ==>aaa
+    print(queue); // bbb, ccc,
+    System.out.println("==>" + queue.poll()); // ==>bbb
+    print(queue); // ccc,
 
     queue.offer(s4); // ccc, ddd,
     print(queue);
@@ -32,7 +31,7 @@ public class Exam0110 {
 
     String value;
     while ((value = (String) queue.poll()) != null) {
-      System.out.println(value);
+      System.out.println(value); // ccc 줄바꿈 ddd 줄바꿈 eee (FIFO)
     }
   }
 
@@ -41,26 +40,5 @@ public class Exam0110 {
       System.out.print(list.get(i) + ", ");
     }
     System.out.println();
-  }    
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
