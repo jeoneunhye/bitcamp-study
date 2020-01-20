@@ -1,9 +1,7 @@
-// java.util.ArrayList의 indexOf()의 사용
+// contains() 와 hashCode(), equals()의 관계
 package com.eomcs.corelib.ex02;
 
-import java.util.ArrayList;
-
-public class Exam0320 {
+public class Exam0210 {
   public static void main(String[] args) {
     String s1 = new String("aaa");
     String s2 = new String("bbb");
@@ -16,7 +14,7 @@ public class Exam0320 {
     list.add(s3);
     print(list);
 
-    System.out.println(list.indexOf(s4));
+    System.out.println(list.contains(s4));
   }
 
   static void print(ArrayList list) {
@@ -25,10 +23,4 @@ public class Exam0320 {
     }
     System.out.println();
   }
-}   
-
-
-
-
-
-
+}
