@@ -1,5 +1,5 @@
 // java.util.HashSet 클래스 사용 - 값을 꺼내는 방법
-package com.eomcs.corelib.ex06;
+package com.eomcs.corelib.ex07;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,13 +17,15 @@ public class Exam0210 {
     set.add(v2);
     set.add(v3);
     set.add(v4);
-    set.add(v5); 
+    set.add(v5);
 
+    // HashSet를 받아 어느 방에 넣을 지 결정하고 그 방의 맨 끝에 값을 집어넣는 방식으로 add한다.
     // 저장한 순서대로 꺼낼 수 없기 때문에 index를 이용하여 값을 꺼낼 수 없다.
     //set.get(0); <== 이런 메서드가 없다.
 
     // 값을 꺼내는 방법
-    // 1) HashSet에 들어있는 값을 배열로 받아 사용한다.
+    // 1) HashSet에 들어있는 값을 배열로 받아 사용한다. set.toArray();
+    // 입력된 순서와 상관없이 출력된다.
     Object[] values = set.toArray();
     for (Object value : values) {
       System.out.print(value + ", ");
@@ -40,10 +42,7 @@ public class Exam0210 {
       System.out.print(컬렉션에서값을꺼내주는객체.next() + ", ");
     }
     System.out.println();
-
-
   }
-
 }
 
 // Iterator 패턴
@@ -53,12 +52,3 @@ public class Exam0210 {
 //    컬렉션의 타입에 상관없이 일관된 방식으로 값을 꺼낼 수 있다.
 //    예) ArrayList => get(), Stack => pop(), Queue => poll()
 //    Iterator를 사용하면 hasNext(), next()만 사용하면 된다.
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,5 @@
-// Iterator 의 사용
-package com.eomcs.corelib.ex06;
+// Iterator의 사용 - LinkedList
+package com.eomcs.corelib.ex07;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -24,6 +24,5 @@ public class Exam0220 {
       System.out.print(컬렉션에서값을꺼내주는객체.next() + ", ");
     }
     System.out.println();
-
   }
 }

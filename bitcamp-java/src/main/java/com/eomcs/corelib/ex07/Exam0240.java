@@ -1,8 +1,7 @@
-// Iterator 의 사용
-package com.eomcs.corelib.ex06;
+// Iterator의 사용 - Queue
+package com.eomcs.corelib.ex07;
 
 import java.util.Iterator;
-import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Exam0240 {
@@ -25,6 +24,5 @@ public class Exam0240 {
       System.out.print(컬렉션에서값을꺼내주는객체.next() + ", ");
     }
     System.out.println();
-
   }
 }
