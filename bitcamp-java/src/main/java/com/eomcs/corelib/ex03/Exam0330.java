@@ -1,10 +1,10 @@
-// indexOf()에서 객체를 찾을 때 equals()로 비교하여 찾는다.
-package com.eomcs.corelib.ex02;
+// indexOf()에서 객체를 찾을 때 equals()로 비교한다.
+package com.eomcs.corelib.ex03;
 
 import java.util.ArrayList;
 
-public class Exam0340 {
-  // equals()를 오버라이딩 한다면?
+public class Exam0330 {
+  // equals()를 오버라이딩한다면?
   static class Member {
     String name;
     int age;
@@ -37,9 +37,8 @@ public class Exam0340 {
         return false;
       return true;
     }
-
-
   }
+
   public static void main(String[] args) {
     Member s1 = new Member("홍길동", 20);
     Member s2 = new Member("임꺽정", 30);
@@ -52,8 +51,8 @@ public class Exam0340 {
     list.add(s3);
     print(list);
 
-    // Member 클래스는 equals()를 오버라이딩 했다.
-    // 따라서 인스턴스가 다르더라도 Member의 name과 age 값이 같다면 
+    // Member 클래스는 equals()를 오버라이딩했다.
+    // 따라서 인스턴스가 다르더라도 Member의 name과 age 값이 같다면
     // equals()의 검사 결과가 true이기 때문에 indexOf()로 객체를 찾을 수 있다.
     System.out.println(list.indexOf(s4)); // 1
   }
@@ -64,10 +63,4 @@ public class Exam0340 {
     }
     System.out.println();
   }
-}   
-
-
-
-
-
-
+}

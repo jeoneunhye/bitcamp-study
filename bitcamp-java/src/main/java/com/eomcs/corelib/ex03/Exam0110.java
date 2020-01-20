@@ -1,5 +1,5 @@
 // 객체(의 주소) 목록을 다루는 클래스 - 컬렉션 클래스(collection class) 정의
-package com.eomcs.corelib.ex02;
+package com.eomcs.corelib.ex03;
 
 // 배열을 이용하여 컬렉션 클래스 만들기 : ArrayList
 // => 단점: 배열의 크기가 고정되기 때문에 배열을 초과하여 값을 넣으려면
@@ -13,25 +13,24 @@ public class Exam0110 {
     list.add("bbb"); // aaa, bbb,
     list.add("ccc"); // aaa, bbb, ccc,
     list.add("ddd"); // aaa, bbb, ccc, ddd,
-
-    print(list); 
+    print(list);
 
     list.remove(2); // aaa, bbb, ddd,
-
-    print(list); 
+    print(list);
 
     list.remove(0); // bbb, ddd,
-
     print(list);
 
     list.remove(4); // bbb, ddd,
-
+    // 우리가 작성한 ArrayList의 remove()는 유효한 index가 아닌 경우 무시한다.
     print(list);
 
     list.add(1, "xxx"); // bbb, xxx, ddd,
     list.add(1, "yyy"); // bbb, yyy, xxx, ddd
     list.add(0, "zzz"); // zzz, bbb, yyy, xxx, ddd
-    list.add(5, "ttt"); // zzz, bbb, yyy, xxx, ddd
+
+    list.add(6, "ttt"); // zzz, bbb, yyy, xxx, ddd
+    // 우리가 작성한 ArrayList의 add()는 유효한 index가 아닌 경우 무시한다.
 
     print(list);
 
@@ -51,10 +50,4 @@ public class Exam0110 {
     }
     System.out.println();
   }
-}   
-
-
-
-
-
-
+}

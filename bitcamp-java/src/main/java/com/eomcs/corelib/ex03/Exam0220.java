@@ -1,10 +1,10 @@
 // java.util.ArrayList의 contains()의 동작 원리 확인
-package com.eomcs.corelib.ex02;
+package com.eomcs.corelib.ex03;
 
 import java.util.ArrayList;
 
-public class Exam0230 {
-  // equals()를 오버라이딩 하지 않았다.
+public class Exam0220 {
+  // Member 클래스는 equals()를 오버라이딩하지 않았다.
   static class Member {
     String name;
     int age;
@@ -19,6 +19,7 @@ public class Exam0230 {
       return String.format("[%s,%d]", this.name, this.age);
     }
   }
+
   public static void main(String[] args) {
     Member s1 = new Member("홍길동", 20);
     Member s2 = new Member("임꺽정", 30);
@@ -31,9 +32,9 @@ public class Exam0230 {
     list.add(s3);
     print(list);
 
-    // Member 클래스는 equals()를 오버라이딩 하지 않았다.
+    // Member 클래스는 equals()를 오버라이딩하지 않았다.
     // 따라서 같은 값을 갖더라도 인스턴스가 다르면 equals()의 검사 결과도 false가 될 것이다.
-    // 그래서 contains()로 s4 객체와 같은 객체가 있는지 검사해보면,
+    // 그래서 contains()로 s4 객체와 같은 객체가 있는지 검사해보면
     // 같은 객체가 없다고 나온다.
     System.out.println(list.contains(s4)); // false
   }
@@ -44,10 +45,4 @@ public class Exam0230 {
     }
     System.out.println();
   }
-}   
-
-
-
-
-
-
+}

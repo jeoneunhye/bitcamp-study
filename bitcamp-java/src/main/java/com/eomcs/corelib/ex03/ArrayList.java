@@ -1,4 +1,4 @@
-package com.eomcs.corelib.ex02;
+package com.eomcs.corelib.ex03;
 
 public class ArrayList {
   protected static final int DEFAULT_CAPACITY = 5;
@@ -98,11 +98,3 @@ public class ArrayList {
     return -1;
   }
 }
-
-
-
-
-
-
-
-
