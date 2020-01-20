@@ -1,18 +1,17 @@
-package com.eomcs.corelib.ex03;
+package com.eomcs.corelib.ex04;
 
 public class LinkedList {
-
   // 값을 저장할 바구니 클래스를 만든다.
   // 그 클래스는 LinkedList에서만 사용할 것이기 때문에
-  // 일반적인 클래스인 패키지 멤버 클래스로 정의하지 않고 
-  // LinkedList 안에 정의한다. 
+  // 일반적인 클래스인 패키지 멤버 클래스로 정의하지 않고
+  // LinkedList 안에 정의한다.
   // 이렇게 클래스 안에 정의된 클래스를 "중첩 클래스(nested class)" 또는
   // "내부 클래스(inner class)"라고 부른다.
-  protected class Bucket { 
+  protected class Bucket {
     // 이 클래스의 역할은 기차에서 사람이나 물건을 싣는 객차의 역할을 수행한다.
     public Object value; // 이 변수에 값을 저장한다.
     public Bucket next; // 이 변수에는 다음 객차 주소를 저장한다.
-    public Bucket prev; // 이 변수에는 이전 객체 주소를 저장한다.
+    public Bucket prev; // 이 변수에는 이전 객차 주소를 저장한다.
   }
 
   protected Bucket head; // 리스트에서 맨 앞 객차의 주소를 저장하는 인스턴스 변수
@@ -37,7 +36,6 @@ public class LinkedList {
 
     // 새로 붙인 객체를 맨 끝 객체로 처리한다.
     tail = bucket;
-
   }
 
   public Object get(int i) {
@@ -45,11 +43,12 @@ public class LinkedList {
     int count = 0;
 
     while (cursor != tail) {
-      if (count == i) 
+      if (count == i)
         return cursor.value;
       count++;
       cursor = cursor.next;
     }
+
     return null;
   }
 
@@ -61,6 +60,7 @@ public class LinkedList {
       count++;
       cursor = cursor.next;
     }
+
     return count;
   }
 
@@ -73,6 +73,7 @@ public class LinkedList {
       else {
         head = head.next;
         head.prev = null;
+
         return cursor.value;
       }
     }
@@ -88,8 +89,8 @@ public class LinkedList {
       count++;
       cursor = cursor.next;
     }
-    return null;
 
+    return null;
   }
 
   public void add(int i, Object value) {
@@ -118,13 +119,4 @@ public class LinkedList {
       add(value);
     }
   }
-
 }
-
-
-
-
-
-
-
-
