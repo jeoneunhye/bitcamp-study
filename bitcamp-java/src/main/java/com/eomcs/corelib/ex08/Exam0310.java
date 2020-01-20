@@ -1,5 +1,5 @@
-// HashMap vs Hashtable
-package com.eomcs.corelib.ex07;
+// HashMap vs HashTable
+package com.eomcs.corelib.ex08;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -11,21 +11,19 @@ public class Exam0310 {
     map.put("s01", null);  // 2) value가 null이 될 수 있다.
     // 3) 동기화를 지원하지 않는다.
     //    멀티스레드가 동시에 사용할 때 문제가 발생할 수 있다.
-    //    => 속도가 빠르다.
+    // => 대신 실행 속도가 빠르다.
+
+    System.out.println(map.get(null)); // 홍길동
+    System.out.println(map.get("s01")); // null
+    System.out.println("---------------------");
 
     Hashtable table = new Hashtable();
-    //table.put(null, "홍길동"); // 실행 오류! key가 null이 될 수 없다.
-    table.put("s02", null);    // 실행 오류! value가 null이 될 수 없다.
-    // 동기화 지원
+    // table.put(null, "홍길동"); // 실행 오류! 1) key가 null이 될 수 없다.
+    // table.put("s02", null); // 실행 오류! 2) value가 null이 될 수 없다.
+    // 3) 동기화 지원
 
-
+    // 결론!
+    // key나 value에 null을 사용하고 싶다면 HashMap을 사용하라.
+    // key나 value에 null이 되어서는 안 된다면 HashTable을 사용하라.
   }
-
 }
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-package com.eomcs.corelib.ex07;
+package com.eomcs.corelib.ex08;
 
 public class Member {
   String name;

@@ -1,5 +1,5 @@
-// java.util.HashMap - value 목록만 꺼내기  
-package com.eomcs.corelib.ex07;
+// java.util.HashMap - value 목록만 꺼내기
+package com.eomcs.corelib.ex08;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,18 +19,13 @@ public class Exam0230 {
     map.put("s04", v4);
     map.put("s05", v5);
 
+    // key 객체는 중복되어선 안 되기 때문에
+    // key 객체 목록은 Set에 담아서 리턴한다.
+    // value 객체는 중복 저장될 수 있기 때문에(같은 객체를 다른 키로 저장할 수 있다.)
+    // value 객체 목록은 Collection에 담아서 리턴한다.
     Collection values = map.values();
     for (Object value : values) {
       System.out.println(value);
     }
-
   }
-
 }
-
-
-
-
-
-
-

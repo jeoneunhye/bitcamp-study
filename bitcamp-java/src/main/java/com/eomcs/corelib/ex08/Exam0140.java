@@ -3,7 +3,7 @@ package com.eomcs.corelib.ex08;
 
 import java.util.HashMap;
 
-public class Exam0120 {
+public class Exam0140 {
   static class MyKey {
     String major;
     int no;
@@ -16,6 +16,15 @@ public class Exam0120 {
     @Override
     public String toString() {
       return "MyKey [major=" + major + ", no=" + no + "]";
+    }
+
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((major == null) ? 0 : major.hashCode());
+      result = prime * result + no;
+      return result;
     }
   }
 
@@ -46,27 +55,16 @@ public class Exam0120 {
     System.out.println(map.get(k4));
     System.out.println(map.get(k5));
 
-    // 같은 값을 갖지만 인스턴스가 다른 key
-    MyKey k6 = new MyKey("컴공", 3); // k3와 같은 값을 갖는다.
+    MyKey k6 = new MyKey("컴공", 3);
+    // k3와 같은 값을 갖는다.
     // 하지만 인스턴스는 다르다!
 
     System.out.println(k3 == k6); // false
     System.out.printf("equals(): %b\n", k3.equals(k6)); // false
-    System.out.printf("hashCode(): %d, %d\n", k3.hashCode(), k5.hashCode()); // 서로 다른 해시코드
+    System.out.printf("hashCode(): %d, %d\n", k3.hashCode(), k5.hashCode()); // 같은 해시코드
     System.out.println("--------------------");
+    // hashCode()의 리턴 값이 같다고 해서 같은 key로 간주하지 않는다.
 
     System.out.println(map.get(k6)); // null
-    // k6로 값을 찾으면 없다고 나온다.
-    // 이유?
-    // => HashMap에서 값을 찾을 때 key가 같아야 한다.
-    //    key 객체가 다르더라도 hashCode()의 리턴 값이 같고,
-    //    equals()의 리턴 값이 true면 두 개의 key는 같다고 간주한다.
-    // => 그러나 우리가 사용한 MyKey 클래스는 hashCode()와 equals()를
-    //    오버라이딩하지 않았기 때문에
-    //    값이 같더라도 인스턴스가 다르면 hashCode()의 리턴 값이 다르게 나온다.
-    //    equals() 또한 false를 리턴한다.
-    // 해결책?
-    // => key로 사용할 클래스는 항상 hashCode()와 equals()를 오버라이딩하여
-    //    같은 값을 갖는 객체에 대해 같은 해시값을 리턴하게 해야 한다.
   }
 }
