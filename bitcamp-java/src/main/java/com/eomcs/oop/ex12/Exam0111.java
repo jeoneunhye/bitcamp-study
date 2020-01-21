@@ -1,22 +1,19 @@
-// 람다(lambda) 문법 - 로컬 클래스
+// 람다(lambda) 문법 - 익명 클래스
 package com.eomcs.oop.ex12;
 
-public class Exam0110 {
+public class Exam0111 {
   static interface Player {
     void play();
   }
 
   public static void main(String[] args) {
-    Player p1; // 인터페이스 레퍼런스는 인터페이스를 구현한 클래스의 객체를 담아야 한다.
-
-    class MyPlayer implements Player {
+    Player p1 = new Player() { // p1 변수에 바로 담아야 한다.
       @Override
       public void play() {
         System.out.println("실행!");
       }
-    }
+    };
 
-    p1 = new MyPlayer();
     p1.play(); // 메서드 실행이 가능해진다.
   }
 }

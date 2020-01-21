@@ -1,9 +1,9 @@
-// 람다(lambda) 문법 - 로컬 클래스
+// 람다(lambda) 문법 - functional interface의 자격
 package com.eomcs.oop.ex12;
 
-public class Exam0110 {
+public class Exam0210 {
   static interface Player {
-    void play();
+    void play(); // 추상 메서드가 한 개
   }
 
   public static void main(String[] args) {
