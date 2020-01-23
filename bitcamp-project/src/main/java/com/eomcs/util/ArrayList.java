@@ -2,7 +2,7 @@ package com.eomcs.util;
 
 import java.util.Arrays;
 
-public class ArrayList<E> extends AbstractList<E> { // List 상속받음
+public class ArrayList<E> extends AbstractList<E> {
   private static final int DEFAULT_CAPACITY = 15;
   Object[] elementData;
 
@@ -18,11 +18,7 @@ public class ArrayList<E> extends AbstractList<E> { // List 상속받음
     }
   }
   
-  //@Override // 수퍼 클래스의 메서드 재정의
-  public void add(E e) { // Override하지 않았을 때 add의 이름을 잘못 설정
-    // => 추상 클래스에서 추상 메서드로 설정하면
-    // 다음과 같이 @Override 애노테이션을 붙이지 않아도
-    // 문법 검사가 이루어지기 때문에 편하다.
+  public void add(E e) {
     if (this.size == this.elementData.length) {
       grow();
     }
@@ -73,15 +69,12 @@ public class ArrayList<E> extends AbstractList<E> { // List 상속받음
   
   @Override
   @SuppressWarnings("unchecked")
-  public E[] toArray(E[] arr) { // E타입 배열을 파라미터로 받고, E타입 배열을 리턴
+  public E[] toArray(E[] arr) {
     if (arr.length < this.size) {
-      // 파라미터로 받은 배열이 작을 때는 새 배열을 만들어 리턴
       return (E[]) Arrays.copyOf(this.elementData, this.size, arr.getClass());
-      // arr.getClass() 생성할 배열의 타입을 지정하는 것
     }
     System.arraycopy(this.elementData,  0,  arr,  0, this.size);
-    // 원본 배열을, 원본 배열의 0번부터 가져와서, arr 배열에 복사한다, arr 배열의 0번부터 입력, 원본 배열의 this.size개 만큼
-    return arr; // 넉넉할 때는 파라미터로 받은 배열을 그대로 리턴
+    return arr;
   }
   
   @Override
@@ -109,4 +102,35 @@ public class ArrayList<E> extends AbstractList<E> { // List 상속받음
     int oldSize = this.elementData.length;
     return oldSize + (oldSize >> 1);
   }
+  
+  /* ----> AbstractList 클래스로 이동! (LinkedList와 함께 사용할 메서드이므로)
+  // ctrl+space
+  @Override
+  public Iterator<E> iterator() { // Iterator를 리턴하는 iterator 메서드
+    /* ----> ArrayListIterator 클래스로 이동!
+    // ArrayList 객체에서 Iterator 규칙에 따라 값을 꺼내주는 클래스를 정의
+    class IteratorImpl<T> implements Iterator<T> {
+      ArrayList<T> list;
+      int cursor;
+      
+      public IteratorImpl(ArrayList<T> list) {
+        this.list = list;   // 생성자로 ArrayList를 파라미터로 받아 놓음
+      }
+      
+      @Override
+      public boolean hasNext() {
+        return cursor < this.list.size(); // 꺼낼 게 있다면 true!
+      }
+      
+      @Override
+      public T next() {
+        return list.get(cursor++); // 커서가 가리키는 값을 꺼내고 그 다음, 커서를 증가시키자
+      }
+    }
+    // <---여기까지
+    
+    // ArrayList에서 값을 꺼내주는 Iterator 구현체를 준비하여 리턴한다.
+    return new ListIterator<E>(this);
+  }
+  */
 }

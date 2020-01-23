@@ -8,7 +8,7 @@ public class LinkedList<E> extends AbstractList<E> {
 
   @Override // 수퍼 클래스의 메서드 재정의
   public void add(E value) {
-    Node<E> newNode = new Node();
+    Node<E> newNode = new Node<>();
     newNode.value = value;
 
     if (first == null) {
@@ -39,7 +39,7 @@ public class LinkedList<E> extends AbstractList<E> {
     if (index < 0 || index >= size)
       return;
     
-    Node<E> newNode = new Node();
+    Node<E> newNode = new Node<>();
     newNode.value = value;
 
     Node<E> cursor = first;
@@ -119,7 +119,6 @@ public class LinkedList<E> extends AbstractList<E> {
   @Override
   @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
-    
     if (arr.length < size) {
       arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), size);
     }

@@ -1,6 +1,6 @@
 package com.eomcs.util;
-// 7) 제네릭 설정
-public class Queue<E> extends LinkedList<E> implements Cloneable{
+
+public class Queue<E> extends LinkedList<E> implements Cloneable {
   public void offer(E value) {
     this.add(value);
   }
@@ -48,5 +48,29 @@ public class Queue<E> extends LinkedList<E> implements Cloneable{
     }
 
     return temp;
+  }
+  
+  @Override
+  public Iterator<E> iterator() {
+    return new QueueIterator<>(this);
+  }
+  
+  public class QueueIterator<E> implements Iterator<E> {
+    Queue<E> queue;
+
+    public QueueIterator(Queue<E> queue) {
+      this.queue = queue.clone();
+      // queue를 복제해서 저장! 꺼내는 순간(poll) 제거되기 때문에
+    }
+
+    @Override
+    public boolean hasNext() {
+      return queue.size() > 0; // 한 개라도 있다면 true!
+    }
+
+    @Override
+    public E next() {
+      return queue.poll();
+    }
   }
 }

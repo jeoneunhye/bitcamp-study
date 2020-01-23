@@ -1,36 +1,21 @@
 package com.eomcs.lms.handler;
-
+// listBoard() 메서드 변경
+// => toArray()의 리턴 값을 사용하는 대신 iterator()의 리턴 값을 사용하여 목록 출력
 import java.sql.Date;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
-  // ArrayList나 LinkedList를 마음대로 사용할 수 있도록
-  // 게시글 목록을 관리하는 필드를 선언할 때
-  // 이들 클래스의 수퍼 클래스로 선언한다.
-  // 대신 이 필드에 들어갈 객체는 생성자에서 파라미터로 받는다.
-  // 이렇게 하면 ArrayList도 사용할 수 있고, LinkedList도 사용할 수 있어
-  // 유지보수에 좋다. 즉 선택의 폭이 넓어진다.
-  /*Linked*/AbstractList<Board> boardList;
+  List<Board> boardList;
   
   Prompt prompt;
   
-  public BoardHandler(Prompt prompt, AbstractList<Board> list) {
+  public BoardHandler(Prompt prompt, List<Board> list) {
+    // List 파라미터는 List 인터페이스를 구현한 객체를 받는다.
     this.prompt = prompt;
-    //this.boardList = new LinkedList<>();
-    this.boardList = list; // 파라미터로 두 리스트 다 받을 수 있다.
-    
-    // Handler가 사용할 List 객체(의존 객체; dependency)를 생성자에서 직접 만들지 않고
-    // 이렇게 생성자가 호출될 때 파라미터로 받으면
-    // 필요에 따라 List 객체를 다른 객체로 대체하기가 쉽다.
-    // 예를 들어 ArrayList를 사용하다가 LinkedList로 바꾸기 쉽다.
-    // LinkedList를 사용하다가 다른 객체로 바꾸기 쉽다.
-    // 즉 다형적 변수의 법칙에 따라
-    // List의 하위 객체(List를 상속받아 만든 객체)라면 어떤 객체든지 가능하다.
-    // 이런 식으로 의존 객체를 외부에서 주입받는 것을
-    // "Dependency Injection(DI; 의존성 주입)"이라 부른다.
-    // 즉 의존 객체를 부품화하여 교체하기 쉽도록 만드는 방식이다.
+    this.boardList = list;
   }
 
   public void addBoard() {
@@ -47,14 +32,26 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board[] arr = new Board[this.boardList.size()];
+    // <1>
+    // for (int i = 0; i < boardList.size(); i++)
+    // Board b = boardList.get(i);
     
-    for (Board b : arr) {
+    // <2>
+    // Board[] arr = new Board[this.boardList.size()];
+    // for (Board b : arr) {
+
+    // BoardList에게 값을 꺼내는 일을 해줄 Iterator 객체를 달라고 한다.
+    Iterator<Board> iterator = boardList.iterator();
+    // Iterator 객체에게 목록에서 꺼낼 값이 있는지 물어본다.
+    while (iterator.hasNext()) {
+      // 값이 있다고 한다면 그 값을 꺼내 달라고 요청한다.
+      Board b = iterator.next();
+      
       if (b == null)
         break;
       System.out.printf("%d, %s, %s, %d\n",
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
-    }
+    } // 값이 없어질 때까지 반복!
   }
 
   public void detailBoard() {
@@ -65,7 +62,7 @@ public class BoardHandler {
       return;
     }
     
-    Board board = this.boardList.get(index); // 추가
+    Board board = this.boardList.get(index);
     System.out.printf("번호: %d\n", board.getNo());
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("등록일: %s\n", board.getDate());
@@ -113,7 +110,6 @@ public class BoardHandler {
     }
     
     this.boardList.remove(index);
-    
     System.out.println("게시글을 삭제했습니다.");
   }
   

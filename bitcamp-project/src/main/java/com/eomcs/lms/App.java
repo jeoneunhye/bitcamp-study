@@ -8,8 +8,8 @@ import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
 import com.eomcs.util.ArrayList;
+import com.eomcs.util.Iterator;
 import com.eomcs.util.LinkedList;
-import com.eomcs.util.AbstractList;
 import com.eomcs.util.Prompt;
 import com.eomcs.util.Queue;
 import com.eomcs.util.Stack;
@@ -20,27 +20,7 @@ public class App {
 
   public static void main(String[] args) {
     Prompt prompt = new Prompt(keyboard);
-
-    // 단지 유지보수를 좋게 하기 위해 ArrayList와 LinkedList의 공통 분모를 뽑아서
-    // 만든 클래스가 List다.
-    // List 크래스는 실제 작업을 하는 클래스가 아니다.
-    // 그럼에도 불구하고 개발자가 다음과 같이 list 객체를 사용하려 한다면 막을 수 없다.
-    // => 실행해도 메서드가 아무런 작업을 수행하지 않을 것이다.
-    // => 왜? List 클래스에 정의된 메서드는 아무런 기능이 없다.
-
-    // 해결책
-    // 이렇게 Generalization을 통해 만든 클래스의 경우
-    // 서브 클래스에게 공통 분모를 물려주기 위한 용도로 사용된다.
-    // 이런 류의 클래스는 직접 인스턴스를 생성하지 못하도록 해서
-    // 직접 사용하는 것을 막아야 한다.
-    // 이런 용도로 사용하는 문법이 "추상 클래스(abstract class)"다.
     
-    // List 클래스(AbstractList로 이름 변경함)를 추상 클래스로 만들면
-    // 다음과 같이 인스턴스를 생성할 수 없다.
-    // 아예 인스턴스 생성을 원천적으로 차단하는 효과가 있다.
-    // AbstractList<Board> boardList = new AbstractList<>(); // 컴파일 오류
-    
-    // 반드시 AbstractList의 일반 하위 객체를 정의해야 한다.
     LinkedList<Board> boardList = new LinkedList<>();
     BoardHandler boardHandler = new BoardHandler(prompt, boardList);
     
@@ -58,7 +38,7 @@ public class App {
       if (command.length() == 0)
         continue;
 
-      commandStack.push(command); // 사용자가 입력할 때마다 쌓임
+      commandStack.push(command);
       commandQueue.offer(command);
 
       switch (command) {
@@ -108,10 +88,10 @@ public class App {
           boardHandler.deleteBoard();
           break;
         case "history":
-          printCommandHistory();
+          printCommandHistory(commandStack.iterator());
           break;
         case "history2":
-          printCommandHistory2();
+          printCommandHistory(commandQueue.iterator());
           break;
         default:
           if (!command.equalsIgnoreCase("quit")) {
@@ -123,48 +103,45 @@ public class App {
     System.out.println("안녕!");
     keyboard.close();
   }
-
-  private static void printCommandHistory() {
-    Stack<String> historyStack = commandStack.clone();
+  
+  // 이전에는 Stack에서 값을 꺼내는 방법과 Queue에서 값을 꺼내는 방법이 다르기 때문에
+  // printCommandHistory()와 printCommandHistory2() 메서드를 따로 정의했다.
+  // 이제 Stack과 Queue는 일관된 방식으로 값을 꺼내주는 Iterator가 있기 때문에
+  // 두 메서드를 하나로 합칠 수 있다.
+  // 파라미터로 Iterator를 받아서 처리하기만 하면 된다.
+  private static void printCommandHistory(Iterator<String> iterator) {
+    // 파라미터로 받았으므로 삭제
+    //Iterator<String> iterator = commandStack.iterator();
 
     int count = 0;
-
-    while (!historyStack.empty()) {
-      System.out.println(historyStack.pop());
+    
+    while (iterator.hasNext()) {
+      System.out.println(iterator.next());
+    //Stack<String> historyStack = commandStack.clone();
+    //  while (!historyStack.empty()) {
+    //    System.out.println(historyStack.pop());
       count++;
 
-      if (count % 5 == 0) { // 5번 출력할 때마다 계속할 지 묻기
+      if (count % 5 == 0) {
         System.out.print(":");
         String str = keyboard.nextLine();
-        if (str.equalsIgnoreCase("q")) // q를 입력받으면 종료, 아니면 계속
+        if (str.equalsIgnoreCase("q"))
           break;
       }
     }
   }
-
+  
+  /* 메서드 하나로 통합: 파라미터로 각각의 iterator를 넘겨줌
   private static void printCommandHistory2() {
+    Iterator<String> iterator = commandQueue.iterator();
+    
     int count = 0;
 
-    /*
-    // clone() 재정의 전
-    while (commandQueue.size() > 0) {
-      System.out.println(commandQueue.poll());
-
-      //count++; 아래와 같음
-      // count값을 조사하기 전 미리 증가시키자
-      if (++count % 5 == 0) { // 5번 출력할 때마다 계속할 지 묻기
-        System.out.print(":");
-        String str = keyboard.nextLine();
-        if (str.equalsIgnoreCase("q")) // q를 입력받으면 종료, 아니면 계속
-          break;
-      }
-    }
-     */
-
-    Queue<String> historyQueue = commandQueue.clone();
-
-    while (historyQueue.size() > 0) {
-      System.out.println(historyQueue.poll());
+    while (iterator.hasNext()) {
+      System.out.println(iterator.next());
+    //Queue<String> historyQueue = commandQueue.clone();
+    //  while (historyQueue.size() > 0) {
+    //    System.out.println(historyQueue.poll());
 
       if (++count % 5 == 0) {
         System.out.print(":");
@@ -173,8 +150,6 @@ public class App {
           break;
       }
     }
-    // history2를 두 번 하면 원본 배열을 이미 꺼냈으므로 nullPointerException 실행 오류 발생
-    // deletedNode.next = null; remove 후 first는 다음꺼로 바꼈지만 next(주소)값이 null이 되어
-    // 찾아갈 수 없다. -> clone() 메서드의 deep copy 오버라이딩 필요
   }
+  */
 }

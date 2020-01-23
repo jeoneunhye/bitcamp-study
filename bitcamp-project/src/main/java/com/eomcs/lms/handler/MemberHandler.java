@@ -1,24 +1,19 @@
 package com.eomcs.lms.handler;
 
 import com.eomcs.lms.domain.Member;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class MemberHandler {
-  // ArrayList나 LinkedList를 마음대로 사용할 수 있도록
-  // 수업 목록을 관리하는 필드를 선언할 때
-  // 이들 클래스의 수퍼 클래스로 선언한다.
-  // 대신 이 필드에 들어갈 객체는 생성자에서 파라미터로 받는다.
-  // 이렇게 하면 ArrayList도 사용할 수 있고, LinkedList도 사용할 수 있어
-  // 유지보수에 좋다. 즉 선택의 폭이 넓어진다.
-  /*Linked*/AbstractList<Member> memberList;
+  List<Member> memberList;
   
   Prompt prompt;
 
-  public MemberHandler(Prompt prompt, AbstractList<Member> list) {
+  public MemberHandler(Prompt prompt, List<Member> list) {
+    // List 파라미터는 List 인터페이스를 구현한 객체를 받는다.
     this.prompt = prompt;
     
-    //memberList = new LinkedList<>();
     memberList = list;
   }
 
@@ -38,9 +33,19 @@ public class MemberHandler {
   }
 
   public void listMember() {
-    Member[] arr = this.memberList.toArray(new Member[] {});
+    // <1>
+    //for (int i = 0; i < memberList.size(); i++) {
+    //  Member m = memberList.get(i);
+      
+    // <2>
+    //Member[] arr = this.memberList.toArray(new Member[] {});
+    //  for (Member m : arr) {
     
-    for (Member m : arr) {
+    // <3>
+    Iterator<Member> iterator = memberList.iterator();
+    while (iterator.hasNext()) {
+      Member m = iterator.next();
+      
       System.out.printf("%d, %s, %s, %s, %s\n",
           m.getNo(), m.getName(), m.getEmail(), m.getTel(), m.getRegisteredDate());
     }
@@ -54,7 +59,7 @@ public class MemberHandler {
       return;
     }
     
-    Member member = this.memberList.get(index); // 추가
+    Member member = this.memberList.get(index);
     
     System.out.printf("번호: %d\n", member.getNo());
     System.out.printf("이름: %s\n", member.getName());
@@ -76,20 +81,8 @@ public class MemberHandler {
     Member oldMember = this.memberList.get(index);
     Member newMember = new Member();
     
-//    String inputStr;
-   // boolean changed = false;
-    
     newMember.setName(prompt.inputString(String.format("이름(%s)? ", oldMember.getName()),
         oldMember.getName()));
-    
-//    System.out.printf("이름(%s)? ", oldMember.getName());
-//    inputStr = input.nextLine();
-//    if (inputStr.equals("")) {
-//      newMember.setName(oldMember.getName());
-//    } else {
-//      newMember.setName(inputStr);
-//      changed = true;
-//    }
     
     newMember.setEmail(prompt.inputString(String.format("이메일(%s)? ", oldMember.getEmail()),
         oldMember.getEmail()));
@@ -110,12 +103,6 @@ public class MemberHandler {
     
     this.memberList.set(index, newMember);
     System.out.println("회원을 변경했습니다.");
-    
-//    if (changed) {
-//    this.memberList.set(index, newMember);
-//    System.out.println("회원을 변경했습니다.");
-//    } else
-//      System.out.println("회원 변경을 취소했습니다.");
   }
   
   public void deleteMember() {
@@ -127,7 +114,6 @@ public class MemberHandler {
     }
     
     this.memberList.remove(index);
-    
     System.out.println("회원을 삭제했습니다.");
   }
   

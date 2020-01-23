@@ -1,29 +1,40 @@
 package com.eomcs.util;
-// 목록 객체의 사용 규칙을 따로 정의: interface
-// => 문법
-//    interface 규칙명 {...}
-public interface List<E> {
-  // 사용 규칙(호출할 메서드 시그니처 형식)이기 때문에 모든 메서드는 추상 메서드다.
-  // 또한 규칙은 공개되어야 하기 때문에 모든 메서드는 public이다.
-  // => 문법
-  //      public abstract 리턴타입 메서드명(파라미터, ...);
-  // => public을 생략할 수 있다.
-  //      abstract 리턴타입 메서드명(파라미터, ...);
-  // => abstract를 생략할 수 있다.
-  //      리턴타입 메서드명(파라미터, ...);
-  public abstract void add(E e);
+
+public abstract class AbstractList<E> implements List<E> {
+  // List 규칙에 따라 동작하는 데 필요한 필드가 있다면
+  // 다음과 같이 그 규칙을 따르는 클래스 쪽에 필드를 선언하면 된다.
+  protected int size;
+
+  // AbstractList는 List 규칙을 포함한다.
+  // List 규칙에 정의된 메서드 중에서 다음과 같이 size()를 구현한다.
+  // => 여기서 구현해도 되기 때문에 서브 클래스에게 구현을 맡기지 않고 여기서 처리하는 것이다.
+  public int size() {
+    return size;
+  }
   
-  /*public*/ abstract void add(int index, E value);
+  //ctrl+space 리턴값 new ListIterator<E>(this) 입력 후 create Class
+  @Override
+  public Iterator<E> iterator() {
+    // LinkedList에서 값을 꺼내줄 Iterator 객체를 준비하여 리턴한다.
+    return new ListIterator<E>(this);
+  }
   
-  public /*abstract*/ E get(int index);
-  
-  /*public abstract*/ E set(int index, E e);
-  
-  E remove(int index);
-  
-  Object[] toArray();
-  
-  E[] toArray(E[] arr);
-  
-  int size(); // 모든 리스트에 size가 필요하기 때문에 size도 정의
+  public class ListIterator<E> implements Iterator<E> {
+    List<E> list;
+    int cursor;
+
+    public ListIterator(List<E> list) {
+      this.list = list;   // 생성자로 List를 파라미터로 받아 놓음
+    }
+
+    @Override
+    public boolean hasNext() {
+      return cursor < this.list.size(); // 가리키는 커서가 꺼낼 게 있다면 true!
+    }
+
+    @Override
+    public E next() {
+      return list.get(cursor++); // 커서가 가리키는 값을 꺼내고 그 다음, 커서를 증가시키자
+    }
+  }
 }
