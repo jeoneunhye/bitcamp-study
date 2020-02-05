@@ -1,6 +1,6 @@
 // LMS 서버
 package com.eomcs.lms;
-// "/board/detail" 처리
+// "/board/add" 처리
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -49,7 +49,7 @@ public class ServerApp {
         System.out.println("클라이언트와 연결되었음!");
 
         if (processRequest(socket) == 9) {
-          break; // /server/stop
+          break; // "/server/stop"
         }
 
         System.out.println("-----클라이언트 요청 처리 끝-----");
@@ -98,11 +98,12 @@ public class ServerApp {
 
           out.writeObject(boards);
 
-        } else if (request.equals("/board/add")) {
+        }
+        // BoardAddCommand: out.writeUTF("/board/add");
+        else if (request.equals("/board/add")) {
           try {
-            Board board = (Board) in.readObject();
-            boards.add(board);
-            System.out.println("게시물을 저장하였습니다.");
+            Board board = (Board) in.readObject(); // 통째로 읽어 Board 객체에 넣는다.
+            boards.add(board); // boardList.add(board);
 
             out.writeUTF("OK");
 
@@ -110,35 +111,8 @@ public class ServerApp {
             out.writeUTF("FAIL");
             out.writeUTF(e.getMessage());
           }
-        }
-        // BoardDetailCommand: out.writeUTF("/board/detail");
-        else if (request.equals("/board/detail")) {
-          try {
-            int no = in.readInt(); // BoardDetailCommand: out.writeInt(no);
 
-            Board board = null;
-            for (Board b : boards) {
-              if (b.getNo() == no) { // board 객체 중에 입력받은 no와 번호가 같다면
-                board = b; // 빈 board 객체에 해당 board 값을 넣는다.
-                break;
-              }
-            }
-
-            if (board != null) { // board의 값이 생겼다면(같은 번호를 찾았다면)
-              out.writeUTF("OK");
-              out.writeObject(board); // board 객체의 값을 통째로 출력한다.
-
-            } else { // 같은 번호를 찾지 못했다면
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        }
-        else {
+        } else {
           out.writeUTF("FAIL");
           out.writeUTF("요청한 명령을 처리하지 못했습니다.");
         }
@@ -146,6 +120,7 @@ public class ServerApp {
         out.flush();
 
       } // while문 끝
+
       System.out.println("클라이언트로 메시지를 전송하였음!");
       return 0;
 

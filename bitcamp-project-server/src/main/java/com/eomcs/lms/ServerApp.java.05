@@ -1,6 +1,6 @@
 // LMS 서버
 package com.eomcs.lms;
-// "/board/detail" 처리
+// "/board/update" 처리
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -97,21 +97,33 @@ public class ServerApp {
           out.reset();
 
           out.writeObject(boards);
-
         } else if (request.equals("/board/add")) {
           try {
             Board board = (Board) in.readObject();
-            boards.add(board);
-            System.out.println("게시물을 저장하였습니다.");
 
-            out.writeUTF("OK");
+            int i = 0;
+            for (; i < boards.size(); i++) {
+              if (boards.get(i).getNo() == board.getNo()) {
+                break;
+              }
+            }
+
+            if (i == boards.size()) {
+              boards.add(board);
+              System.out.println("게시물을 저장하였습니다.");
+
+              out.writeUTF("OK");
+            } else {
+              out.writeUTF("FAIL");
+              out.writeUTF("같은 번호의 게시물이 있습니다.");
+            }
 
           } catch (Exception e) {
             out.writeUTF("FAIL");
             out.writeUTF(e.getMessage());
           }
         }
-        // BoardDetailCommand: out.writeUTF("/board/detail");
+        // BoardUpdateCommand: out.writeUTF("/board/detail");
         else if (request.equals("/board/detail")) {
           try {
             int no = in.readInt(); // BoardDetailCommand: out.writeInt(no);
@@ -128,7 +140,7 @@ public class ServerApp {
               out.writeUTF("OK");
               out.writeObject(board); // board 객체의 값을 통째로 출력한다.
 
-            } else { // 같은 번호를 찾지 못했다면
+            } else {
               out.writeUTF("FAIL");
               out.writeUTF("해당 번호의 게시물이 없습니다.");
             }
@@ -138,12 +150,40 @@ public class ServerApp {
             out.writeUTF(e.getMessage());
           }
         }
-        else {
+        // BoardUpdateCommand: out.writeUTF("/board/update");
+        else if (request.equals("/board/update")) {
+          try {
+            // 클라이언트에서, 변경 처리한 데이터를 받는다.
+            Board board = (Board) in.readObject();
+
+            int index = -1;
+            for (int i = 0; i < boards.size(); i++) {
+              if (boards.get(i).getNo() == board.getNo()) {
+                index = i;
+                break;
+              }
+            }
+
+            if (index != -1) { // boards에서 같은 번호를 가진 데이터를 찾았다면
+              boards.set(index, board); // index번째 boards -> board로 새로 교체
+              out.writeUTF("OK");
+            } else {
+              out.writeUTF("FAIL");
+              out.writeUTF("해당 번호의 게시물이 없습니다.");
+            }
+            
+          } catch (Exception e) {
+            out.writeUTF("FAIL");
+            out.writeUTF(e.getMessage());
+          }
+          
+        } else {
           out.writeUTF("FAIL");
           out.writeUTF("요청한 명령을 처리하지 못했습니다.");
         }
 
-        out.flush();
+        out.flush(); // 성공 여부에 상관없이 flush() 호출하기
+        // TCP/IP에 패킷이 꽉 차있지 않아도 내보냄
 
       } // while문 끝
       System.out.println("클라이언트로 메시지를 전송하였음!");

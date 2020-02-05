@@ -6,14 +6,18 @@ import java.sql.Date;
 public class Board implements Serializable {
   private static final long serialVersionUID = 20200131L;
 
+  private int no;
   private String title;
   private Date date;
   private int viewCount;
   private String writer;
-  private int no;
 
-  // CSV 포맷:
-  // 번호,제목,등록일,조회수
+  @Override
+  public String toString() {
+    return "Board [no=" + no + ", title=" + title + ", date=" + date + ", viewCount=" + viewCount
+        + ", writer=" + writer + "]";
+  }
+
   public static Board valueOf(String csv) {
     // 클래스명.메서드명();으로 호출할 수 있도록 static 메서드로 만든다.
     String[] data = csv.split(",");

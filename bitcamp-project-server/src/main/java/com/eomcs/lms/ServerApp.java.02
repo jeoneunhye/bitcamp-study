@@ -1,6 +1,6 @@
 // LMS 서버
 package com.eomcs.lms;
-// "/board/detail" 처리
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -48,9 +48,7 @@ public class ServerApp {
         Socket socket = serverSocket.accept();
         System.out.println("클라이언트와 연결되었음!");
 
-        if (processRequest(socket) == 9) {
-          break; // /server/stop
-        }
+        processRequest(socket);
 
         System.out.println("-----클라이언트 요청 처리 끝-----");
       }
@@ -62,41 +60,45 @@ public class ServerApp {
   }
 
   @SuppressWarnings("unchecked")
-  int processRequest(Socket clientSocket) {
+  void processRequest(Socket clientSocket) {
     try(
         Socket socket = clientSocket;
 
+        // Scanner in = new Scanner(socket.getInputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        // /board/add할 때 list 객체를 통째로 가져와야 하기 때문에 도구 변경
 
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())
         ) {
       System.out.println("통신을 위한 입출력 스트림을 준비하였음!");
 
       while (true) {
+        // String request = in.nextLine();
         String request = in.readUTF();
         System.out.println("클라이언트가 보낸 메시지: " + request);
         System.out.println("클라이언트가 보낸 메시지를 수신하였음!");
 
+        // Client: command.equals("quit")이면 out.writeUTF("quit");
         if (request.equals("quit")) {
           out.writeUTF("OK");
           out.flush();
           break;
         }
 
-        if (request.equals("/server/stop")) {
-          out.writeUTF("OK");
-          out.flush();
-          return 9;
-        }
-
+        // Client의 command가 "quit"이 아니면 Board를 담은 List 객체 생성
         List<Board> boards = (List<Board>) context.get("boardList");
 
+        // BoardListCommand: out.writeUTF("/board/list");
         if (request.equals("/board/list")) {
           out.writeUTF("OK");
 
-          out.reset();
+          out.reset(); // disregard already written to the stream
+          // 기존에 출력했던 List<Board> 객체의 직렬화 데이터를 무시하고
+          // 새로 직렬화를 수행한다.
+          // reset을 해야만 add한 board 객체가 list에 정상적으로 출력된다.
 
-          out.writeObject(boards);
+          // out.writeObject(context.get("boardList"));
+          out.writeObject(boards); // List 객체를 받아 통째로 출력
 
         } else if (request.equals("/board/add")) {
           try {
@@ -110,49 +112,21 @@ public class ServerApp {
             out.writeUTF("FAIL");
             out.writeUTF(e.getMessage());
           }
-        }
-        // BoardDetailCommand: out.writeUTF("/board/detail");
-        else if (request.equals("/board/detail")) {
-          try {
-            int no = in.readInt(); // BoardDetailCommand: out.writeInt(no);
 
-            Board board = null;
-            for (Board b : boards) {
-              if (b.getNo() == no) { // board 객체 중에 입력받은 no와 번호가 같다면
-                board = b; // 빈 board 객체에 해당 board 값을 넣는다.
-                break;
-              }
-            }
-
-            if (board != null) { // board의 값이 생겼다면(같은 번호를 찾았다면)
-              out.writeUTF("OK");
-              out.writeObject(board); // board 객체의 값을 통째로 출력한다.
-
-            } else { // 같은 번호를 찾지 못했다면
-              out.writeUTF("FAIL");
-              out.writeUTF("해당 번호의 게시물이 없습니다.");
-            }
-
-          } catch (Exception e) {
-            out.writeUTF("FAIL");
-            out.writeUTF(e.getMessage());
-          }
-        }
-        else {
+        } else {
           out.writeUTF("FAIL");
           out.writeUTF("요청한 명령을 처리하지 못했습니다.");
         }
 
-        out.flush();
+        out.flush(); // 성공 여부에 상관없이 flush() 호출하기
+        // TCP/IP에 패킷이 꽉 차있지 않아도 내보냄
 
+        System.out.println("클라이언트로 메시지를 전송하였음!");
       } // while문 끝
-      System.out.println("클라이언트로 메시지를 전송하였음!");
-      return 0;
 
     } catch(Exception e) {
       System.out.print("예외 발생: ");
       e.printStackTrace();
-      return -1;
     }
   }
 
