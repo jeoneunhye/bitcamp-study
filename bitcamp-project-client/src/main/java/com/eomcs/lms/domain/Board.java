@@ -12,6 +12,13 @@ public class Board implements Serializable {
   private String writer;
   private int no;
 
+  // Source-Generate toString()
+  @Override
+  public String toString() {
+    return "Board [title=" + title + ", date=" + date + ", viewCount=" + viewCount + ", writer="
+        + writer + ", no=" + no + "]";
+  }
+
   // CSV 포맷:
   // 번호,제목,등록일,조회수
   public static Board valueOf(String csv) {

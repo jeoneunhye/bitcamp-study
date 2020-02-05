@@ -1,0 +1,65 @@
+package com.eomcs.lms.handler;
+
+import java.io.ObjectInputStream;
+import java.io.PrintStream;
+import java.util.List;
+import com.eomcs.lms.domain.Board;
+
+public class BoardListCommand implements Command {
+  // List<Board> boardList;
+
+  PrintStream out;
+  ObjectInputStream in;
+
+  // 클라이언트는 목록을 관리하지 않기 때문에
+  // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
+  // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
+  public BoardListCommand(PrintStream out, ObjectInputStream in/*list<Board> list*/) {
+    // this.boardList = list;
+    
+    this.out = out;
+    this.in = in;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public void execute() {
+    try {
+      out.println("/board/list"); // Server의 String 변수 request로 받음
+      String response = in.readUTF();
+      // if문 실행 위의 출력한 문자열에 따라 writeUTF("OK" 또는 "FAIL");
+      
+      // server: else문
+      if (response.equals("FAIL")) { // server: out.writeUTF("FAIL");
+        System.out.println(in.readUTF());
+        // server: out.writeUTF("요청한 명령을 처리하지 못했습니다.");
+        return;
+      }
+
+      // Server의 response가 "FAIL"이 아니면 Board를 담은 List 객체를 생성
+      List<Board> boards = (List<Board>) in.readObject();
+      // List<Board> boards == boardList
+      
+      // List에서 Board 객체를 꺼내 값을 출력
+      for (Board b : boards) {
+        System.out.printf("%d, %s, %s, %d, %s\n",
+            b.getNo(), b.getTitle(), b.getDate(), b.getViewCount(), b.getWriter());
+      }
+
+    } catch (Exception e) {
+      System.out.println("통신 오류 발생!");
+    }
+
+    /* 기존 boardlist를 생성자 파라미터로 받아 Board 객체를 출력하던 코드
+    Iterator<Board> iterator = boardList.iterator();
+    while (iterator.hasNext()) {
+      Board b = iterator.next();
+
+      if (b == null)
+        break;
+      System.out.printf("%d, %s, %s, %d, %s\n",
+          b.getNo(), b.getTitle(), b.getDate(), b.getViewCount(), b.getWriter());
+    }
+     */
+  }
+}
