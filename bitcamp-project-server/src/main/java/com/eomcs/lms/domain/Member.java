@@ -47,6 +47,7 @@ public class Member implements Serializable {
     result = prime * result + ((tel == null) ? 0 : tel.hashCode());
     return result;
   }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -90,6 +91,7 @@ public class Member implements Serializable {
       return false;
     return true;
   }
+
   public int getNo() {
     return no;
   }

@@ -6,16 +6,19 @@ import java.sql.Date;
 public class Board implements Serializable {
   private static final long serialVersionUID = 20200131L;
 
+  private int no;
   private String title;
   private Date date;
   private int viewCount;
   private String writer;
-  private int no;
 
-  // CSV 포맷:
-  // 번호,제목,등록일,조회수
+  @Override
+  public String toString() {
+    return "Board [no=" + no + ", title=" + title + ", date=" + date + ", viewCount=" + viewCount
+        + ", writer=" + writer + "]";
+  }
+
   public static Board valueOf(String csv) {
-    // 클래스명.메서드명();으로 호출할 수 있도록 static 메서드로 만든다.
     String[] data = csv.split(",");
 
     Board board = new Board();
@@ -29,7 +32,6 @@ public class Board implements Serializable {
   }
 
   public String toCsvString() {
-    // 특정 인스턴스의 값을 사용하기 때문에 인스턴스 메서드로 만든다.
     return String.format("%d,%s,%s,%d,%s", this.getNo(), this.getTitle(), this.getDate(),
         this.getViewCount(), this.getWriter());
   }
