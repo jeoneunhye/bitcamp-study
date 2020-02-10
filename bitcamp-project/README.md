@@ -17,20 +17,20 @@
 
 ## 실습
 
-### 훈련1. ListIterator를 AbstractList 클래스의 중첩 클래스로 만들라.
+### 훈련1. ListIterator 클래스를 AbstractList 클래스의 중첩클래스로 만들라.
 
 - AbstractList.java 변경
-    - ListIterator 클래스를 스태틱 중첩 클래스로 정의한다.
+  - ListIterator 클래스를 스태틱 중첩 클래스로 정의한다.
 - ListIterator.java 삭제
-    
-### 훈련2. QueueIterator를 Queue 클래스의 중첩 클래스로 만들라.
+
+### 훈련2. QueueIterator 클래스를 Queue 클래스의 중첩클래스로 만들라.
 
 - Queue.java 변경
-    - QueueIterator 클래스를 스태틱 중첩 클래스로 정의한다.
+  - QueueIterator 클래스를 스태틱 중첩 클래스로 정의한다.
 - QueueIterator.java 삭제
 
-### 훈련3. StackIterator를 Stack 클래스의 중첩 클래스로 만들라.
+### 훈련3. StackIterator 클래스를 Stack 클래스의 중첩클래스로 만들라.
 
 - Stack.java 변경
-    - StackIterator 클래스를 스태틱 중첩 클래스로 정의한다.
+  - StackIterator 클래스를 스태틱 중첩 클래스로 정의한다.
 - StackIterator.java 삭제

@@ -10,8 +10,7 @@ public class Member {
   private String photo;
   private String tel;
   private Date registeredDate;
-  
-  // 마우스 우클릭 - source - Generate hashCode() % equals()
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -25,6 +24,7 @@ public class Member {
     result = prime * result + ((tel == null) ? 0 : tel.hashCode());
     return result;
   }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -68,6 +68,7 @@ public class Member {
       return false;
     return true;
   }
+
   public int getNo() {
     return no;
   }

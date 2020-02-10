@@ -68,12 +68,14 @@ public class Stack<E> implements Cloneable {
 
   public Iterator<E> iterator() {
     return new StackIterator<E>(this);
+    // static 클래스인 StackIterator는 내장 변수 this를 가지고 있지 않다.
+    // 그래서 호출하는 쪽에서 파라미터로 Stack 구현체를 넘겨줘야 한다.
   }
 
-  // StackIterator 클래스는 Stack 클래스에서만 사용하다.
-  // => static nested 클래스로 만들었다.
+  // StackIterator 클래스는 Stack 클래스의 메서드에서만 필요로 하는 클래스
+  // => 이동하여 static nested 클래스로 변경했다.
   // new Stack(); 하면 중첩 클래스인 StackIterator 객체는 생성되지 않는다.
-  static class StackIterator<E> implements Iterator<E> {
+  /*public*/static class StackIterator<E> implements Iterator<E> {
     Stack<E> stack;
 
     public StackIterator(Stack<E> stack) {
