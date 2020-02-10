@@ -60,28 +60,26 @@ public class Stack<E> implements Cloneable {
       temp.elementData = arr;
 
       return temp;
-
     } catch (CloneNotSupportedException ex) {
       System.out.println(ex);
-
       return null;
     }
   }
 
   public Iterator<E> iterator() {
-    return this.new StackIterator<E>(/*this*/);
-    // this : non-static 클래스 Stack의 인스턴스 주소로
-    // 논스태틱 중첩 클래스(이너 클래스)인 StackIterator에 접근
+    return new StackIterator<E>(this);
+    // static 클래스인 StackIterator는 내장 변수 this를 가지고 있지 않다.
+    // 그래서 호출하는 쪽에서 파라미터로 Stack 구현체를 넘겨줘야 한다.
   }
 
-  // StackIterator non-static nested 클래스로 변경
-  /*static*/ class StackIterator<T> implements Iterator<T> {
-    Stack<T> stack;
+  // StackIterator 클래스는 Stack 클래스의 메서드에서만 필요로 하는 클래스
+  // => 이동하여 static nested 클래스로 변경했다.
+  // new Stack(); 하면 중첩 클래스인 StackIterator 객체는 생성되지 않는다.
+  /*public*/static class StackIterator<E> implements Iterator<E> {
+    Stack<E> stack;
 
-    @SuppressWarnings("unchecked")
-    public StackIterator(/*Stack<E> stack*/) {
-      this.stack = (Stack<T>) Stack.this.clone/*stack.clone*/();
-      // 바깥 클래스인 Stack의 인스턴스 주소 this
+    public StackIterator(Stack<E> stack) {
+      this.stack = stack.clone();
     }
 
     @Override
@@ -90,7 +88,7 @@ public class Stack<E> implements Cloneable {
     }
 
     @Override
-    public T next() {
+    public E next() {
       return stack.pop();
     }
   }

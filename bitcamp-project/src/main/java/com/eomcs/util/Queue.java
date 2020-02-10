@@ -22,19 +22,19 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
 
   @Override
   public Iterator<E> iterator() {
-    return new QueueIterator<E>(this);
-    // static 클래스인 QueueIterator는 내장 변수 this를 가지고 있지 않다.
-    // 그래서 호출하는 쪽에서 파라미터로 Queue 구현체를 넘겨줘야 한다.
+    return this.new QueueIterator<E>(/*this*/);
+    // this : non-static 클래스 AbstractList의 인스턴스 주소로
+    // 논스태틱 중첩 클래스(이너 클래스)인 ListIterator에 접근
   }
 
-  // QueueIterator 클래스는 Queue 클래스의 메서드에서만 필요로 하는 클래스
-  // => 이동하여 static nested 클래스로 변경했다.
-  // new Queue(); 하면 중첩 클래스인 QueueIterator 객체는 생성되지 않는다.
-  /*public*/ static class QueueIterator<E> implements Iterator<E> {
-    Queue<E> queue;
+  // QueueIterator non-static nested 클래스로 변경
+  /*static*/ class QueueIterator<T> implements Iterator<T> {
+    Queue<T> queue;
 
-    public QueueIterator(Queue<E> queue) {
-      this.queue = queue.clone();
+    @SuppressWarnings("unchecked")
+    public QueueIterator(/*Queue<E> queue*/) {
+      this.queue = (Queue<T>) Queue.this.clone/*queue.clone*/();
+      // 바깥 클래스인 Queue의 인스턴스 주소 this
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
     }
 
     @Override
-    public E next() {
+    public T next() {
       return queue.poll();
     }
   }

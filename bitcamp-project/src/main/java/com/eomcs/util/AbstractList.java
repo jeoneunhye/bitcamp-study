@@ -10,20 +10,21 @@ public abstract class AbstractList<E> implements List<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new ListIterator<E>(this);
-    // static 클래스인 ListIterator는 내장 변수 this를 가지고 있지 않다.
-    // 그래서 호출하는 쪽에서 파라미터로 List 구현체를 넘겨줘야 한다.
+    return this.new ListIterator<E>(/*this*/);
+    // this : non-static 클래스 AbstractList의 인스턴스 주소로
+    // 논스태틱 중첩 클래스(이너 클래스)인 ListIterator에 접근
   }
 
-  // ListIterator 클래스는 AbstractList 클래스의 메서드에서만 필요로 하는 클래스
-  // => 이동하여 static nested 클래스로 변경했다.
-  // new AbstractList(); 하면 중첩 클래스인 ListIterator 객체는 생성되지 않는다.
-  /*public*/static class ListIterator<E> implements Iterator<E> {
-    List<E> list;
+  // ListIterator non-static nested 클래스로 변경
+  /*static*/ class ListIterator<T> implements Iterator<T> {
+    List<T> list;
     int cursor;
 
-    public ListIterator(List<E> list) {
-      this.list = list;
+    @SuppressWarnings("unchecked")
+    public ListIterator(/*List<E> list*/) {
+      this.list = (List<T>) AbstractList.this/*list*/;
+      // 바깥 클래스의 this
+      // AbstractList의 서브 클래스인 ArrayList, LinkedList의 인스턴스 주소
     }
 
     @Override
@@ -32,7 +33,7 @@ public abstract class AbstractList<E> implements List<E> {
     }
 
     @Override
-    public E next() {
+    public T next() {
       return list.get(cursor++);
     }
   }
