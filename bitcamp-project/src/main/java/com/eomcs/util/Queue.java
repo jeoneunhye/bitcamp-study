@@ -20,16 +20,20 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
     return temp;
   }
 
+  // 로컬 클래스 -> 익명 클래스
+  // 인스턴스를 한 개만 생성할 거면 익명 클래스로 정의하라.
+  // Queue.java.01의 리턴 값에 obj 구현체를 바로 집어 넣음
   @Override
   public Iterator<E> iterator() {
-    // QueueIterator 클래스는 iterator() 메서드 안에서만 사용되는 중첩 클래스다.
-    // 멤버 클래스 QueueIterator를 Iterator()의 로컬 클래스로 위치 이동
-    class QueueIterator<T> implements Iterator<T> {
-      Queue<T> queue;
+    // Iterator<E> obj =
+    // 익명 클래스
+    // return obj;
 
-      @SuppressWarnings("unchecked")
-      public QueueIterator() {
-        this.queue = (Queue<T>) Queue.this.clone();
+    return new Iterator<E>() {
+      Queue<E> queue;
+
+      {
+        this.queue = Queue.this.clone();
       }
 
       @Override
@@ -38,14 +42,9 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
       }
 
       @Override
-      public T next() {
+      public E next() {
         return queue.poll();
       }
-    }
-
-    return /*this.*/new QueueIterator<E>();
-    // QueueIterator는 더이상 Queue의 멤버 클래스가 아니기 때문에
-    // 인스턴스를 생성할 때 바깥 클래스의 인스턴스 주소를 주면 안 된다.
-    // 즉 생성자를 호출하는 앞쪽에 this를 붙여서는 안 된다.
+    };
   }
 }

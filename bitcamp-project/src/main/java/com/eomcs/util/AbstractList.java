@@ -8,17 +8,21 @@ public abstract class AbstractList<E> implements List<E> {
     return size;
   }
 
+  // 로컬 클래스 -> 익명 클래스
+  // 인스턴스를 한 개만 생성할 거면 익명 클래스로 정의하라.
+  // AbstractList.java.01의 리턴 값에 obj 구현체를 바로 집어 넣음
   @Override
   public Iterator<E> iterator() {
-    // ListIterator 클래스는 iterator() 메서드 안에서만 사용되는 중첩 클래스다.
-    // 멤버 클래스 ListIterator를 Iterator()의 로컬 클래스로 위치 이동
-    class ListIterator<T> implements Iterator<T> {
-      List<T> list;
+    // Iterator<E> obj =
+    // 익명 클래스
+    // return obj;
+
+    return new Iterator<E>() {
+      List<E> list;
       int cursor;
 
-      @SuppressWarnings("unchecked")
-      public ListIterator() {
-        this.list = (List<T>) AbstractList.this;
+      {
+        this.list = AbstractList.this;
       }
 
       @Override
@@ -27,14 +31,9 @@ public abstract class AbstractList<E> implements List<E> {
       }
 
       @Override
-      public T next() {
+      public E next() {
         return list.get(cursor++);
       }
-    }
-
-    return /*this*/ new ListIterator<E>();
-    // ListIterator는 더이상 AbstractList의 멤버 클래스가 아니기 때문에
-    // 인스턴스를 생성할 때 바깥 클래스의 인스턴스 주소를 주면 안 된다.
-    // 즉 생성자를 호출하는 앞쪽에 this를 붙여서는 안 된다.
+    };
   }
 }

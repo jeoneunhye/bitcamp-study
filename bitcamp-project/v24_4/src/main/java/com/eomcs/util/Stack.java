@@ -66,19 +66,15 @@ public class Stack<E> implements Cloneable {
     }
   }
 
-  // 로컬 클래스 -> 익명 클래스
-  // 인스턴스를 한 개만 생성할 거면 익명 클래스로 정의하라.
-  // Stack.java.01의 리턴 값에 obj 구현체를 바로 집어 넣음
   public Iterator<E> iterator() {
-    // Iterator<E> obj =
-    // 익명 클래스
-    // return obj;
+    // StackIterator 클래스는 iterator() 메서드 안에서만 사용되는 중첩 클래스다.
+    // 멤버 클래스 StackIterator를 Iterator()의 로컬 클래스로 위치 이동
+    class StackIterator<T> implements Iterator<T> {
+      Stack<T> stack;
 
-    return new Iterator<E>() {
-      Stack<E> stack;
-
-      {
-        this.stack = Stack.this.clone();
+      @SuppressWarnings("unchecked")
+      public StackIterator() {
+        this.stack = (Stack<T>) Stack.this.clone();
       }
 
       @Override
@@ -87,9 +83,14 @@ public class Stack<E> implements Cloneable {
       }
 
       @Override
-      public E next() {
+      public T next() {
         return stack.pop();
       }
-    };
+    }
+
+    return /*this.*/new StackIterator<E>();
+    // StackIterator는 더이상 Stack의 멤버 클래스가 아니기 때문에
+    // 인스턴스를 생성할 때 바깥 클래스의 인스턴스 주소를 주면 안 된다.
+    // 즉 생성자를 호출하는 앞쪽에 this를 붙여서는 안 된다.
   }
 }
