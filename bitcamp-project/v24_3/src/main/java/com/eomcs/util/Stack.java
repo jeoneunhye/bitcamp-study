@@ -60,37 +60,38 @@ public class Stack<E> implements Cloneable {
       temp.elementData = arr;
 
       return temp;
+
     } catch (CloneNotSupportedException ex) {
       System.out.println(ex);
+
       return null;
     }
   }
 
   public Iterator<E> iterator() {
-    // StackIterator 클래스는 iterator() 메서드 안에서만 사용되는 중첩 클래스다.
-    // 멤버 클래스 StackIterator를 Iterator()의 로컬 클래스로 위치 이동
-    class StackIterator<T> implements Iterator<T> {
-      Stack<T> stack;
+    return this.new StackIterator<E>(/*this*/);
+    // this : non-static 클래스 Stack의 인스턴스 주소로
+    // 논스태틱 중첩 클래스(이너 클래스)인 StackIterator에 접근
+  }
 
-      @SuppressWarnings("unchecked")
-      public StackIterator() {
-        this.stack = (Stack<T>) Stack.this.clone();
-      }
+  // StackIterator non-static nested 클래스로 변경
+  /*static*/ class StackIterator<T> implements Iterator<T> {
+    Stack<T> stack;
 
-      @Override
-      public boolean hasNext() {
-        return !stack.empty();
-      }
-
-      @Override
-      public T next() {
-        return stack.pop();
-      }
+    @SuppressWarnings("unchecked")
+    public StackIterator(/*Stack<E> stack*/) {
+      this.stack = (Stack<T>) Stack.this.clone/*stack.clone*/();
+      // 바깥 클래스인 Stack의 인스턴스 주소 this
     }
 
-    return /*this.*/new StackIterator<E>();
-    // StackIterator는 더이상 Stack의 멤버 클래스가 아니기 때문에
-    // 인스턴스를 생성할 때 바깥 클래스의 인스턴스 주소를 주면 안 된다.
-    // 즉 생성자를 호출하는 앞쪽에 this를 붙여서는 안 된다.
+    @Override
+    public boolean hasNext() {
+      return !stack.empty();
+    }
+
+    @Override
+    public T next() {
+      return stack.pop();
+    }
   }
 }
