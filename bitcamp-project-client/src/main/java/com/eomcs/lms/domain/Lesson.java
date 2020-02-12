@@ -30,7 +30,6 @@ public class Lesson implements Serializable {
   }
 
   public String toCsvString() {
-    // 수업 데이터를 꺼내 CSV 형식의 문자열로 만들어 리턴한다.
     return String.format("%d,%s,%s,%s,%s,%d,%d", this.getNo(), this.getTitle(),
         this.getDescription(), this.getStartDate(), this.getEndDate(), this.getTotalHours(),
         this.getDayHours());
@@ -66,7 +65,6 @@ public class Lesson implements Serializable {
 
     return true;
   }
-
 
   public void setNo(int no) {
     this.no = no;

@@ -1,5 +1,5 @@
 package com.eomcs.lms.handler;
-
+// 출력 도구 ObjectOutputStream 사용 전
 import java.io.ObjectInputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -26,6 +26,7 @@ public class BoardListCommand implements Command {
   public void execute() {
     try {
       out.println("/board/list"); // Server의 String 변수 request로 받음
+      
       String response = in.readUTF();
       // if문 실행 위의 출력한 문자열에 따라 writeUTF("OK" 또는 "FAIL");
       
@@ -49,17 +50,5 @@ public class BoardListCommand implements Command {
     } catch (Exception e) {
       System.out.println("통신 오류 발생!");
     }
-
-    /* 기존 boardlist를 생성자 파라미터로 받아 Board 객체를 출력하던 코드
-    Iterator<Board> iterator = boardList.iterator();
-    while (iterator.hasNext()) {
-      Board b = iterator.next();
-
-      if (b == null)
-        break;
-      System.out.printf("%d, %s, %s, %d, %s\n",
-          b.getNo(), b.getTitle(), b.getDate(), b.getViewCount(), b.getWriter());
-    }
-     */
   }
 }

@@ -11,7 +11,11 @@ public class LessonDeleteCommand implements Command {
   ObjectOutputStream out;
   ObjectInputStream in;
 
-  public LessonDeleteCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt/*, List<Lesson> list*/) {
+  // 클라이언트는 목록을 관리하지 않기 때문에
+  // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
+  // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
+  public LessonDeleteCommand(ObjectOutputStream out, ObjectInputStream in,
+      Prompt prompt/*, List<Lesson> list*/) {
     // this.boardList = list;
     this.prompt = prompt;
 
@@ -30,6 +34,7 @@ public class LessonDeleteCommand implements Command {
 
       String response = in.readUTF(); // server: out.writeUTF("OK" 또는 "FAIL");
 
+      // server의 else문
       if (response.equals("FAIL")) { // server: out.writeUTF("FAIL");
         System.out.println(in.readUTF());
         // server: out.writeUTF("해당 번호의 수업이 없습니다.");

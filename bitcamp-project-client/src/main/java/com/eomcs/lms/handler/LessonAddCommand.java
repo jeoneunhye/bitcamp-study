@@ -14,6 +14,9 @@ public class LessonAddCommand implements Command {
   ObjectOutputStream out;
   ObjectInputStream in;
 
+  // 클라이언트는 목록을 관리하지 않기 때문에
+  // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
+  // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
   public LessonAddCommand(ObjectOutputStream out, ObjectInputStream in,
       Prompt prompt/*List<Member> list*/) {
     // this.memberList = list;
@@ -47,14 +50,14 @@ public class LessonAddCommand implements Command {
 
       String response = in.readUTF(); // Server: out.writeUTF("OK" 또는 "FAIL");
 
-      // Server: else문
+      // Server의 else문
       if (response.equals("FAIL")) { // Server: out.writeUTF("FAIL");
         System.out.println(in.readUTF());
         // Server: out.wirteUTF("요청한 명령을 처리하지 못했습니다.");
         return;
       }
 
-      System.out.println("수업 데이터를 저장하였습니다.");
+      System.out.println("수업을 저장하였습니다.");
 
     } catch (IOException e) {
       System.out.println("통신 오류 발생!");

@@ -7,13 +7,16 @@ import com.eomcs.util.Prompt;
 
 public class BoardDetailCommand implements Command {
   // List<Board> boardList;
-
   Prompt prompt;
 
   ObjectOutputStream out;
   ObjectInputStream in;
 
-  public BoardDetailCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt/*, List<Board> list*/) {
+  // 클라이언트는 목록을 관리하지 않기 때문에
+  // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
+  // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
+  public BoardDetailCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt
+      /*, List<Board> list*/) {
     // this.boardList = list;
     this.out = out;
     this.in = in;
@@ -51,30 +54,4 @@ public class BoardDetailCommand implements Command {
       System.out.println("명령 실행 중 오류 발생!");
     }
   }
-
-  /*
-    int index = indexOfBoard(prompt.inputInt("번호? "));
-
-    if (index == -1) {
-      System.out.println("해당 번호의 게시글이 없습니다.");
-      return;
-    }
-
-    Board board = this.boardList.get(index);
-    System.out.printf("번호: %d\n", board.getNo());
-    System.out.printf("제목: %s\n", board.getTitle());
-    System.out.printf("등록일: %s\n", board.getDate());
-    System.out.printf("조회수: %d\n", board.getViewCount());
-    System.out.printf("작성자: %s\n", board.getWriter());
-  }
-
-  private int indexOfBoard(int no) {
-    for (int i = 0; i < this.boardList.size(); i++) {
-      if (this.boardList.get(i).getNo() == no) {
-        return i;
-      }
-    }
-    return -1;
-  }
-   */
 }

@@ -12,7 +12,11 @@ public class MemberUpdateCommand implements Command {
   ObjectOutputStream out;
   ObjectInputStream in;
 
-  public MemberUpdateCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt/*, List<Member> list*/) {
+  // 클라이언트는 목록을 관리하지 않기 때문에
+  // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
+  // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
+  public MemberUpdateCommand(ObjectOutputStream out, ObjectInputStream in,
+      Prompt prompt/*, List<Member> list*/) {
     // this.memberList = list;
     this.prompt = prompt;
 
@@ -43,22 +47,16 @@ public class MemberUpdateCommand implements Command {
       // 여기까지 "/member/detail"의 코드와 같다.
 
       Member newMember = new Member();
-
       newMember.setNo(oldMember.getNo());
       newMember.setRegisteredDate(oldMember.getRegisteredDate());
-
       newMember.setName(
           prompt.inputString(String.format("이름(%s)? ", oldMember.getName()), oldMember.getName()));
-
       newMember.setEmail(prompt.inputString(String.format("이메일(%s)? ", oldMember.getEmail()),
           oldMember.getEmail()));
-
       newMember.setPassword(prompt.inputString(String.format("암호(%s)? ", oldMember.getPassword()),
           oldMember.getPassword()));
-
       newMember.setPhoto(prompt.inputString(String.format("사진(%s)? ", oldMember.getPhoto()),
           oldMember.getPhoto()));
-
       newMember.setTel(
           prompt.inputString(String.format("전화(%s)? ", oldMember.getTel()), oldMember.getTel()));
 
@@ -70,9 +68,9 @@ public class MemberUpdateCommand implements Command {
       out.writeObject(newMember);
       out.flush();
 
-      response = in.readUTF();
-      if (response.equals("FAIL")) {
-        System.out.println(in.readUTF());
+      response = in.readUTF(); // server: out.writeUTF("OK" 또는 "FAIL");
+      if (response.equals("FAIL")) { // server: out.writeUTF("FAIL");
+        System.out.println(in.readUTF()); // server: out.writeUTF("해당 번호의 회원이 없습니다.");
         return;
       }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import com.eomcs.lms.domain.Member;
 
 public class MemberListCommand implements Command {
+  // List<Member> memberList;
   ObjectOutputStream out;
   ObjectInputStream in;
 
@@ -13,6 +14,8 @@ public class MemberListCommand implements Command {
   // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
   // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
   public MemberListCommand(ObjectOutputStream out, ObjectInputStream in/*list<Member> list*/) {
+    // this.memberList = list;
+
     this.out = out;
     this.in = in;
   }
@@ -40,7 +43,6 @@ public class MemberListCommand implements Command {
       }
 
       List<Member> members = (List<Member>) in.readObject(); // server: out.writeObject(members);
-      // List 객체를 통째로 읽어와 List에 담는다.
 
       for (Member m : members) { // List에서 Member 객체를 꺼내어 데이터의 정보를 전부 출력한다.
         System.out.printf("%d, %s, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(), m.getTel(),

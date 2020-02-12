@@ -6,12 +6,13 @@ import com.eomcs.util.Prompt;
 
 public class BoardDeleteCommand implements Command {
   // List<Board> boardList;
-
   Prompt prompt;
+
   ObjectOutputStream out;
   ObjectInputStream in;
 
-  public BoardDeleteCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt/*, List<Board> list*/) {
+  public BoardDeleteCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt
+      /*, List<Board> list*/) {
     // this.boardList = list;
     this.prompt = prompt;
 
@@ -30,39 +31,17 @@ public class BoardDeleteCommand implements Command {
 
       String response = in.readUTF(); // server: out.writeUTF("OK" 또는 "FAIL");
 
+      // server의 else문
       if (response.equals("FAIL")) { // server: out.writeUTF("FAIL");
         System.out.println(in.readUTF());
         // server: out.writeUTF("해당 번호의 게시물이 없습니다.");
         return;
       }
 
-      System.out.println("게시글을 삭제했습니다.");
+      System.out.println("게시물을 삭제했습니다.");
 
     } catch (Exception e) {
       System.out.println("명령 실행 중 오류 발생!");
     }
   }
-
-  /*
-    int index = indexOfBoard(prompt.inputInt("번호? "));
-
-    if (index == -1) {
-      System.out.println("해당 번호의 게시글이 없습니다.");
-      return;
-    }
-
-    this.boardList.remove(index);
-
-    System.out.println("게시글을 삭제했습니다.");
-  }
-
-  private int indexOfBoard(int no) {
-    for (int i = 0; i < this.boardList.size(); i++) {
-      if (this.boardList.get(i).getNo() == no) {
-        return i;
-      }
-    }
-    return -1;
-  }
-   */
 }

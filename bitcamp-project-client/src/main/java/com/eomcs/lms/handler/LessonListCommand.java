@@ -6,6 +6,8 @@ import java.util.List;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonListCommand implements Command {
+  // List<Lesson> lessonList;
+
   ObjectOutputStream out;
   ObjectInputStream in;
 
@@ -13,6 +15,8 @@ public class LessonListCommand implements Command {
   // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
   // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
   public LessonListCommand(ObjectOutputStream out, ObjectInputStream in/*list<Lesson> list*/) {
+    // this.lessonList = list;
+
     this.out = out;
     this.in = in;
   }
@@ -40,7 +44,6 @@ public class LessonListCommand implements Command {
       }
 
       List<Lesson> lessons = (List<Lesson>) in.readObject(); // server: out.writeObject(lessons);
-      // List 객체를 통째로 읽어와 List에 담는다.
 
       for (Lesson l : lessons) { // List에서 Lesson 객체를 꺼내어 데이터의 정보를 전부 출력한다.
         System.out.printf("%d, %s, %s ~ %s, %d\n", l.getNo(), l.getTitle(), l.getStartDate(),

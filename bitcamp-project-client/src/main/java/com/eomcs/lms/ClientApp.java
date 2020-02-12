@@ -80,7 +80,7 @@ public class ClientApp {
 
     // keyScan.close();
     keyboard.close();
-  } // service()
+  } // service() 끝
 
   // 명령 처리 메서드 생성, 내부적으로 호출(private)
   private void processCommand(ObjectOutputStream out, ObjectInputStream in) {

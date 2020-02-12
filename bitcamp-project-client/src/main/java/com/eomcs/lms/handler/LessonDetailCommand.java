@@ -7,13 +7,16 @@ import com.eomcs.util.Prompt;
 
 public class LessonDetailCommand implements Command {
   // List<Lesson> lessonList;
-
   Prompt prompt;
 
   ObjectOutputStream out;
   ObjectInputStream in;
 
-  public LessonDetailCommand(ObjectOutputStream out, ObjectInputStream in, Prompt prompt/*, List<Lesson> list*/) {
+  // 클라이언트는 목록을 관리하지 않기 때문에
+  // 서버와 대화할 수 있는 입출력 스트림을 넘겨 받는다!
+  // DI(의존성 주입): 외부에서 의존 객체(dependency)를 주입(injection)받는다.
+  public LessonDetailCommand(ObjectOutputStream out, ObjectInputStream in,
+      Prompt prompt/*, List<Lesson> list*/) {
     // this.lessonList = list;
     this.out = out;
     this.in = in;
