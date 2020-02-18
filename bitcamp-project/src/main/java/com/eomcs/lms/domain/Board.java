@@ -8,7 +8,29 @@ public class Board {
   private int viewCount;
   private String writer;
   private int no;
-  
+
+  // CSV 파일 데이터 포맷:
+  // 번호,제목,등록일,조회수,작성자
+  // CSV 파일에서 데이터를 읽어올 때 사용할 메서드
+  public static Board valueOf(String csv) {
+    String[] data = csv.split(",");
+
+    Board board = new Board();
+    board.setNo(Integer.parseInt(data[0]));
+    board.setTitle(data[1]);
+    board.setDate(Date.valueOf(data[2]));
+    board.setViewCount(Integer.parseInt(data[3]));
+    board.setWriter(data[4]);
+
+    return board;
+  }
+
+  // CSV 파일에 데이터를 저장할 때 사용할 메서드
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%d,%s\n", this.getNo(), this.getTitle(), this.getDate(),
+        this.getViewCount(), this.getWriter());
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -19,7 +41,7 @@ public class Board {
     result = prime * result + ((writer == null) ? 0 : writer.hashCode());
     return result;
   }
-  
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -45,7 +67,7 @@ public class Board {
       return false;
     return true;
   }
-  
+
   public int getNo() {
     return no;
   }

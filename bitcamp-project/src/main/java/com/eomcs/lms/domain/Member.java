@@ -11,6 +11,30 @@ public class Member {
   private String tel;
   private Date registeredDate;
 
+  // CSV 파일 데이터 포맷:
+  // 번호,이름,이메일,암호,사진,전화,등록일
+  // CSV 파일에서 데이터를 읽어올 때 사용할 메서드
+  public static Member valueOf(String csv) {
+    String[] data = csv.split(",");
+
+    Member member = new Member();
+    member.setNo(Integer.parseInt(data[0]));
+    member.setName(data[1]);
+    member.setEmail(data[2]);
+    member.setPassword(data[3]);
+    member.setPhoto(data[4]);
+    member.setTel(data[5]);
+    member.setRegisteredDate(Date.valueOf(data[6]));
+
+    return member;
+  }
+
+  // CSV 파일에 데이터를 저장할 때 사용할 메서드
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%s,%s\n", this.getNo(), this.getName(), this.getEmail(),
+        this.getPassword(), this.getPhoto(), this.getTel(), this.getRegisteredDate());
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
