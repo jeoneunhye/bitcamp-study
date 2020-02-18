@@ -1,5 +1,5 @@
 package com.eomcs.lms;
-
+// Command Design Pattern 적용: 요청을 객체의 형태로 캡슐화
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -44,6 +44,14 @@ public class App {
     LinkedList<Member> memberList = new LinkedList<>();
     LinkedList<Board> boardList = new LinkedList<>();
 
+    // Handler 클래스 삭제 => 명령어 처리 코드가 담긴 메서드들을 각각의 객체로 분리
+    /*
+    BoardHandler boardHandler = new BoardHandler(prompt, boardList);
+    LessonHandler lessonHandler = new LessonHandler(prompt, lessonList);
+    MemberHandler memberHandler = new MemberHandler(prompt, memberList);
+     */
+
+    // Command 인터페이스를 구현한 객체를 Map에 담아 해당하는 명령어를 받으면 꺼내도록 설정
     Map<String, Command> commandMap = new HashMap<>();
 
     commandMap.put("/lesson/add", new LessonAddCommand(prompt, lessonList));
@@ -89,19 +97,13 @@ public class App {
         continue;
       }
 
+      // "quit", "history", "history2"를 입력한 기록은 Stack과 Queue에 저장되지 않는다.
       commandStack.push(command);
       commandQueue.offer(command);
 
       Command commandHandler = commandMap.get(command);
       if (commandHandler != null) {
-        try {
-          commandHandler.execute();
-
-          // 예외 처리 문법을 사용하여
-          // 명령어 실행 중 잘못된 형식으로 값을 입력하더라도 시스템이 멈추지 않고 계속 실행된다.
-        } catch (Exception e) {
-          System.out.printf("명령어 실행 중 오류 발생: %s\n", e.getMessage());
-        }
+        commandHandler.execute(); // 모두 같은 인터페이스를 구현하여 간결한 코드!
 
       } else {
         System.out.println("실행할 수 없는 명령입니다.");
