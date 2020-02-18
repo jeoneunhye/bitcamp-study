@@ -16,7 +16,6 @@ public class MemberHandler {
 
   public void addMember() {
     Member member = new Member();
-
     member.setNo(prompt.inputInt("번호? "));
     member.setName(prompt.inputString("이름? "));
     member.setEmail(prompt.inputString("이메일? "));
@@ -41,14 +40,12 @@ public class MemberHandler {
 
   public void detailMember() {
     int index = indexOfMember(prompt.inputInt("번호? "));
-
     if (index == -1) {
       System.out.println("해당 번호의 회원이 없습니다.");
       return;
     }
 
     Member member = this.memberList.get(index);
-
     System.out.printf("번호: %d\n", member.getNo());
     System.out.printf("이름: %s\n", member.getName());
     System.out.printf("이메일: %s\n", member.getEmail());
@@ -60,9 +57,8 @@ public class MemberHandler {
 
   public void updateMember() {
     int index = indexOfMember(prompt.inputInt("번호? "));
-
     if (index == -1) {
-      System.out.println("해당 번호의 게시글이 없습니다.");
+      System.out.println("해당 번호의 회원이 없습니다.");
       return;
     }
 
@@ -95,9 +91,8 @@ public class MemberHandler {
 
   public void deleteMember() {
     int index = indexOfMember(prompt.inputInt("번호? "));
-
     if (index == -1) {
-      System.out.println("해당 회원을 찾을 수 없습니다.");
+      System.out.println("해당 번호의 회원이 없습니다.");
       return;
     }
 
@@ -111,6 +106,7 @@ public class MemberHandler {
         return i;
       }
     }
+    
     return -1;
   }
 }

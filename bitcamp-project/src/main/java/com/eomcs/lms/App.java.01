@@ -1,36 +1,72 @@
 package com.eomcs.lms;
-
+// Command Design Pattern 적용: 요청을 객체의 형태로 캡슐화
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.lms.handler.BoardHandler;
-import com.eomcs.lms.handler.LessonHandler;
-import com.eomcs.lms.handler.MemberHandler;
-import com.eomcs.util.ArrayList;
-import com.eomcs.util.Iterator;
-import com.eomcs.util.LinkedList;
+import com.eomcs.lms.handler.BoardAddCommand;
+import com.eomcs.lms.handler.BoardDeleteCommand;
+import com.eomcs.lms.handler.BoardDetailCommand;
+import com.eomcs.lms.handler.BoardListCommand;
+import com.eomcs.lms.handler.BoardUpdateCommand;
+import com.eomcs.lms.handler.Command;
+import com.eomcs.lms.handler.LessonAddCommand;
+import com.eomcs.lms.handler.LessonDeleteCommand;
+import com.eomcs.lms.handler.LessonDetailCommand;
+import com.eomcs.lms.handler.LessonListCommand;
+import com.eomcs.lms.handler.LessonUpdateCommand;
+import com.eomcs.lms.handler.MemberAddCommand;
+import com.eomcs.lms.handler.MemberDeleteCommand;
+import com.eomcs.lms.handler.MemberDetailCommand;
+import com.eomcs.lms.handler.MemberListCommand;
+import com.eomcs.lms.handler.MemberUpdateCommand;
 import com.eomcs.util.Prompt;
-import com.eomcs.util.Queue;
-import com.eomcs.util.Stack;
+
 public class App {
   static Scanner keyboard = new Scanner(System.in);
-  static Stack<String> commandStack = new Stack<>();
-  static Queue<String> commandQueue = new Queue<>();
+  static Deque<String> commandStack = new ArrayDeque<>();
+  static Queue<String> commandQueue = new LinkedList<>();
 
   public static void main(String[] args) {
     Prompt prompt = new Prompt(keyboard);
 
-    LinkedList<Board> boardList = new LinkedList<>();
-    BoardHandler boardHandler = new BoardHandler(prompt, boardList);
-
     ArrayList<Lesson> lessonList = new ArrayList<>();
-    LessonHandler lessonHandler = new LessonHandler(prompt, lessonList);
-
     LinkedList<Member> memberList = new LinkedList<>();
+    LinkedList<Board> boardList = new LinkedList<>();
+
+    // Handler 클래스 삭제 => 명령어 처리 코드가 담긴 메서드들을 각각의 객체로 분리
+    /*
+    BoardHandler boardHandler = new BoardHandler(prompt, boardList);
+    LessonHandler lessonHandler = new LessonHandler(prompt, lessonList);
     MemberHandler memberHandler = new MemberHandler(prompt, memberList);
+     */
+
+    Command lessonAddCommand = new LessonAddCommand(prompt, lessonList);
+    Command lessonListCommand = new LessonListCommand(lessonList);
+    Command lessonDetailCommand = new LessonDetailCommand(prompt, lessonList);
+    Command lessonUpdateCommand = new LessonUpdateCommand(prompt, lessonList);
+    Command lessonDeleteCommand = new LessonDeleteCommand(prompt, lessonList);
+
+    Command memberAddCommand = new MemberAddCommand(prompt, memberList);
+    Command memberListCommand = new MemberListCommand(memberList);
+    Command memberDetailCommand = new MemberDetailCommand(prompt, memberList);
+    Command memberUpdateCommand = new MemberUpdateCommand(prompt, memberList);
+    Command memberDeleteCommand = new MemberDeleteCommand(prompt, memberList);
+
+    Command boardAddCommand = new BoardAddCommand(prompt, boardList);
+    Command boardListCommand = new BoardListCommand(boardList);
+    Command boardDetailCommand = new BoardDetailCommand(prompt, boardList);
+    Command boardUpdateCommand = new BoardUpdateCommand(prompt, boardList);
+    Command boardDeleteCommand = new BoardDeleteCommand(prompt, boardList);
 
     String command;
+
     do {
       System.out.print("\n명령> ");
       command = keyboard.nextLine();
@@ -43,49 +79,64 @@ public class App {
 
       switch (command) {
         case "/lesson/add":
-          lessonHandler.addLesson();
+          // lessonHandler.addLesson();
+          lessonAddCommand.execute();
           break;
         case "/lesson/list":
-          lessonHandler.listLesson();
+          // lessonHandler.listLesson();
+          lessonListCommand.execute();
           break;
         case "/lesson/detail":
-          lessonHandler.detailLesson();
+          // lessonHandler.detailLesson();
+          lessonDetailCommand.execute();
           break;
         case "/lesson/update":
-          lessonHandler.updateLesson();
+          // lessonHandler.updateLesson();
+          lessonUpdateCommand.execute();
           break;
         case "/lesson/delete":
-          lessonHandler.deleteLesson();
+          // lessonHandler.deleteLesson();
+          lessonDeleteCommand.execute();
           break;
         case "/member/add":
-          memberHandler.addMember();
+          // memberHandler.addMember();
+          memberAddCommand.execute();
           break;
         case "/member/list":
-          memberHandler.listMember();
+          // memberHandler.listMember();
+          memberListCommand.execute();
           break;
         case "/member/detail":
-          memberHandler.detailMember();
+          // memberHandler.detailMember();
+          memberDetailCommand.execute();
           break;
         case "/member/update":
-          memberHandler.updateMember();
+          // memberHandler.updateMember();
+          memberUpdateCommand.execute();
           break;
         case "/member/delete":
-          memberHandler.deleteMember();
+          // memberHandler.deleteMember();
+          memberDeleteCommand.execute();
           break;
         case "/board/add":
-          boardHandler.addBoard();
+          // boardHandler.addBoard();
+          boardAddCommand.execute();
           break;
         case "/board/list":
-          boardHandler.listBoard();
+          // boardHandler.listBoard();
+          boardListCommand.execute();
           break;
         case "/board/detail":
-          boardHandler.detailBoard();
+          // boardHandler.detailBoard();
+          boardDetailCommand.execute();
           break;
         case "/board/update":
-          boardHandler.updateBoard();
+          // boardHandler.updateBoard();
+          boardUpdateCommand.execute();
           break;
         case "/board/delete":
-          boardHandler.deleteBoard();
+          // boardHandler.deleteBoard();
+          boardDeleteCommand.execute();
           break;
         case "history":
           printCommandHistory(commandStack.iterator());
@@ -98,6 +149,7 @@ public class App {
             System.out.println("실행할 수 없는 명령입니다.");
           }
       }
+
     } while (!command.equalsIgnoreCase("quit"));
 
     System.out.println("안녕!");

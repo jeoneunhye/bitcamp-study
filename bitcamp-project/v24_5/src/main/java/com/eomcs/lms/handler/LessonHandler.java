@@ -11,12 +11,11 @@ public class LessonHandler {
 
   public LessonHandler(Prompt prompt, List<Lesson> list) {
     this.prompt = prompt;
-    lessonList = list;
+    this.lessonList = list;
   }
 
   public void addLesson() {
     Lesson lesson = new Lesson();
-
     lesson.setNo(prompt.inputInt("번호? "));
     lesson.setTitle(prompt.inputString("수업명? "));
     lesson.setDescription(prompt.inputString("수업내용? "));
@@ -41,14 +40,12 @@ public class LessonHandler {
 
   public void detailLesson() {
     int index = indexOfLesson(prompt.inputInt("번호? "));
-
     if (index == -1) {
-      System.out.println("해당 수업을 찾을 수 없습니다.");
+      System.out.println("해당 번호의 수업이 없습니다.");
       return;
     }
 
     Lesson lesson = this.lessonList.get(index);
-
     System.out.printf("번호: %d\n", lesson.getNo());
     System.out.printf("수업명: %s\n", lesson.getTitle());
     System.out.printf("수업내용: %s\n", lesson.getDescription());
@@ -59,17 +56,14 @@ public class LessonHandler {
   }
 
   public void updateLesson() {
-
     int index = indexOfLesson(prompt.inputInt("번호? "));
-
     if (index == -1) {
       System.out.println("해당 번호의 수업이 없습니다.");
       return;
     }
 
-    Lesson newLesson = new Lesson();
-
     Lesson oldLesson = this.lessonList.get(index);
+    Lesson newLesson = new Lesson();
 
     newLesson.setNo(oldLesson.getNo());
 
@@ -95,15 +89,14 @@ public class LessonHandler {
       return;
     }
 
-    this.lessonList.set(index,  newLesson);
+    this.lessonList.set(index, newLesson);
     System.out.println("수업을 변경했습니다.");
   }
 
   public void deleteLesson() {
     int index = indexOfLesson(prompt.inputInt("번호? "));
-
     if (index == -1) {
-      System.out.println("해당 수업을 찾을 수 없습니다.");
+      System.out.println("해당 번호의 수업이 없습니다.");
       return;
     }
 
@@ -117,6 +110,7 @@ public class LessonHandler {
         return i;
       }
     }
+    
     return -1;
   }
 }
