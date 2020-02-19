@@ -7,6 +7,7 @@ DB 객체(테이블, 뷰, 함수, 트리거 등)를 생성, 변경, 삭제하는
 - 트리거(trigger)
   - 특정 조건에서 자동으로 호출되는 함수
   - 특정 조건? SQL 실행 전/후 등
+  - OOP 디자인 패턴에서 옵저버에 해당한다.
 - 함수(function)
 - 프로시저(procedure)
 - 인덱스(index)
@@ -30,7 +31,7 @@ DB 객체(테이블, 뷰, 함수, 트리거 등)를 생성, 변경, 삭제하는
   컬럼명 타입 NULL여부 옵션
   );
 
-예) 
+예)
 > create table test01 (
     name varchar(50) not null,
     kor int not null,
@@ -75,21 +76,21 @@ DB 객체(테이블, 뷰, 함수, 트리거 등)를 생성, 변경, 삭제하는
 
 데이터 입력 테스트:
 > insert into test1(no, name) values(1, 'aaa');
-> insert into test1(no, name) values(null, 'bbb'); /* 실행 오류 */
+> insert into test1(no, name) values(null, 'bbb'); /* 실행 오류 Column 'no' cannot be null */
 > insert into test1(no, name) values(3, null);
 
 #### 기본값 지정하기
 입력할 때 컬럼을 생략하면 지정된 기본값이 대신 입력된다.
 > create table test1(
     no int not null,
-    name varchar(20) default 'noname',
+    name varchar(20) default 'noname', // 문자열 싱글 코테이션 필요
     age int default 20
   );
 
 > insert into test1(no, name, age) values(1, 'aaa', 30);
 
 값을 입력하지 않는 컬럼은 이름과 값 지정을 생략한다.
-> insert into test1(name, age) values('aaa', 30); /* 오류! no는 not null*/
+> insert into test1(name, age) values('aaa', 30); /* 오류! Field 'no' doesn't have a default value */
 > insert into test1(no, age) values(3, 30);
 > insert into test1(no, name) values(4, 'ddd');
 > insert into test1(no) values(5);
@@ -116,62 +117,63 @@ DB 객체(테이블, 뷰, 함수, 트리거 등)를 생성, 변경, 삭제하는
   );
   
 > insert into test1(c1) values(100);
-> insert into test1(c1) values(3.14); /* 소수점 이하 반올림하고 짜름 */
-> insert into test1(c1) values(100.98); /* 소수점 이하 반올림하고 짜름 */
+> insert into test1(c1) values(3.14); /* 3 소수점 이하 반올림하고 자름 */
+> insert into test1(c1) values(100.98); /* 101 소수점 이하 반올림하고 자름 */
 > insert into test1(c2) values(100);
 > insert into test1(c2) values(3.14);
 > insert into test1(c2) values(3.14159); 
-> insert into test1(c3) values(100);
-> insert into test1(c3) values(123456789); /* 입력 오류. 5자리 초과 */
-> insert into test1(c3) values(12345); /* 입력 오류. 1자리 초과 */
-> insert into test1(c3) values(1234);
+> insert into test1(c3) values(100); // 100.00
+> insert into test1(c3) values(123456789); /* 입력 오류. 5자리 초과 Out of range value for column 'c3' at row 1 */
+> insert into test1(c3) values(12345); /* 입력 오류. 1자리 초과 Out of range value for column 'c3' at row 1 */
+> insert into test1(c3) values(1234); // 1234.0
 > insert into test1(c3) values(3.14);
-> insert into test1(c3) values(3.14159); /* 2자리를 초과한 값은 반올림. */
-> insert into test1(c3) values(3.14551); /* 2자리를 초과한 값은 반올림. */
+> insert into test1(c3) values(3.14159); /* 3.14 2자리를 초과한 값은 반올림. 소수점 이하 자리가 넘어갈 경우 오류가 아니다. */
+> insert into test1(c3) values(3.14551); /* 3.15 2자리를 초과한 값은 반올림. 소수점 이하 자리가 넘어갈 경우 오류가 아니다. */
 > insert into test1(c4) values(1234567890); 
-> insert into test1(c4) values(12.34567890); /* 소수점은 반올림 처리됨 */
-> insert into test1(c4) values(12345678.90); /* 소수점은 반올림 처리됨 */
+> insert into test1(c4) values(12.34567890); /* 12 소수점은 반올림 처리됨 */
+> insert into test1(c4) values(12345678.90); /* 12345679 소수점은 반올림 처리됨 */
 
 #### char(n)
 - 최대 n개의 문자를 저장.
 - 0 <= n <= 255 
-- 고정 크기를 갖는다. 
+- 고정 크기를 갖는다.
 - 한 문자를 저장하더라도 n자를 저장할 크기를 사용한다.
 - 메모리 크기가 고정되어서 검색할 때 빠르다.  
 
 #### varchar(n)
 - 최대 n개의 문자를 저장.
-- 0 ~ 65535 바이트 크기를 갖는다.
+- 0 ~ 65532 바이트 크기를 갖는다.
 - n 값은 문자집합에 따라 최대 값이 다르다.
-- 만약 UTF-8로 지정된 경우 n은 최대 21845까지 지정할 수 있다.
+- 만약 UTF-8로 지정된 경우 n은 최대 21844까지 지정할 수 있다.
 - 가변 크기를 갖는다.
-- 한 문자를 저장하면 한 문자 만큼 크기의 메모리를 차지한다.
-- 메모리 크기가 가변적이라서 데이터 위치를 찾을 때 시간이 오래 걸린다.
-  그래서 검색할 때 위치를 계산해야 하기 때문에 검색 시 느리다.
+- 한 문자를 저장하면 한 문자만큼 크기의 메모리를 차지한다.
+- 메모리 크기가 가변적이라서 데이터 위치를 찾을 때 시간이 오래 걸린다. 메모리 절약할 수 있다.
+  그래서 검색할 때 위치를 계산해야 하기 때문에 검색시 느리다.
 
 > create table test1(
-  c1 char(5),
+  c1 char(5), /* 5라고 했으면 값을 입력하든 안하든 메모리 5칸을 쓴다. */
   c2 varchar(5),
   c3 varchar(21000) 
   );
 
 입력 테스트:
-> insert into test1(c1) values('');
+> insert into test1(c1) values(''); /* 공백 또는 null 아님. 빈 문자열 */
 > insert into test1(c1) values('abcde');
 > insert into test1(c1) values('가나다라마'); /* 한글 영어 상관없이 5자 */
-> insert into test1(c1) values('abcdefghi'); /* 입력 크기 초과 오류! */
-> insert into test1(c1) values('가나다라마바'); /* 입력 크기 초과 오류! */
+> insert into test1(c1) values('abcdefghi'); /* 입력 크기 초과 오류! Data too long for column 'c1' at row 1 */
+> insert into test1(c1) values('가나다라마바'); /* 입력 크기 초과 오류! Data too long for column 'c1' at row 1 */
 > insert into test1(c2) values('');
 > insert into test1(c2) values('abcde');
-> insert into test1(c2) values('abcdefghi'); /* 입력 크기 초과 오류! */
+> insert into test1(c2) values('abcdefghi'); /* 입력 크기 초과 오류! Data too long for column 'c2' at row 1 */
+> insert into test1(c2) values('가나다라마');
 
 고정 크기와 가변 크기 비교:
 > insert into test1(c1) values('abc');
 > insert into test1(c2) values('abc');
 > select * from test1 where c1='abc'; 
-DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 검사하는 경우도 있다.
-즉 c1='abc'에서는 데이터를 찾지 못하고, c1='abc  '여야만 데이터를 찾는 경우가 있다.
-그러나 mysql은 고정크기 컬럼이더라도 빈자리를 무시하고 데이터를 찾는다.
+DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈 자리까지 검사하는 경우도 있다.
+즉 c1='abc'에서는 데이터를 찾지 못하고, c1='abc  '(2칸만큼 추가)여야만 데이터를 찾는 경우가 있다.
+그러나 mysql은 고정크기 컬럼이더라도 빈 자리를 무시하고 데이터를 찾는다.
 
 #### text(65535), mediumtext(약 1.6MB), longtext(약 2GB)
 - 긴 텍스트를 저장할 때 사용하는 컬럼 타입이다.
@@ -180,7 +182,7 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 #### date
 - 날짜 정보를 저장할 때 사용한다.
 - 년,월,일 정보를 저장한다.
-- 오라클의 경우 날짜 뿐만 아니라 시간 정보도 저장한다.
+- ☆오라클의 경우 날짜 뿐만 아니라 시간 정보도 저장한다.
 
 #### time
 - 시간 정보를 저장할 때 사용한다.
@@ -196,8 +198,8 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   ); 
 
 입력 테스터:
-> insert into test1(c1) values('2017-11-21');
-> insert into test1(c2) values('16:12:35');
+> insert into test1(c1) values('2017-11-21'); /* 'yyyy-mm-dd' */
+> insert into test1(c2) values('16:12:35'); /* 시:분:초 0~24 */
 > insert into test1(c3) values('2017-11-21 16:13:33');
 > insert into test1(c1) values('2017-11-21 16:13:33'); /* 날짜 정보만 저장*/
 > insert into test1(c2) values('2017-11-21 16:13:33'); /* 시간 정보만 저장*/
@@ -222,13 +224,13 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 > insert into test1(c2) values(1); /* true */
 > insert into test1(c2) values(0); /* false */
 
-> insert into test1(c3) values('Y'); /* error */
-> insert into test1(c3) values('N'); /* error */
-> insert into test1(c3) values('T'); /* error */
-> insert into test1(c3) values('F'); /* error */
+> insert into test1(c3) values('Y'); /* Incorrect integer value error */
+> insert into test1(c3) values('N'); /* Incorrect integer value error */
+> insert into test1(c3) values('T'); /* Incorrect integer value error */
+> insert into test1(c3) values('F'); /* Incorrect integer value error */
 
-> insert into test1(c3) values(true);
-> insert into test1(c3) values(false);
+> insert into test1(c3) values(true); /* 내부적으로 1로 저장 */
+> insert into test1(c3) values(false); /* 내부적으로 0으로 저장 */
 > insert into test1(c3) values('1'); /* true */
 > insert into test1(c3) values('0'); /* false */
 > insert into test1(c3) values(1); /* true */
@@ -254,7 +256,7 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 > insert into test1(name,kor,eng,math) values('bbb', 90, 90, 90);
 > insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100); /* 중복 허용*/
 
-- PK를 지정한 후:
+- PK를 지정한 후: 중복된 이름을 저장할 수 없다.
 > 컬럼명 타입 primary key
 > create table test1(
   name varchar(20) primary key,
@@ -266,7 +268,7 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 - 입력 테스트:
 > insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100);
 > insert into test1(name,kor,eng,math) values('bbb', 90, 90, 90);
-> insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100); /* 중복 오류!*/
+> insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100); /* 중복 오류! Duplicate entry 'aaa' for key 'PRIMARY' */
 
 
 - 한 개 이상의 컬럼을 PK로 지정하기
@@ -276,10 +278,10 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   kor int,
   eng int,
   math int
-  ); /* 실행 오류 */
+  ); /* 실행 오류 Multiple primary key defined */
 
 - 두 개 이상의 컬럼을 묶어서 PK로 선언하고 싶다면 
-  각 컬럼에 대해서 개별적으로 PK를 지정해서는 안된다. 
+  각 컬럼에 대해서 개별적으로 PK를 지정해서는 안 된다. 
 - 여러 개의 컬럼을 묶어서 PK로 지정하려면 별도의 문법을 사용해야 한다.
 > create table test1(
   name varchar(20),
@@ -288,20 +290,22 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   eng int,
   math int,
   constraint test1_pk primary key(name, age)
-  );
+  ); /* constraint 제약. 조건명(label) 생략 가능- 임의의 이름이 붙여진다. 보통 테이블명_pk라고 지정한다. */
 
 - 입력 테스트:
+> desc test1; /* 두 개의 컬럼에 PK가 지정된 것을 볼 수 있다. */
 > insert into test1(name, age, kor, eng, math) values('aa', 10, 100, 100, 100);
 > insert into test1(name, age, kor, eng, math) values('bb', 20, 90, 90, 90);
-> insert into test1(name, age, kor, eng, math) values('aa', 11, 88, 88, 88);
-> insert into test1(name, age, kor, eng, math) values('ab', 10, 88, 88, 88);
+> insert into test1(name, age, kor, eng, math) values('aa', 11, 88, 88, 88); /* 둘 중 하나만 중복이면 저장 가능 */
+> insert into test1(name, age, kor, eng, math) values('ab', 10, 88, 88, 88); /* 둘 중 하나만 중복이면 저장 가능 */
 
-/* 이름과 나이가 같으면 중복되기 때문에 입력 거절이다. */
+/* 이름과 나이가 같으면 중복되기 때문에 입력 거절이다. Duplicate entry 'aa-10' for key 'PRIMARY'*/
 > insert into test1(name, age, kor, eng, math) values('aa', 10, 88, 88, 88);
 
 - 여러 개의 컬럼을 묶어서 PK로 사용하면 데이터를 다루기가 불편하다.
-  즉 데이터를 찾을 때 마다 name과 age 값을 지정해야 한다.
+  즉 데이터를 찾을 때마다 name과 age 값을 지정해야 한다.
 - 그래서 실무에서는 이런 경우 '학번'처럼 임의의 값을 저장하는 컬럼을 만들어 PK로 사용한다.
+  primary key는 자동으로 not null 처리된다.
 > create table test1(
   no int primary key, /* 학번 */
   name varchar(20),
@@ -316,13 +320,13 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 > insert into test1(no,name,age,kor,eng,math) values(3,'b',11,81,81,81);
 > insert into test1(no,name,age,kor,eng,math) values(4,'c',20,81,81,81);
 
-/* 번호가 중복되었기 때문에 입력 거절 */
+/* 학번이 중복되었기 때문에 입력 거절 Duplicate entry '4' for key 'PRIMARY' */
 > insert into test1(no,name,age,kor,eng,math) values(4,'d',21,81,81,81);
 
-/* 번호는 중복되지 않았지만, name과 age값이 중복되는 경우를 막을 수 없다*/
+/* 학번은 중복되지 않았지만, name과 age값이 중복되는 경우를 막을 수 없다. */
 > insert into test1(no,name,age,kor,eng,math) values(5,'c',20,81,81,81);
 
-- 위와 같은 경우를 대비해 준비된 문법이 unique이다.
+- 위와 같은 경우를 대비해 준비된 문법이 unique다.
 - PK는 아니지만 PK처럼 중복을 허락하지 않는 컬럼을 지정할 때 사용한다.
 - 그래서 PK를 대신해서 사용할 수 있는 key라고 해서 "대안키(alternate key)"라고 부른다.
 
@@ -337,25 +341,41 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   constraint test1_uk unique (name, age)
   );
 
+/* 다음과 같이 제약 조건을 컬럼 선언 뒤에 모두 놓을 수 있다. */
+> create table test1(
+  no int,
+  name varchar(20),
+  age int,
+  kor int,
+  eng int,
+  math int,
+  constraint test1_pk primary key(no),
+  constraint test1_uk unique (name, age)
+  ); /* desc test1; => name에만 Mul; multi key라고 적힌다. age에는 따로 기입되지 않는다. */
+
 - 입력 테스트:
 > insert into test1(no,name,age,kor,eng,math) values(1,'a',10,90,90,90);
 > insert into test1(no,name,age,kor,eng,math) values(2,'a',11,91,91,91);
 > insert into test1(no,name,age,kor,eng,math) values(3,'b',11,81,81,81);
 > insert into test1(no,name,age,kor,eng,math) values(4,'c',20,81,81,81);
 
-/* 번호가 중복되었기 때문에 입력 거절 */
+/* 학번이 중복되었기 때문에 입력 거절 Duplicate entry '4' for key 'PRIMARY' */
 > insert into test1(no,name,age,kor,eng,math) values(4,'d',21,81,81,81);
 
-/* 비록 번호가 중복되지 않더라도 name, age가 unique 컬럼으로 지정되었기 
-   때문에 중복저장될 수 없다.*/
+/* 비록 학번이 중복되지 않더라도 name, age가 unique 컬럼으로 지정되었기 
+   때문에 중복 저장할 수 없다. Duplicate entry 'c-20' for key 'test1_uk' */
 > insert into test1(no,name,age,kor,eng,math) values(5,'c',20,81,81,81);
-
 
 ##### index
 - 검색 조건으로 사용되는 컬럼은 정렬되어야만 데이터를 빨리 찾을 수 있다.
-- 특정 컬럼의 값을 A-Z 또는 Z-A로 정렬시키는 문법이 인덱스이다.
-```
-create table test1(
+- 특정 컬럼의 값을 A-Z 또는 Z-A로 정렬시키는 문법이 인덱스다.
+- DBMS는 해당 컬럼의 값으로 정렬한 데이터 정보를 별도로 생성한다.
+- 책 맨 뒤에 붙어 있는 색인표와 같다.
+- 인덱스로 지정된 컬럼의 값이 추가/변경/삭제될 때 인덱스 정보도 갱신한다.
+- 따라서 추가/변경/삭제가 자주 발생하는 테이블에 대해 인덱스 컬럼을 지정하면
+  조회 속도가 빠른 대신 처리 속도가 느리다.
+
+> create table test1(
   no int primary key,
   name varchar(20),
   age int,
@@ -366,12 +386,12 @@ create table test1(
   fulltext index test1_name_idx (name)
 );
 
-insert into test1(no,name,age,kor,eng,math) values(1,'aaa',20,80,80,80);
-insert into test1(no,name,age,kor,eng,math) values(2,'bbb',21,90,80,80);
-insert into test1(no,name,age,kor,eng,math) values(3,'ccc',20,80,80,80);
-insert into test1(no,name,age,kor,eng,math) values(4,'ddd',22,90,80,80);
-insert into test1(no,name,age,kor,eng,math) values(5,'eee',20,80,80,80); 
-```
+> insert into test1(no,name,age,kor,eng,math) values(1,'aaa',20,80,80,80);
+> insert into test1(no,name,age,kor,eng,math) values(2,'bbb',21,90,80,80);
+> insert into test1(no,name,age,kor,eng,math) values(3,'ccc',20,80,80,80);
+> insert into test1(no,name,age,kor,eng,math) values(4,'ddd',22,90,80,80);
+> insert into test1(no,name,age,kor,eng,math) values(5,'eee',20,80,80,80);
+
 - name 컬럼은 인덱스 컬럼으로 지정되었기 때문에 
   DBMS는 데이터가 추가되거나 삭제되거나 name 컬럼 값이 변경될 때마다
   색인표를 갱신한다.
@@ -379,17 +399,14 @@ insert into test1(no,name,age,kor,eng,math) values(5,'eee',20,80,80,80);
   입력,변경,삭제 속도는 느리게 된다.
    
 #### 인덱스 컬럼의 활용
-검색할 때 사용한다.
-```
-select * from test1 where name = 'bbb';
-```
+검색할 때 사용한다. 빠르게 해당 데이터를 찾을 수 있다.
+> select * from test1 where name = 'bbb';
 
 ### 테이블 변경 
 기존에 있는 테이블을 변경할 수 있다.
 
 - 테이블 생성
-```
-create table test1 (
+> create table test1 (
   name varchar(3),
   kor int,
   eng int,
@@ -398,32 +415,25 @@ create table test1 (
   aver int
 );
 
-```
-
 - 테이블에 컬럼 추가
-```
-alter table test1
+> alter table test1
   add column no int;
 
-alter table test1
-  add column age int;  
+> alter table test1
+  add column age int;
   
-alter table test1
+> alter table test1
   add column no2 int,
-  add column age2 int;   
-```
+  add column age2 int;
 
 - PK 컬럼 지정, UNIQUE 컬럼 지정, INDEX 컬럼 지정
-```
-alter table test1
+> alter table test1
   add constraint test1_pk primary key (no),
   add constraint test1_uk unique (name, age),
   add fulltext index test1_name_idx (name);
-```
 
 - 컬럼에 옵션 추가
-```
-alter table test1
+> alter table test1
   modify column name varchar(20) not null,
   modify column age int not null,
   modify column kor int not null,
@@ -431,20 +441,17 @@ alter table test1
   modify column math int not null,
   modify column sum int not null,
   modify column aver float not null;
-```
 
 - 입력 테스트
-```
-insert into test1(no,name,age,kor,eng,math,sum,aver)
+> insert into test1(no,name,age,kor,eng,math,sum,aver)
   values(1,'aaa',20,100,100,100,300,100);
   
-insert into test1(no,name,age,kor,eng,math,sum,aver)
+> insert into test1(no,name,age,kor,eng,math,sum,aver)
   values(2,'bbb',21,100,100,100,300,100);
 
-/* 다음은 name과 age의 값이 중복되기 때문에 입력 거절된다.*/  
-insert into test1(no,name,age,kor,eng,math,sum,aver)
+/* 다음은 name과 age의 값이 중복되기 때문에 입력 거절된다. Duplicate entry 'bbb-21' for key 'test1_uk' */  
+> insert into test1(no,name,age,kor,eng,math,sum,aver)
   values(3,'bbb',21,100,100,100,300,100);  
-```
 
 ### 컬럼 값 자동 증가
 - 숫자 타입의 PK 컬럼인 경우 값을 1씩 자동 증가시킬 수 있다.
@@ -453,49 +460,57 @@ insert into test1(no,name,age,kor,eng,math,sum,aver)
   즉 증가된 번호는 계속 앞으로 증가할 뿐이다.
 
 - 테이블 생성 
-```
-create table test1(
+> create table test1(
   no int not null,
   name varchar(20) not null
 );
-``` 
 
 - 특정 컬럼의 값을 자동으로 증가하게 선언한다.
-- 단 반드시 primary key여야 한다.
-```
-alter table test1
-  modify column no int not null auto_increment; /* 아직 no가 pk가 아니기 때문에 오류*/
+- 단 반드시 key(primary key 또는 unique)여야 한다.
+> alter table test1
+  modify column no int not null auto_increment; /* 변경할 때 기존 설정 값을 생략해서는 안 된다! */
+  /* 아직 no가 pk가 아니기 때문에 오류 Incorrect table definition; there can be only one auto column and it must be defined as a key */
   
-alter table test1
-  add constraint primary key (no); /* 일단 no를 pk로 지정한다.*/
+> alter table test1
+  add constraint primary key (no); /* 일단 no를 pk로 지정한다. */
 
-alter table test1
-  modify column no int not null auto_increment; /* 그런 후 auto_increment를 지정한다.*/
-```
+> alter table test1
+  add constraint unique (no); /* no를 primary key가 아닌 unique로 지정해도 된다. */
+
+> alter table test1
+  modify column no int not null auto_increment; /* 그런 후 auto-increment를 지정한다. */
 
 - 입력 테스트
-```
+/* auto-increment 컬럼의 값을 직접 지정할 수 있다. */
+insert into test1(no, name) values(1, 'xxx');
+/* auto-increment 컬럼의 값을 생략하면 마지막 값에 1을 더한 값이 입력된다. */
 insert into test1(name) values('aaa');
-insert into test1(name) values('bbb');
-insert into test1(name) values('ccc');
-insert into test1(name) values('ddd');
-insert into test1(name) values('eee');
-```
+insert into test1(no, name) values(100, 'yyy');
+insert into test1(name) values('bbb'); /* no=101 */
+insert into test1(name) values('ccc'); /* no=102 */
+insert into test1(name) values('ddd'); /* no=103 */
+
+/* 값을 삭제하더라도 auto-increment는 계속 앞으로 증가한다. */
+delete from test1 where no=103;
+insert into test1(name) values('eee'); /* no=104 */
+insert into test1(name) values('123456789012345678901234'); /* 입력 오류 Data too long for column 'name' at row 1 */
+/* 다른 DBMS의 경우(Oracle, ...) 입력 오류가 발생하더라도 번호는 자동 증가하기 때문에
+다음 값을 입력할 때는 증가된 값이 들어간다. 그러나 MySQL(MariaDB)은 증가되지 않는다. */
+insert into test1(name) values('fff'); /* no=105 */
 
 ## 뷰(view)
 - 조회 결과를 테이블처럼 사용하는 문법
 - select 문장이 복잡할 때 뷰로 정의해 놓고 사용하면 편리하다.
 
-```
-create table test1 (
+> create table test1 (
   no int primary key auto_increment,
   name varchar(20) not null,
   class varchar(10) not null,
-  working char(1) not null,
+  working char(1) not null, /* 'Y' or 'N' */
   tel varchar(20)
 );
 
-insert into test1(name,class,working) values('aaa','java100','Y');
+> insert into test1(name,class,working) values('aaa','java100','Y');
 insert into test1(name,class,working) values('bbb','java100','N');
 insert into test1(name,class,working) values('ccc','java100','Y');
 insert into test1(name,class,working) values('ddd','java100','N');
@@ -504,34 +519,25 @@ insert into test1(name,class,working) values('kkk','java101','N');
 insert into test1(name,class,working) values('lll','java101','Y');
 insert into test1(name,class,working) values('mmm','java101','N');
 insert into test1(name,class,working) values('nnn','java101','Y');
-insert into test1(name,class,working) values('ooo','java101','N'); 
-```
+insert into test1(name,class,working) values('ooo','java101','N');
 
 - 직장인만 조회
-```
-select no, name, class from test1 where working = 'Y';
-```
+> select no, name, class from test1 where working = 'Y';
 
 - 직장인만 조회한 결과를 가상 테이블로 만들기
-```
-create view worker
+> create view worker
   as select no, name, class from test1 where working = 'Y';
-```
 
-- view가 참조하는 테이블에 데이터를 입력한 후 view를 조회하면?
+> show tables;
+
+- view가 참조하는 테이블 test1에 데이터를 입력한 후 view를 조회하면?
   => 새로 추가된 컬럼이 함께 조회된다.
 - 뷰를 조회할 때 마다 매번 select 문장을 실행한다.
-  => 미리 결과를 만들어 놓는 것이 아니다.
+  => ☆미리 결과를 만들어 놓는 것이 아니다. 
 - 일종의 조회 함수 역할을 한다.
 - 목적은 복잡한 조회를 가상의 테이블로 표현할 수 있어 SQL문이 간결해진다.
-```
-insert into test1(name,class,working) values('ppp','java101','Y');
-select * from worker;
-```
+> insert into test1(name,class,working) values('ppp','java101','Y');
+> select * from worker;
 
 ### 뷰 삭제
-```
-drop view worker;
-```
-
-
+> drop view worker;

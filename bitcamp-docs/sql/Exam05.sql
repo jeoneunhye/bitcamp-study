@@ -1,4 +1,8 @@
-# select 테스트 용 테이블 준비
+# select 테스트용 테이블 준비
+/* eXERD로 자동 작성됨 */
+
+-- IF EXISTS 해당 테이블이 없어도 오류를 내지 않고, 알림 메시지만 보여준다.
+-- RESTRICT 해당 테이블과 의존성 관계가 있는 객체가 있으면 작업을 중지한다. 이 옵션이 기본값이다.
 
 -- 수강생
 DROP TABLE IF EXISTS stnt RESTRICT;
@@ -39,6 +43,7 @@ CREATE TABLE stnt (
 )
 COMMENT '수강생';
 
+/* 키 적용이나 번호 자동 증가같은 기능은 보통 테이블을 생성하고 별도의 문법으로 작성한다. */
 -- 수강생
 ALTER TABLE stnt
     ADD CONSTRAINT PK_stnt -- 수강생 기본키
@@ -147,12 +152,12 @@ COMMENT '매니저';
 ALTER TABLE mgr
     ADD CONSTRAINT PK_mgr -- 매니저 기본키
         PRIMARY KEY (
-            mno -- 매니저번호
+            mno
         );
 
 -- 수강신청
 CREATE TABLE lect_appl (
-    lano INTEGER  NOT NULL COMMENT '수강신청번호', -- 수강신청번호
+    lano INTEGER  NOT NULL COMMENT '수강신청번호', -- 수강신청번호 lecture apply no
     lno  INTEGER  NOT NULL COMMENT '강의번호', -- 강의번호
     mno  INTEGER  NOT NULL COMMENT '수강생번호', -- 수강생번호
     rdt  DATETIME NOT NULL COMMENT '신청일', -- 신청일
@@ -167,7 +172,7 @@ ALTER TABLE lect_appl
             lano -- 수강신청번호
         );
 
--- 수강신청 유니크 인덱스
+-- 수강신청 유니크 인덱스 같은 수강생이 한 강의를 여러번 신청하지 못하도록
 CREATE UNIQUE INDEX UIX_lect_appl
     ON lect_appl ( -- 수강신청
         lno ASC, -- 강의번호
@@ -272,7 +277,7 @@ ALTER TABLE lect_tcher
             mno  -- 강사번호
         );
 
--- 수강생
+-- 수강생 멤버번호를 참조하는 수강생번호
 ALTER TABLE stnt
     ADD CONSTRAINT FK_memb_TO_stnt -- 멤버 -> 수강생
         FOREIGN KEY (

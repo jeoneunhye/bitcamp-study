@@ -1,4 +1,4 @@
-# select 테스트 용 데이터 준비
+# select 테스트용 데이터 준비
 
 /* 강의실 데이터 준비 */
 insert into room(rno, loc, name, qnty) values(1, '강남', '501', 30);
@@ -81,7 +81,7 @@ values(303, '교육', '주임');
 insert into mgr(mno, dept, posi)
 values(304, '교육', '과장');
 
-/* 200번 강사는 교육팀 과장이기도 하다.*/
+/* 200번 강사는 교육팀 과장이기도 하다. */
 insert into mgr(mno, dept, posi)
 values(200, '교육', '과장');
 
@@ -92,7 +92,6 @@ insert into lect(lno, titl, sdt, edt, qnty, pric, nat_sup, sup_typ, dsct)
 values(2, 'IoT프로그래밍', '2018-3-1', '2018-7-30', 30, 200, 'Y', '미취업자', 'ok');
 insert into lect(lno, titl, sdt, edt, qnty, pric, nat_sup, sup_typ, dsct)
 values(3, '윈도우프로그래밍', '2018-5-1', '2018-10-30', 30, 300, 'Y', '노동부', 'ok');
-
 
 /* 강의에 매니저 배정 */
 update lect set mno=303 where lno=1;
@@ -111,18 +110,3 @@ insert into lect_appl(lano, lno, mno, rdt) values(5, 2, 100, '2017-12-7');
 insert into lect_appl(lano, lno, mno, rdt) values(6, 3, 101, '2017-10-8');
 insert into lect_appl(lano, lno, mno, rdt) values(7, 3, 102, '2017-11-9');
 insert into lect_appl(lano, lno, mno, rdt) values(8, 3, 104, '2017-11-11');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
