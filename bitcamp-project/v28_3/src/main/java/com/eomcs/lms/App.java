@@ -1,7 +1,5 @@
 package com.eomcs.lms;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -146,14 +144,26 @@ public class App {
   private static void loadLessonData() {
     File file = new File("./lesson.json");
 
-    // 임시 메모리를 사용하여 파일 입력 도구를 불러오는 시간을 단축
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+    try (FileReader in = new FileReader(file)) {
+      // 방법1) JSON ===> List
+      // Gson json도구 = new Gson();
+      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
+      // for (Lesson 수업 : 배열) {
+      // lessonList.add(수업);
+      // }
 
+      // 방법2) JSON ===> List
+      // Gson json도구 = new Gson();
+      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
+      // List<Lesson> 읽기전용List구현체 = Arrays.asList(배열); // => 배열을 List로 만들어 리턴
+      // lessonList.addAll(읽기전용List구현체); // list에 다른 list를 통째로 붙이는 addAll()
+
+      // 위의 코드를 간략히 줄이면 다음과 같다.
       lessonList.addAll(Arrays.asList(new Gson().fromJson(in, Lesson[].class)));
 
       System.out.printf("총 %d개의 수업 데이터를 로딩했습니다.\n", lessonList.size());
 
-    } catch (IOException e) {
+    } catch (/*FileNotFound*/IOException e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
 
     }
@@ -162,9 +172,9 @@ public class App {
   private static void saveLessonData() {
     File file = new File("./lesson.json");
 
-    // 임시 메모리를 사용하여 파일 출력 도구를 불러오는 시간을 단축
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+    try (FileWriter out = new FileWriter(file)) {
 
+      // 한 줄에 lesson의 값을 계속해서 출력하지 않고 list를 통째로 출력할 수 있다.
       out.write(new Gson().toJson(lessonList));
 
       System.out.printf("총 %d개의 수업 데이터를 저장했습니다.\n", lessonList.size());
@@ -178,14 +188,26 @@ public class App {
   private static void loadMemberData() {
     File file = new File("./member.json");
 
-    // 임시 메모리를 사용하여 파일 입력 도구를 불러오는 시간을 단축
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+    try (FileReader in = new FileReader(file)) {
+      // 방법1) JSON ===> List
+      // Gson json도구 = new Gson();
+      // Member[] 배열 = json도구.fromJson(in, Member[].class);
+      // for (Member 회원 : 배열) {
+      // memberList.add(회원);
+      // }
 
+      // 방법2) JSON ===> List
+      // Gson json도구 = new Gson();
+      // Member[] 배열 = json도구.fromJson(in, Member[].class);
+      // List<Member> 읽기전용List구현체 = Arrays.asList(배열); // => 배열을 List로 만들어 리턴
+      // memberList.addAll(읽기전용List구현체); // list에 다른 list를 통째로 붙이는 addAll()
+
+      // 위의 코드를 간략히 줄이면 다음과 같다.
       memberList.addAll(Arrays.asList(new Gson().fromJson(in, Member[].class)));
 
       System.out.printf("총 %d개의 회원 데이터를 로딩했습니다.\n", memberList.size());
 
-    } catch (IOException e) {
+    } catch (/*FileNotFound*/IOException e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
 
     }
@@ -194,9 +216,9 @@ public class App {
   private static void saveMemberData() {
     File file = new File("./member.json");
 
-    // 임시 메모리를 사용하여 파일 출력 도구를 불러오는 시간을 단축
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+    try (FileWriter out = new FileWriter(file)) {
 
+      // 한 줄에 member의 값을 계속해서 출력하지 않고 list를 통째로 출력할 수 있다.
       out.write(new Gson().toJson(memberList));
 
       System.out.printf("총 %d개의 회원 데이터를 저장했습니다.\n", memberList.size());
@@ -210,14 +232,26 @@ public class App {
   private static void loadBoardData() {
     File file = new File("./board.json");
 
-    // 임시 메모리를 사용하여 파일 입력 도구를 불러오는 시간을 단축
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+    try (FileReader in = new FileReader(file)) {
+      // 방법1) JSON ===> List
+      // Gson json도구 = new Gson();
+      // Board[] 배열 = json도구.fromJson(in, Board[].class);
+      // for (Board 게시판 : 배열) {
+      // boardList.add(게시판);
+      // }
 
+      // 방법2) JSON ===> List
+      // Gson json도구 = new Gson();
+      // Board[] 배열 = json도구.fromJson(in, Board[].class);
+      // List<Board> 읽기전용List구현체 = Arrays.asList(배열); // => 배열을 List로 만들어 리턴
+      // boardList.addAll(읽기전용List구현체); // list에 다른 list를 통째로 붙이는 addAll()
+
+      // 위의 코드를 간략히 줄이면 다음과 같다.
       boardList.addAll(Arrays.asList(new Gson().fromJson(in, Board[].class)));
 
       System.out.printf("총 %d개의 게시물 데이터를 로딩했습니다.\n", boardList.size());
 
-    } catch (IOException e) {
+    } catch (/*FileNotFound*/IOException e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
 
     }
@@ -226,9 +260,9 @@ public class App {
   private static void saveBoardData() {
     File file = new File("./board.json");
 
-    // 임시 메모리를 사용하여 파일 출력 도구를 불러오는 시간을 단축
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+    try (FileWriter out = new FileWriter(file)) {
 
+      // 한 줄에 board의 값을 계속해서 출력하지 않고 list를 통째로 출력할 수 있다.
       out.write(new Gson().toJson(boardList));
 
       System.out.printf("총 %d개의 게시물 데이터를 저장했습니다.\n", boardList.size());
