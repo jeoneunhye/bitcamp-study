@@ -1,14 +1,16 @@
 package com.eomcs.lms;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,7 +40,6 @@ import com.eomcs.lms.handler.MemberDetailCommand;
 import com.eomcs.lms.handler.MemberListCommand;
 import com.eomcs.lms.handler.MemberUpdateCommand;
 import com.eomcs.util.Prompt;
-import com.google.gson.Gson;
 
 public class App {
   static Scanner keyboard = new Scanner(System.in);
@@ -143,29 +144,65 @@ public class App {
     }
   }
 
+  // 바이너리 데이터를 다루는 .data 파일로 변경
   private static void loadLessonData() {
-    File file = new File("./lesson.json");
+    File file = new File("./lesson.data");
 
-    // 임시 메모리를 사용하여 파일 입력 도구를 불러오는 시간을 단축
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+    // 파일 로딩 객체 변경 FileReader -> FileInputStream으로 파일을 로딩
+    // 버퍼 객체 변경 BufferedReader -> BufferedInputStream
+    // Java primitive data type을 입력하는데 적합한 DataInputStream을 FilterStream으로 사용한다.
+    try (DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-      lessonList.addAll(Arrays.asList(new Gson().fromJson(in, Lesson[].class)));
+      // lessonList.addAll(Arrays.asList(new Gson().fromJson(in, Lesson[].class)));
+
+      int size = in.readInt(); // 먼저 파일에 저장된 lesson이 담긴 list 객체의 크기를 읽는다.
+
+      // list<Lesson>의 size만큼 반복하면서 lesson 객체에 값을 담는다.
+      for (int i = 0; i < size; i++) {
+        Lesson lesson = new Lesson();
+        lesson.setNo(in.readInt());
+        lesson.setTitle(in.readUTF());
+        lesson.setDescription(in.readUTF());
+        lesson.setStartDate(Date.valueOf(in.readUTF()));
+        lesson.setEndDate(Date.valueOf(in.readUTF()));
+        lesson.setTotalHours(in.readInt());
+        lesson.setDayHours(in.readInt());
+
+        lessonList.add(lesson);
+      }
 
       System.out.printf("총 %d개의 수업 데이터를 로딩했습니다.\n", lessonList.size());
 
     } catch (IOException e) {
       System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
-
     }
   }
 
   private static void saveLessonData() {
-    File file = new File("./lesson.json");
+    File file = new File("./lesson.data");
 
-    // 임시 메모리를 사용하여 파일 출력 도구를 불러오는 시간을 단축
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+    // 파일 로딩 객체 변경 FileWriter -> FileOutputStream으로 파일을 로딩
+    // 버퍼 객체 변경 BufferedWriter -> BufferedOutputStream
+    // Java primitive data type을 입력하는데 적합한 DataOutputStream을 FilterStream으로 사용한다.
+    try (DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
 
-      out.write(new Gson().toJson(lessonList));
+      // out.write(new Gson().toJson(lessonList));
+
+      out.writeInt(lessonList.size()); // 먼저 파일에 담을 list의 크기를 알려준다.
+
+      // lesson 객체의 정보를 파일에 출력한다.
+      // 날짜 데이터는 문자열로 변환하여 출력한다.
+      for (Lesson lesson : lessonList) {
+        out.writeInt(lesson.getNo());
+        out.writeUTF(lesson.getTitle());
+        out.writeUTF(lesson.getDescription());
+        out.writeUTF(String.valueOf(lesson.getStartDate()));
+        out.writeUTF(String.valueOf(lesson.getEndDate()));
+        out.writeInt(lesson.getTotalHours());
+        out.writeInt(lesson.getDayHours());
+      }
 
       System.out.printf("총 %d개의 수업 데이터를 저장했습니다.\n", lessonList.size());
 
@@ -175,13 +212,33 @@ public class App {
     }
   }
 
+  // 바이너리 데이터를 다루는 .data 파일로 변경
   private static void loadMemberData() {
-    File file = new File("./member.json");
+    File file = new File("./member.data");
 
-    // 임시 메모리를 사용하여 파일 입력 도구를 불러오는 시간을 단축
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+    // 파일 로딩 객체 변경 FileReader -> FileInputStream으로 파일을 로딩
+    // 버퍼 객체 변경 BufferedReader -> BufferedInputStream
+    // Java primitive data type을 입력하는데 적합한 DataInputStream을 FilterStream으로 사용한다.
+    try (DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-      memberList.addAll(Arrays.asList(new Gson().fromJson(in, Member[].class)));
+      // memberList.addAll(Arrays.asList(new Gson().fromJson(in, Member[].class)));
+
+      int size = in.readInt(); // 먼저 파일에 저장된 lesson이 담긴 list 객체의 크기를 읽는다.
+
+      // list<Member>의 size만큼 반복하면서 member 객체에 값을 담는다.
+      for (int i = 0; i < size; i++) {
+        Member member = new Member();
+        member.setNo(in.readInt());
+        member.setName(in.readUTF());
+        member.setEmail(in.readUTF());
+        member.setPassword(in.readUTF());
+        member.setPhoto(in.readUTF());
+        member.setTel(in.readUTF());
+        member.setRegisteredDate(Date.valueOf(in.readUTF()));
+
+        memberList.add(member);
+      }
 
       System.out.printf("총 %d개의 회원 데이터를 로딩했습니다.\n", memberList.size());
 
@@ -192,12 +249,29 @@ public class App {
   }
 
   private static void saveMemberData() {
-    File file = new File("./member.json");
+    File file = new File("./member.data");
 
-    // 임시 메모리를 사용하여 파일 출력 도구를 불러오는 시간을 단축
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+    // 파일 로딩 객체 변경 FileWriter -> FileOutputStream으로 파일을 로딩
+    // 버퍼 객체 변경 BufferedWriter -> BufferedOutputStream
+    // Java primitive data type을 입력하는데 적합한 DataOutputStream을 FilterStream으로 사용한다.
+    try (DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
 
-      out.write(new Gson().toJson(memberList));
+      // out.write(new Gson().toJson(memberList));
+
+      out.writeInt(memberList.size()); // 먼저 파일에 담을 list의 크기를 알려준다.
+
+      // member 객체의 정보를 파일에 출력한다.
+      // 날짜 데이터는 문자열로 변환하여 출력한다.
+      for (Member member : memberList) {
+        out.writeInt(member.getNo());
+        out.writeUTF(member.getName());
+        out.writeUTF(member.getEmail());
+        out.writeUTF(member.getPassword());
+        out.writeUTF(member.getPhoto());
+        out.writeUTF(member.getTel());
+        out.writeUTF(String.valueOf(member.getRegisteredDate()));
+      }
 
       System.out.printf("총 %d개의 회원 데이터를 저장했습니다.\n", memberList.size());
 
@@ -207,13 +281,31 @@ public class App {
     }
   }
 
+  // 바이너리 데이터를 다루는 .data 파일로 변경
   private static void loadBoardData() {
-    File file = new File("./board.json");
+    File file = new File("./board.data");
 
-    // 임시 메모리를 사용하여 파일 입력 도구를 불러오는 시간을 단축
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+    // 파일 로딩 객체 변경 FileReader -> FileInputStream으로 파일을 로딩
+    // 버퍼 객체 변경 BufferedReader -> BufferedInputStream
+    // Java primitive data type을 입력하는데 적합한 DataInputStream을 FilterStream으로 사용한다.
+    try (DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-      boardList.addAll(Arrays.asList(new Gson().fromJson(in, Board[].class)));
+      // boardList.addAll(Arrays.asList(new Gson().fromJson(in, Board[].class)));
+
+      int size = in.readInt(); // 먼저 파일에 저장된 lesson이 담긴 list 객체의 크기를 읽는다.
+
+      // list<Board>의 size만큼 반복하면서 board 객체에 값을 담는다.
+      for (int i = 0; i < size; i++) {
+        Board board = new Board();
+        board.setNo(in.readInt());
+        board.setTitle(in.readUTF());
+        board.setDate(Date.valueOf(in.readUTF()));
+        board.setViewCount(in.readInt());
+        board.setWriter(in.readUTF());
+
+        boardList.add(board);
+      }
 
       System.out.printf("총 %d개의 게시물 데이터를 로딩했습니다.\n", boardList.size());
 
@@ -224,12 +316,27 @@ public class App {
   }
 
   private static void saveBoardData() {
-    File file = new File("./board.json");
+    File file = new File("./board.data");
 
-    // 임시 메모리를 사용하여 파일 출력 도구를 불러오는 시간을 단축
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+    // 파일 로딩 객체 변경 FileWriter -> FileOutputStream으로 파일을 로딩
+    // 버퍼 객체 변경 BufferedWriter -> BufferedOutputStream
+    // Java primitive data type을 입력하는데 적합한 DataOutputStream을 FilterStream으로 사용한다.
+    try (DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
 
-      out.write(new Gson().toJson(boardList));
+      // out.write(new Gson().toJson(boardList));
+
+      out.writeInt(boardList.size()); // 먼저 파일에 담을 list의 크기를 알려준다.
+
+      // board 객체의 정보를 파일에 출력한다.
+      // 날짜 데이터는 문자열로 변환하여 출력한다.
+      for (Board board : boardList) {
+        out.writeInt(board.getNo());
+        out.writeUTF(board.getTitle());
+        out.writeUTF(String.valueOf(board.getDate()));
+        out.writeInt(board.getViewCount());
+        out.writeUTF(board.getWriter());
+      }
 
       System.out.printf("총 %d개의 게시물 데이터를 저장했습니다.\n", boardList.size());
 
