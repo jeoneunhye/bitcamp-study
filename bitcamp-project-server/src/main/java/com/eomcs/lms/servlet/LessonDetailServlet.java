@@ -1,15 +1,17 @@
 package com.eomcs.lms.servlet;
-
+// 의존 객체를 LessonJsonFileDao 클래스 -> LessonDao 인터페이스로 변경
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.json.LessonJsonFileDao;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonDetailServlet implements Servlet {
-  // json파일을 다루도록 객체를 변경 LessonObjectFileDao -> LessonJsonFileDao
-  LessonJsonFileDao lessonDao;
+  // 레퍼런스 타입으로 DAO 클래스를 구체적으로 지정하기보다는
+  // 인터페이스를 지정함으로써
+  // 향후 다른 구현체로 교체하기 쉽도록 한다.
+  LessonDao lessonDao;
 
-  public LessonDetailServlet(LessonJsonFileDao lessonDao) {
+  public LessonDetailServlet(LessonDao lessonDao) {
     this.lessonDao = lessonDao;
   }
 
@@ -17,12 +19,11 @@ public class LessonDetailServlet implements Servlet {
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
 
-    Lesson lesson = lessonDao.findByNo(no); // LessonObjectFileDao.findByNo(int);
+    Lesson lesson = lessonDao.findByNo(no);
 
     if (lesson != null) {
       out.writeUTF("OK");
       out.writeObject(lesson);
-      // 해당 번호의 lesson 객체 데이터를 클라이언트쪽에서 꺼내 조회하기 위해 출력 필요!
 
     } else {
       out.writeUTF("FAIL");

@@ -1,9 +1,11 @@
 package com.eomcs.lms.dao.json;
+// LessonDao 인터페이스를 구현
 // Json 파일의 lesson 데이터를 읽고 쓰는 기능을 하는 클래스
 import java.util.List;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
-public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> {
+public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements LessonDao {
   public LessonJsonFileDao(String filename) {
     super(filename);
   }

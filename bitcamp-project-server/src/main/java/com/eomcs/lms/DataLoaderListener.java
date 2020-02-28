@@ -11,7 +11,6 @@ public class DataLoaderListener implements ApplicationContextListener {
   public void contextInitialized(Map<String, Object> context) {
     System.out.println("데이터를 로딩합니다.");
 
-    // json파일을 다루도록 객체를 변경 XxxObjectFileDao -> XxxJsonFileDao
     LessonJsonFileDao lessonDao = new LessonJsonFileDao("./lesson.json");
     MemberJsonFileDao memberDao = new MemberJsonFileDao("./member.json");
     BoardJsonFileDao boardDao = new BoardJsonFileDao("./board.json");

@@ -1,9 +1,11 @@
 package com.eomcs.lms.dao.json;
+// MemberDao 인터페이스를 구현
 // Json 파일의 member데이터를 읽고 쓰는 기능을 하는 클래스
 import java.util.List;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
-public class MemberJsonFileDao extends AbstractJsonFileDao<Member> {
+public class MemberJsonFileDao extends AbstractJsonFileDao<Member> implements MemberDao {
   public MemberJsonFileDao(String filename) {
     super(filename);
   }

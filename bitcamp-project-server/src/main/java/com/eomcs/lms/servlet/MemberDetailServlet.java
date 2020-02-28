@@ -1,15 +1,17 @@
 package com.eomcs.lms.servlet;
-
+// 의존 객체를 MemberJsonFileDao 클래스 -> MemberDao 인터페이스로 변경
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.json.MemberJsonFileDao;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 public class MemberDetailServlet implements Servlet {
-  // json파일을 다루도록 객체를 변경 MemberObjectFileDao -> MemberJsonFileDao
-  MemberJsonFileDao memberDao;
+  // 레퍼런스 타입으로 DAO 클래스를 구체적으로 지정하기보다는
+  // 인터페이스를 지정함으로써
+  // 향후 다른 구현체로 교체하기 쉽도록 한다.
+  MemberDao memberDao;
 
-  public MemberDetailServlet(MemberJsonFileDao memberDao) {
+  public MemberDetailServlet(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 
@@ -17,12 +19,11 @@ public class MemberDetailServlet implements Servlet {
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
 
-    Member member = memberDao.findByNo(no); // MemberObjectFileDao.findByNo(int);
+    Member member = memberDao.findByNo(no);
 
     if (member != null) {
       out.writeUTF("OK");
       out.writeObject(member);
-      // 해당 번호의 member 객체 데이터를 클라이언트쪽에서 꺼내 조회하기 위해 출력 필요!
 
     } else {
       out.writeUTF("FAIL");

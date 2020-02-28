@@ -11,9 +11,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.eomcs.context.ApplicationContextListener;
-import com.eomcs.lms.dao.json.BoardJsonFileDao;
-import com.eomcs.lms.dao.json.LessonJsonFileDao;
-import com.eomcs.lms.dao.json.MemberJsonFileDao;
+import com.eomcs.lms.dao.BoardDao;
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.servlet.BoardAddServlet;
 import com.eomcs.lms.servlet.BoardDeleteServlet;
 import com.eomcs.lms.servlet.BoardDetailServlet;
@@ -59,11 +59,12 @@ public class ServerApp {
   public void service() {
     notifyApplicationInitialized();
     // DataLoaderListener의 contextInitialized()를 호출
+    // 다루고자 하는 파일과 관련된 객체를 context Map에 준비하여 담는다.
 
-    // json파일을 다루도록 객체를 변경 XxxObjectFileDao -> XxxJsonFileDao
-    LessonJsonFileDao lessonDao = (LessonJsonFileDao) context.get("lessonDao");
-    MemberJsonFileDao memberDao = (MemberJsonFileDao) context.get("memberDao");
-    BoardJsonFileDao boardDao = (BoardJsonFileDao) context.get("boardDao");
+    // 상위 레퍼런스인 XxxDao에 준비한 객체를 꺼내 담는다.
+    LessonDao lessonDao = (LessonDao) context.get("lessonDao");
+    MemberDao memberDao = (MemberDao) context.get("memberDao");
+    BoardDao boardDao = (BoardDao) context.get("boardDao");
 
     servletMap.put("/lesson/list", new LessonListServlet(lessonDao));
     servletMap.put("/lesson/add", new LessonAddServlet(lessonDao));

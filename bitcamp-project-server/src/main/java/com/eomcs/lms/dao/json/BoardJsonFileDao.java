@@ -1,9 +1,11 @@
 package com.eomcs.lms.dao.json;
+// BoardDao 인터페이스를 구현
 // Json 파일의 Board 데이터를 읽고 쓰는 기능을 하는 클래스
 import java.util.List;
+import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
-public class BoardJsonFileDao extends AbstractJsonFileDao<Board> {
+public class BoardJsonFileDao extends AbstractJsonFileDao<Board> implements BoardDao {
   public BoardJsonFileDao(String filename) {
     super(filename);
   }

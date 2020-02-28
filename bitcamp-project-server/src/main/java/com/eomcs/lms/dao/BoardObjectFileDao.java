@@ -1,14 +1,16 @@
 package com.eomcs.lms.dao;
+// BoardDao 인터페이스를 구현
 // 파일의 Board 데이터를 읽고 쓰는 기능을 하는 클래스
 import java.util.List;
 import com.eomcs.lms.domain.Board;
 
-public class BoardObjectFileDao extends AbstractObjectFileDao<Board> {
+public class BoardObjectFileDao extends AbstractObjectFileDao<Board> implements BoardDao {
   public BoardObjectFileDao(String filename) {
     super(filename);
   }
 
   // 서블릿 객체들이 데이터를 다룰 때 사용할 메서드를 정의한다.
+  @Override
   public int insert(Board board) throws Exception {
     if (indexOf(board.getNo()) > -1) {
       return 0;
@@ -21,10 +23,12 @@ public class BoardObjectFileDao extends AbstractObjectFileDao<Board> {
     return 1;
   }
 
+  @Override
   public List<Board> findAll() throws Exception {
     return list;
   }
 
+  @Override
   public Board findByNo(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {
@@ -34,6 +38,7 @@ public class BoardObjectFileDao extends AbstractObjectFileDao<Board> {
     return list.get(index);
   }
 
+  @Override
   public int update(Board board) throws Exception {
     int index = indexOf(board.getNo());
     if (index == -1) {
@@ -47,6 +52,7 @@ public class BoardObjectFileDao extends AbstractObjectFileDao<Board> {
     return 1;
   }
 
+  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {

@@ -1,15 +1,17 @@
 package com.eomcs.lms.servlet;
-
+// 의존 객체를 BoardJsonFileDao 클래스 -> BoardDao 인터페이스로 변경
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.json.BoardJsonFileDao;
+import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
 public class BoardAddServlet implements Servlet {
-  // json파일을 다루도록 객체를 변경 BoardObjectFileDao -> BoardJsonFileDao
-  BoardJsonFileDao boardDao;
+  // 레퍼런스 타입으로 DAO 클래스를 구체적으로 지정하기보다는
+  // 인터페이스를 지정함으로써
+  // 향후 다른 구현체로 교체하기 쉽도록 한다.
+  BoardDao boardDao;
 
-  public BoardAddServlet(BoardJsonFileDao boardDao) {
+  public BoardAddServlet(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
 
@@ -17,9 +19,8 @@ public class BoardAddServlet implements Servlet {
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     Board board = (Board) in.readObject();
 
-    if (boardDao.insert(board) > 0) { // insert(Board); 저장했으면 1을 리턴
+    if (boardDao.insert(board) > 0) {
       out.writeUTF("OK");
-
     } else {
       out.writeUTF("FAIL");
       out.writeUTF("같은 번호의 게시물이 있습니다.");
