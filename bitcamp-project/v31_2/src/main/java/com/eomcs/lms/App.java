@@ -40,8 +40,11 @@ public class App {
   static Deque<String> commandStack = new ArrayDeque<>();
   static Queue<String> commandQueue = new LinkedList<>();
 
+  // 데이터를 보관할 List 객체 DataLoaderListener의 contextInitialized()로 이동
+
   Set<ApplicationContextListener> listeners = new HashSet<>();
 
+  // 옵저버와 공유할 값을 보관할 객체를 준비한다.
   Map<String, Object> context = new HashMap<>();
 
   public void addApplicationContextListener(ApplicationContextListener listener) {
@@ -52,6 +55,8 @@ public class App {
     listeners.remove(listener);
   }
 
+  // 옵저버에서 처리한 작업 결과를 리턴받을 수 있도록 바구니를 넘긴다.
+  // 이 때 옵저버에게 전달할 값이 있으면 넘기기 전에 바구니에 담아 넘긴다.
   private void notifyApplicationInitialized() {
     for (ApplicationContextListener listener : listeners) {
       listener.contextInitialized(context);
@@ -68,6 +73,13 @@ public class App {
   public void service() {
     notifyApplicationInitialized();
 
+    /*
+    loadLessonData();
+    loadMemberData();
+    loadBoardData();
+     */
+
+    // DataLoaderListener에 있는 List를 context Map 객체를 통해 가져온다.
     List<Lesson> lessonList = (List<Lesson>) context.get("lessonList");
     List<Member> memberList = (List<Member>) context.get("memberList");
     List<Board> boardList = (List<Board>) context.get("boardList");
@@ -107,6 +119,7 @@ public class App {
         continue;
 
       if (command.equals("quit")) {
+        System.out.println("안녕!");
         break;
 
       } else if (command.equals("history")) {
@@ -137,6 +150,12 @@ public class App {
 
     keyboard.close();
 
+    /*
+    saveLessonData();
+    saveMemberData();
+    saveBoardData();
+     */
+
     notifyApplicationDestroyed();
   }
 
@@ -159,7 +178,6 @@ public class App {
   public static void main(String[] args) {
     App app = new App();
     app.addApplicationContextListener(new DataLoaderListener());
-    app.addApplicationContextListener(new GreetingListener());
     app.service();
   }
 }
