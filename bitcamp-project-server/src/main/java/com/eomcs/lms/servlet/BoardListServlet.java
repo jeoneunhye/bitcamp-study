@@ -5,23 +5,14 @@ import java.io.ObjectOutputStream;
 import com.eomcs.lms.dao.BoardObjectFileDao;
 
 public class BoardListServlet implements Servlet {
-  // List<Board> boards;
   BoardObjectFileDao boardDao;
 
-  public BoardListServlet(/*List<Board> boards*/BoardObjectFileDao boardDao) {
-    // this.boards = boards;
+  public BoardListServlet(BoardObjectFileDao boardDao) {
     this.boardDao = boardDao;
   }
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    // List<Board>를 리턴하는 코드 BoardObjectFileDao.findAll()로 이동
-    /*
-    out.writeUTF("OK");
-    out.reset();
-    out.writeObject(boards);
-     */
-
     out.writeUTF("OK");
     out.reset();
     out.writeObject(boardDao.findAll()); // findAll(); List<Board>를 리턴

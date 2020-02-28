@@ -5,23 +5,14 @@ import java.io.ObjectOutputStream;
 import com.eomcs.lms.dao.MemberObjectFileDao;
 
 public class MemberListServlet implements Servlet {
-  // List<Member> members;
   MemberObjectFileDao memberDao;
 
-  public MemberListServlet(/*List<Member> members*/MemberObjectFileDao memberDao) {
-    // this.members = members;
+  public MemberListServlet(MemberObjectFileDao memberDao) {
     this.memberDao = memberDao;
   }
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    // List<Member>를 리턴하는 코드 MemberObjectFileDao.findAll()로 이동
-    /*
-    out.writeUTF("OK");
-    out.reset();
-    out.writeObject(members);
-     */
-
     out.writeUTF("OK");
     out.reset();
     out.writeObject(memberDao.findAll()); // findAll(); List<Member>를 리턴

@@ -36,11 +36,6 @@ public class ServerApp {
   Map<String, Object> context = new HashMap<>();
   Map<String, Servlet> servletMap = new HashMap<>();
 
-  // XxxObjectFileDao로 이동
-  // List<Lesson> lessons;
-  // List<Member> members;
-  // List<Board> boards;
-
   public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
   }
@@ -71,13 +66,6 @@ public class ServerApp {
     MemberObjectFileDao memberDao = (MemberObjectFileDao) context.get("memberDao");
     BoardObjectFileDao boardDao = (BoardObjectFileDao) context.get("boardDao");
 
-    // 더이상 List 객체를 DataLoaderListener의 context Map에서 꺼내지 않고 XxxObjectfileDao가 준비
-    // lessons = (List<Lesson>) context.get("lessonList");
-    // members = (List<Member>) context.get("memberList");
-    // boards = (List<Board>) context.get("boardList");
-
-    // Servlet 구현체의 생성자 파라미터를 List 객체 lessons, members, boards가 아닌
-    // XxxObjectFileDao 구현체 lessonDao, memberDao, boardDao를 넘겨주도록 변경
     servletMap.put("/lesson/list", new LessonListServlet(lessonDao));
     servletMap.put("/lesson/add", new LessonAddServlet(lessonDao));
     servletMap.put("/lesson/detail", new LessonDetailServlet(lessonDao));

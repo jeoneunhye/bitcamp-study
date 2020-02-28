@@ -5,23 +5,14 @@ import java.io.ObjectOutputStream;
 import com.eomcs.lms.dao.LessonObjectFileDao;
 
 public class LessonListServlet implements Servlet {
-  // List<Lesson> lessons;
   LessonObjectFileDao lessonDao;
 
-  public LessonListServlet(/*List<Lesson> lessons*/LessonObjectFileDao lessonDao) {
-    // this.lessons = lessons;
+  public LessonListServlet(LessonObjectFileDao lessonDao) {
     this.lessonDao = lessonDao;
   }
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    // List<Lesson>를 리턴하는 코드 LessonObjectFileDao.findAll()로 이동
-    /*
-    out.writeUTF("OK");
-    out.reset();
-    out.writeObject(lessons);
-     */
-
     out.writeUTF("OK");
     out.reset();
     out.writeObject(lessonDao.findAll()); // findAll(); List<Lesson>를 리턴
