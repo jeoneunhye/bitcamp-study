@@ -2,12 +2,13 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.LessonObjectFileDao;
+import com.eomcs.lms.dao.json.LessonJsonFileDao;
 
 public class LessonListServlet implements Servlet {
-  LessonObjectFileDao lessonDao;
+  // json파일을 다루도록 객체를 변경 LessonObjectFileDao -> LessonJsonFileDao
+  LessonJsonFileDao lessonDao;
 
-  public LessonListServlet(LessonObjectFileDao lessonDao) {
+  public LessonListServlet(LessonJsonFileDao lessonDao) {
     this.lessonDao = lessonDao;
   }
 

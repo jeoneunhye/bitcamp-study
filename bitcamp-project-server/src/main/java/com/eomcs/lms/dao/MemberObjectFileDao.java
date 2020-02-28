@@ -1,23 +1,12 @@
 package com.eomcs.lms.dao;
-//파일의 Member 데이터를 읽고 쓰는 기능을 하는 클래스
+// 파일의 Member 데이터를 읽고 쓰는 기능을 하는 클래스
 import java.util.List;
 import com.eomcs.lms.domain.Member;
 
 public class MemberObjectFileDao extends AbstractObjectFileDao<Member> {
-  // 공통 필드와 메서드 AbstractObjectFileDao 클래스로 이동
-  // List<Lesson> list;
-  // String filename;
-
   public MemberObjectFileDao(String filename) {
-    // list = new ArrayList<>();
-    // this.filename = filename;
-
-    // loadData(); // => 수퍼 클래스에서 메서드 호출
-
     super(filename);
   }
-
-  // loadData() {}, saveData() {} 삭제 => 수퍼 클래스에서 메서드 구현
 
   // 서블릿 객체들이 데이터를 다룰 때, 사용할 메서드를 정의한다.
   public int insert(Member member) throws Exception {
@@ -69,9 +58,9 @@ public class MemberObjectFileDao extends AbstractObjectFileDao<Member> {
   }
 
   @Override
-  protected/*private*/ <K> int indexOf(K key/*int no*/) {
+  protected <K> int indexOf(K key) {
     for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).getNo() == (int) key/*no*/) { // key가 어떤 타입인지 형변환 필요
+      if (list.get(i).getNo() == (int) key) { // key가 어떤 타입인지 형변환 필요
         return i;
       }
     }

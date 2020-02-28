@@ -2,13 +2,14 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.MemberObjectFileDao;
+import com.eomcs.lms.dao.json.MemberJsonFileDao;
 import com.eomcs.lms.domain.Member;
 
 public class MemberDetailServlet implements Servlet {
-  MemberObjectFileDao memberDao;
+  // json파일을 다루도록 객체를 변경 MemberObjectFileDao -> MemberJsonFileDao
+  MemberJsonFileDao memberDao;
 
-  public MemberDetailServlet(MemberObjectFileDao memberDao) {
+  public MemberDetailServlet(MemberJsonFileDao memberDao) {
     this.memberDao = memberDao;
   }
 
