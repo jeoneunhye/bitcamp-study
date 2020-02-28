@@ -12,15 +12,12 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Set;
-import com.eomcs.context.ApplicationContextListener;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
@@ -53,38 +50,7 @@ public class App {
   static List<Member> memberList = new LinkedList<>();
   static List<Board> boardList = new LinkedList<>();
 
-  // ApplicationContextListener를 구현한 옵저버들을 관리할 객체 준비
-  // - 같은 인스턴스를 중복해서 등록하지 않도록 한다.
-  // - Set은 등록 순서를 따지지 않는다.
-  Set<ApplicationContextListener> listeners = new HashSet<>();
-
-  // Set에 새 옵저버를 등록하는 메서드
-  public void addApplicationContextListener(ApplicationContextListener listener) {
-    listeners.add(listener);
-  }
-
-  // Set에 있는 옵저버를 제거하는 메서드
-  public void removeApplicationContextListener(ApplicationContextListener listener) {
-    listeners.remove(listener);
-  }
-
-  // 애플리케이션이 시작될 때 실행할, Set에 등록된 옵저버들의 메서드를 호출한다.
-  private void notifyApplicationInitialized() {
-    for (ApplicationContextListener listener : listeners) {
-      listener.contextInitialized();
-    }
-  }
-
-  // 애플리케이션이 종료될 때 실행할, Set에 등록된 옵저버들의 메서드를 호출한다.
-  private void notifyApplicationDestroyed() {
-    for (ApplicationContextListener listener : listeners) {
-      listener.contextDestroyed();
-    }
-  }
-
-  public void service() {
-    notifyApplicationInitialized();
-
+  public static void main(String[] args) {
     // 파일에서 데이터 로딩
     loadLessonData();
     loadMemberData();
@@ -160,8 +126,6 @@ public class App {
     saveLessonData();
     saveMemberData();
     saveBoardData();
-
-    notifyApplicationDestroyed();
   }
 
   private static void printCommandHistory(Iterator<String> iterator) {
@@ -184,10 +148,19 @@ public class App {
   private static void loadLessonData() {
     File file = new File("./lesson.ser2");
 
+    // 파일의 데이터를 통째로 읽어오기 위해 ObjectInputStream 도구 준비
     try (ObjectInputStream in =
         new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-      lessonList = (List<Lesson>) in.readObject();
+      /*
+      int size = in.readInt();
+
+      for (int i = 0; i < size; i++) {
+        lessonList.add((Lesson) in.readObject());
+      }
+       */
+
+      lessonList = (List<Lesson>) in.readObject(); // Lesson 객체가 담긴 List를 통째로 읽는다.
 
       System.out.printf("총 %d개의 수업 데이터를 로딩했습니다.\n", lessonList.size());
 
@@ -199,10 +172,19 @@ public class App {
   private static void saveLessonData() {
     File file = new File("./lesson.ser2");
 
+    // 직렬화한 데이터를 통째로 파일에 출력하기 위해 ObjectOutputStream 도구로 변경
     try (ObjectOutputStream out =
         new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
 
-      out.writeObject(lessonList);
+      /*
+      out.writeInt(lessonList.size());
+
+      for (Lesson lesson : lessonList) {
+        out.writeObject(lesson);
+      }
+       */
+
+      out.writeObject(lessonList); // Lesson 객체가 담긴 List를 통째로 출력한다.
 
       System.out.printf("총 %d개의 수업 데이터를 저장했습니다.\n", lessonList.size());
 
@@ -216,10 +198,19 @@ public class App {
   private static void loadMemberData() {
     File file = new File("./member.ser2");
 
+    // 파일의 데이터를 통째로 읽어오기 위해 ObjectInputStream 도구 준비
     try (ObjectInputStream in =
         new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-      memberList = (List<Member>) in.readObject();
+      /*
+      int size = in.readInt();
+
+      for (int i = 0; i < size; i++) {
+        memberList.add((Member) in.readObject());
+      }
+       */
+
+      memberList = (List<Member>) in.readObject(); // Member 객체가 담긴 List를 통째로 읽는다.
 
       System.out.printf("총 %d개의 회원 데이터를 로딩했습니다.\n", memberList.size());
 
@@ -232,8 +223,17 @@ public class App {
   private static void saveMemberData() {
     File file = new File("./member.ser2");
 
+    // 직렬화한 데이터를 통째로 파일에 출력하기 위해 ObjectOutputStream 도구로 변경
     try (ObjectOutputStream out =
         new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+
+      /*
+      out.writeInt(memberList.size());
+
+      for (Member member : memberList) {
+        out.writeObject(member);
+      }
+       */
 
       out.writeObject(memberList);
 
@@ -249,8 +249,17 @@ public class App {
   private static void loadBoardData() {
     File file = new File("./board.ser2");
 
+    // 파일의 데이터를 통째로 읽어오기 위해 ObjectInputStream 도구 준비
     try (ObjectInputStream in =
         new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+
+      /*
+      int size = in.readInt();
+
+      for (int i = 0; i < size; i++) {
+        boardList.add((Board) in.readObject());
+      }
+       */
 
       boardList = (List<Board>) in.readObject();
 
@@ -265,10 +274,19 @@ public class App {
   private static void saveBoardData() {
     File file = new File("./board.ser2");
 
+    // 직렬화한 데이터를 통째로 파일에 출력하기 위해 ObjectOutputStream 도구로 변경
     try (ObjectOutputStream out =
         new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
 
-      out.writeObject(boardList);
+      /*
+      out.writeInt(boardList.size());
+
+      for (Board board : boardList) {
+        out.writeObject(board);
+      }
+       */
+
+      out.writeObject(boardList); // Board 객체가 담긴 List를 통째로 출력한다.
 
       System.out.printf("총 %d개의 게시물 데이터를 저장했습니다.\n", boardList.size());
 
@@ -276,12 +294,5 @@ public class App {
       System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
 
     }
-  }
-
-  public static void main(String[] args) {
-    App app = new App();
-    app.service();
-    // 보통 실무에서는 클래스의 일반적인 구조로 인스턴스 필드와 메서드를 사용한다.
-    // 객체를 한 개만 만들더라도 보통 service()와 같이 인스턴스 메서드로 만들어 호출한다.
   }
 }

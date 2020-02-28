@@ -1,0 +1,43 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'   // jar 파일 생성 또는 실행 관련 등등
+
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'    // $ gradle run 과 관련이 있음
+
+    // 이클립스 그레이들 플러그인
+    // 이클립스 IDE 관련 작업을 수행할 수 있는 명령이 들어있다. $ gradle tasks all하면 추가된 것 볼 수 있음
+    id 'eclipse'
+}
+
+tasks.withType(JavaCompile) {
+    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
+    // 컴파일 시 -encoding 명령어를 안 붙여도 된다
+    options.encoding = 'UTF-8'
+
+    // 소스 파일을 작성할 때 사용할 자바 버전 지정
+    sourceCompatibility = '1.8'
+    // 자바 클래스를 실행시킬 JVM의 최소 버전 지정 1.7이면 안됨 보통 위와 통일
+    targetCompatibility = '1.8'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+dependencies {
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:28.0-jre'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'com.eomcs.lms.App'
+}
