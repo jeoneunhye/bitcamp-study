@@ -1,6 +1,15 @@
 package com.eomcs.lms;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,49 +49,46 @@ public class App {
   static Deque<String> commandStack = new ArrayDeque<>();
   static Queue<String> commandQueue = new LinkedList<>();
 
-  // 데이터를 보관할 List 객체 DataLoaderListener의 contextInitialized()로 이동
+  static List<Lesson> lessonList = new ArrayList<>();
+  static List<Member> memberList = new LinkedList<>();
+  static List<Board> boardList = new LinkedList<>();
 
+  // ApplicationContextListener를 구현한 옵저버들을 관리할 객체 준비
+  // - 같은 인스턴스를 중복해서 등록하지 않도록 한다.
+  // - Set은 등록 순서를 따지지 않는다.
   Set<ApplicationContextListener> listeners = new HashSet<>();
 
-  // 옵저버와 공유할 값을 보관할 객체를 준비한다.
-  Map<String, Object> context = new HashMap<>();
-
+  // Set에 새 옵저버를 등록하는 메서드
   public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
   }
 
+  // Set에 있는 옵저버를 제거하는 메서드
   public void removeApplicationContextListener(ApplicationContextListener listener) {
     listeners.remove(listener);
   }
 
-  // 옵저버에서 처리한 작업 결과를 리턴받을 수 있도록 바구니를 넘긴다.
-  // 이 때 옵저버에게 전달할 값이 있으면 넘기기 전에 바구니에 담아 넘긴다.
+  // 애플리케이션이 시작될 때 실행할, Set에 등록된 옵저버들의 메서드를 호출한다.
   private void notifyApplicationInitialized() {
     for (ApplicationContextListener listener : listeners) {
-      listener.contextInitialized(context);
+      listener.contextInitialized();
     }
   }
 
+  // 애플리케이션이 종료될 때 실행할, Set에 등록된 옵저버들의 메서드를 호출한다.
   private void notifyApplicationDestroyed() {
     for (ApplicationContextListener listener : listeners) {
-      listener.contextDestroyed(context);
+      listener.contextDestroyed();
     }
   }
 
-  @SuppressWarnings("unchecked")
   public void service() {
     notifyApplicationInitialized();
 
-    /*
+    // 파일에서 데이터 로딩
     loadLessonData();
     loadMemberData();
     loadBoardData();
-     */
-
-    // DataLoaderListener에 있는 List를 context Map 객체를 통해 가져온다.
-    List<Lesson> lessonList = (List<Lesson>) context.get("lessonList");
-    List<Member> memberList = (List<Member>) context.get("memberList");
-    List<Board> boardList = (List<Board>) context.get("boardList");
 
     Prompt prompt = new Prompt(keyboard);
 
@@ -150,11 +156,10 @@ public class App {
 
     keyboard.close();
 
-    /*
+    // 데이터를 파일에 저장
     saveLessonData();
     saveMemberData();
     saveBoardData();
-     */
 
     notifyApplicationDestroyed();
   }
@@ -175,9 +180,108 @@ public class App {
     }
   }
 
+  @SuppressWarnings("unchecked")
+  private static void loadLessonData() {
+    File file = new File("./lesson.ser2");
+
+    try (ObjectInputStream in =
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+
+      lessonList = (List<Lesson>) in.readObject();
+
+      System.out.printf("총 %d개의 수업 데이터를 로딩했습니다.\n", lessonList.size());
+
+    } catch (Exception e) {
+      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
+    }
+  }
+
+  private static void saveLessonData() {
+    File file = new File("./lesson.ser2");
+
+    try (ObjectOutputStream out =
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+
+      out.writeObject(lessonList);
+
+      System.out.printf("총 %d개의 수업 데이터를 저장했습니다.\n", lessonList.size());
+
+    } catch (IOException e) {
+      System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
+
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private static void loadMemberData() {
+    File file = new File("./member.ser2");
+
+    try (ObjectInputStream in =
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+
+      memberList = (List<Member>) in.readObject();
+
+      System.out.printf("총 %d개의 회원 데이터를 로딩했습니다.\n", memberList.size());
+
+    } catch (Exception e) {
+      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
+
+    }
+  }
+
+  private static void saveMemberData() {
+    File file = new File("./member.ser2");
+
+    try (ObjectOutputStream out =
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+
+      out.writeObject(memberList);
+
+      System.out.printf("총 %d개의 회원 데이터를 저장했습니다.\n", memberList.size());
+
+    } catch (IOException e) {
+      System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
+
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private static void loadBoardData() {
+    File file = new File("./board.ser2");
+
+    try (ObjectInputStream in =
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+
+      boardList = (List<Board>) in.readObject();
+
+      System.out.printf("총 %d개의 게시물 데이터를 로딩했습니다.\n", boardList.size());
+
+    } catch (Exception e) {
+      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
+
+    }
+  }
+
+  private static void saveBoardData() {
+    File file = new File("./board.ser2");
+
+    try (ObjectOutputStream out =
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+
+      out.writeObject(boardList);
+
+      System.out.printf("총 %d개의 게시물 데이터를 저장했습니다.\n", boardList.size());
+
+    } catch (IOException e) {
+      System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
+
+    }
+  }
+
   public static void main(String[] args) {
     App app = new App();
-    app.addApplicationContextListener(new DataLoaderListener());
     app.service();
+    // 보통 실무에서는 클래스의 일반적인 구조로 인스턴스 필드와 메서드를 사용한다.
+    // 객체를 한 개만 만들더라도 보통 service()와 같이 인스턴스 메서드로 만들어 호출한다.
   }
 }
