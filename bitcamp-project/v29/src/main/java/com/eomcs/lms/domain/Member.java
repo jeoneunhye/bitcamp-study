@@ -1,13 +1,8 @@
 package com.eomcs.lms.domain;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-// 객체를 serialize하기 위해 java.io.Serializable을 구현
-public class Member implements Serializable {
-  // serialize 데이터를 구분하기 위해 버전 번호를 명시한다.
-  private static final long serialVersionUID = 20200131L;
-
+public class Member {
   private int no;
   private String name;
   private String email;
