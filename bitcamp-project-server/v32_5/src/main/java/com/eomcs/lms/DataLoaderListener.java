@@ -20,7 +20,6 @@ import com.eomcs.lms.domain.Member;
 public class DataLoaderListener implements ApplicationContextListener {
   List<Lesson> lessonList = new ArrayList<>();
   List<Member> memberList = new ArrayList<>();
-  List<Board> boardList = new ArrayList<>();
 
   @Override
   public void contextInitialized(Map<String, Object> context) {
