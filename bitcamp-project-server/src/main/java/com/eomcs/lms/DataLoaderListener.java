@@ -1,127 +1,58 @@
 package com.eomcs.lms;
-// 애플리케이션이 시작되거나 종료될 때
-// 데이터를 로딩하고 저장하는 일을 한다.
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 import com.eomcs.context.ApplicationContextListener;
-import com.eomcs.lms.domain.Board;
-import com.eomcs.lms.domain.Lesson;
-import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.dao.BoardObjectFileDao;
+import com.eomcs.lms.dao.LessonObjectFileDao;
+import com.eomcs.lms.dao.MemberObjectFileDao;
 
 public class DataLoaderListener implements ApplicationContextListener {
-  List<Lesson> lessonList = new ArrayList<>();
-  List<Member> memberList = new ArrayList<>();
-  List<Board> boardList = new ArrayList<>();
+  // 데이터를 다루는 XxxObjectFileDao에서 List 객체를 준비한다.
+  // List<Lesson> lessonList = new ArrayList<>();
+  // List<Member> memberList = new ArrayList<>();
+  // List<Board> boardList = new ArrayList<>();
 
   @Override
   public void contextInitialized(Map<String, Object> context) {
     System.out.println("데이터를 로딩합니다.");
 
-    loadBoardData();
+    // XxxObjectFileDao의 구현 객체가 생성될 때 로딩되도록 변경
+    /*
     loadLessonData();
     loadMemberData();
+    loadBoardData();
+     */
 
-    context.put("boardList", boardList);
-    context.put("lessonList", lessonList);
-    context.put("memberList", memberList);
+    // context.put("boardList", boardList);
+    // context.put("lessonList", lessonList);
+    // context.put("memberList", memberList);
+
+    // 파일 로딩 및 저장 메서드, 데이터 처리에 필요한 List를 갖고 있다.
+    LessonObjectFileDao lessonDao = new LessonObjectFileDao("./lesson.ser2");
+    MemberObjectFileDao memberDao = new MemberObjectFileDao("./member.ser2");
+    BoardObjectFileDao boardDao = new BoardObjectFileDao("./board.ser2");
+
+    // contextInitialized(Map)를 호출한 쪽(serverApp)에서
+    // DAO 객체를 사용할 수 있도록 Map 객체에 담아둔다.
+    context.put("lessonDao", lessonDao);
+    context.put("memberDao", memberDao);
+    context.put("boardDao", boardDao);
   }
 
   @Override
   public void contextDestroyed(Map<String, Object> context) {
-    System.out.println("데이터를 저장합니다.");
-
+    // XxxObjectFileDao에서 insert, update, delete 메서드를 호출할 때(list의 데이터가 변경됐을 때)
+    // 파일에 저장하도록 변경
+    /*
     saveBoardData();
     saveLessonData();
     saveMemberData();
+    
+    System.out.println("데이터를 저장합니다.");
+     */
   }
 
-  @SuppressWarnings("unchecked")
-  private void loadLessonData() {
-    File file = new File("./lesson.ser2");
-
-    try (ObjectInputStream in =
-        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      lessonList = (List<Lesson>) in.readObject();
-      System.out.printf("총 %d개의 수업 데이터를 로딩했습니다.\n", lessonList.size());
-
-    } catch (Exception e) {
-      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
-    }
-  }
-
-  private void saveLessonData() {
-    File file = new File("./lesson.ser2");
-
-    try (ObjectOutputStream out =
-        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(lessonList);
-      System.out.printf("총 %d개의 수업 데이터를 저장했습니다.\n", lessonList.size());
-
-    } catch (IOException e) {
-      System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private void loadMemberData() {
-    File file = new File("./member.ser2");
-
-    try (ObjectInputStream in =
-        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      memberList = (List<Member>) in.readObject();
-      System.out.printf("총 %d개의 회원 데이터를 로딩했습니다.\n", memberList.size());
-
-    } catch (Exception e) {
-      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
-    }
-  }
-
-  private void saveMemberData() {
-    File file = new File("./member.ser2");
-
-    try (ObjectOutputStream out =
-        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(memberList);
-      System.out.printf("총 %d개의 회원 데이터를 저장했습니다.\n", memberList.size());
-
-    } catch (IOException e) {
-      System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private void loadBoardData() {
-    File file = new File("./board.ser2");
-
-    try (ObjectInputStream in =
-        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      boardList = (List<Board>) in.readObject();
-      System.out.printf("총 %d개의 게시물 데이터를 로딩했습니다.\n", boardList.size());
-
-    } catch (Exception e) {
-      System.out.println("파일 읽기 중 오류 발생! - " + e.getMessage());
-    }
-  }
-
-  private void saveBoardData() {
-    File file = new File("./board.ser2");
-
-    try (ObjectOutputStream out =
-        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(boardList);
-      System.out.printf("총 %d개의 게시물 데이터를 저장했습니다.\n", boardList.size());
-
-    } catch (IOException e) {
-      System.out.println("파일 쓰기 중 오류 발생! - " + e.getMessage());
-    }
-  }
+  // 데이터를 로딩하고 저장하는 메서드 => XxxObjectFileDao로 이동
+  // loadLessonData(), saveLessonData(), loadMemberData(), saveMemberData(),
+  // loadBoardData(), saveMemberData() 삭제
 }

@@ -2,26 +2,25 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
+import com.eomcs.lms.dao.LessonObjectFileDao;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonDetailServlet implements Servlet {
-  List<Lesson> lessons;
+  // List<Lesson> lessons;
+  LessonObjectFileDao lessonDao;
 
-  // service()가 사용할 의존 객체를 생성자로부터 받아 온다.
-  // serverApp.processRequest()에서 servletMap.get("/lesson/detail");이 호출될 때
-  // 이 클래스의 객체가 servlet 레퍼런스에 담긴다.
-  public LessonDetailServlet(List<Lesson> lessons) {
-    this.lessons = lessons;
+  public LessonDetailServlet(/*List<Lesson> lessons*/LessonObjectFileDao lessonDao) {
+    // this.lessons = lessons;
+    this.lessonDao = lessonDao;
   }
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    // ServerApp에서 service()를 호출하면 예외를 받고, 그 예외를
-    // 처리하는 try문을 썼기 때문에 이 메서드에서 예외를 처리할 필요 없다.
-    // try {
     int no = in.readInt();
 
+    // 입력받은 번호와 일치하는 lesson 객체의 존재 여부를 list에서 검사하고
+    // 있으면 그 lesson 객체를 리턴하는 코드 LessonObjectFileDao.findByNo(int)로 이동
+    /*
     Lesson lesson = null;
     for (Lesson l : lessons) {
       if (l.getNo() == no) {
@@ -38,10 +37,18 @@ public class LessonDetailServlet implements Servlet {
       out.writeUTF("FAIL");
       out.writeUTF("해당 번호의 수업이 없습니다.");
     }
+     */
 
-    // } catch (Exception e) {
-    // out.writeUTF("FAIL");
-    // out.writeUTF(e.getMessage());
-    // }
+    Lesson lesson = lessonDao.findByNo(no);// LessonObjectFileDao.findByNo(int);
+
+    if (lesson != null) {
+      out.writeUTF("OK");
+      out.writeObject(lesson);
+      // 해당 번호의 lesson 객체 데이터를 클라이언트쪽에서 꺼내 조회하기 위해 출력 필요!
+
+    } else {
+      out.writeUTF("FAIL");
+      out.writeUTF("해당 번호의 수업이 없습니다.");
+    }
   }
 }

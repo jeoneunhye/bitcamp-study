@@ -1,52 +1,67 @@
-# 32_6 - 커맨드 패턴을 적용하여 요청 처리 메서드를 객체화하기 
+# 32_7 - 데이터 처리 코드를 별도의 클래스로 정의하여 객체화하기
 
 ## 학습목표
 
-- 커맨드 패턴의 동작 원리를 이해한다.
-- 커맨드 패턴을 코드에 적용할 수 있다. 
+- DAO(Data Access Object)의 역할과 이점을 이해한다.
+- 데이터 처리 코드를 DAO로 분리할 수 있다. 
+
+### DAO(Data Access Object)
+
+- 데이터 처리 역할을 수행하는 객체다.
+- 데이터 처리 방식을 캡슐화(=추상화=클래스로 정의)하여 객체의 사용을 일관성 있게 만든다.
+    - 즉 데이터 처리 방식(배열, 스택, 큐, 맵, 파일, 데이터베이스 등)을 
+    클래스로 포장(캡슐화)하면 데이터 처리 방식에 상관없이 메서드 사용을 통일할 수 있다.
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/lms/servlet 패키지 생성
-- src/main/java/com/eomcs/lms/servlet/Servlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/LessonListServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/LessonAddServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/LessonDetailServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/LessonUpdateServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/LessonDeleteServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/MemberListServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/MemberAddServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/MemberDetailServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/MemberUpdateServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/MemberDeleteServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/BoardListServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/BoardAddServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/BoardDetailServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/BoardUpdateServlet.java 추가
-- src/main/java/com/eomcs/lms/servlet/BoardDeleteServlet.java 추가
+- src/main/java/com/eomcs/lms/dao 패키지 생성
+- src/main/java/com/eomcs/lms/dao/LessonObjectFileDao.java 추가
+- src/main/java/com/eomcs/lms/dao/MemberObjectFileDao.java 추가
+- src/main/java/com/eomcs/lms/dao/BoardObjectFileDao.java 추가
+- src/main/java/com/eomcs/lms/servlet/LessonXxxServlet.java 변경
+- src/main/java/com/eomcs/lms/servlet/MemberXxxServlet.java 변경
+- src/main/java/com/eomcs/lms/servlet/BoardXxxServlet.java 변경
+- src/main/java/com/eomcs/lms/DataLoaderListener.java 변경
 - src/main/java/com/eomcs/lms/ServerApp.java 변경
 
 ## 실습  
 
-### 훈련 1: 커맨드 패턴의 인터페이스 정의하라.
+### 훈련1: 게시물 데이터를 처리하는 DAO 클래스를 정의하라.
 
-- com.eomcs.lms.servlet 패키지를 생성한다.
-- com.eomcs.lms.servlet.Servlet 인터페이스를 정의한다.
+- com.eomcs.lms.dao 패키지를 생성한다.
+- com.eomcs.lms.BoardObjectFileDao 클래스를 정의한다.
 
-### 훈련 2: 각각의 요청 처리 메서드를 인터페이스 규칙에 따라 클래스를 정의하라.
- 
-- listBoard()를 BoardListServlet 클래스로 정의한다.
-- addBoard()를 BoardAddServlet 클래스로 정의한다.
-- detailBoard()를 BoardDetailServlet 클래스로 정의한다.
-- updateBoard()를 BoardUpdateServlet 클래스로 정의한다.
-- deleteBoard()를 BoardDeleteServlet 클래스로 정의한다.
-- listMember()를 MemberListServlet 클래스로 정의한다.
-- addMember()를 MemberAddServlet 클래스로 정의한다.
-- detailMember()를 MemberDetailServlet 클래스로 정의한다.
-- updateMember()를 MemberUpdateServlet 클래스로 정의한다.
-- deleteMember()를 MemberDeleteServlet 클래스로 정의한다.
-- listLesson()를 LessonListServlet 클래스로 정의한다.
-- addLesson()를 LessonAddServlet 클래스로 정의한다.
-- detailLesson()를 LessonDetailServlet 클래스로 정의한다.
-- updateLesson()를 LessonUpdateServlet 클래스로 정의한다.
-- deleteLesson() 를 LessonDeleteServlet 클래스로 정의한다.
+### 훈련2: BoardObjectFileDao 객체를 적용하라.
+
+- com.eomcs.lms.DataLoaderListener를 변경한다.
+  - 게시물 데이터를 로딩하고 저장하는 기존 코드를 제거한다.
+  - 대신에 BoardObjectFileDao 객체를 생성한다.
+- com.eomcs.lms.ServerApp을 변경한다.
+  - Map에서 BoardObjectFileDao를 꺼내 관련 커맨드 객체에 주입한다.
+- BoardXxxServlet을 변경한다.
+  - 생성자에서 List 객체를 받는 대신에 BoardObjectFileDao 객체를 받는다.
+  - 데이터를 저장하고, 조회하고, 변경하고, 삭제할 때 BoardObjectFileDao 객체를 통해 처리한다.
+  
+### 훈련3: 수업 데이터를 처리하는 DAO 클래스를 정의하고 적용하라.
+
+- com.eomcs.lms.LessonObjectFileDao 클래스를 정의한다.
+- com.eomcs.lms.DataLoaderListener를 변경한다.
+    - 수업 데이터를 로딩하고 저장하는 기존 코드를 제거한다.
+    - 대신에 LessonObjectFileDao 객체를 생성한다.
+- com.eomcs.lms.ServerApp을 변경한다.
+    - Map에서 LessonObjectFileDao를 꺼내 관련 커맨드 객체에 주입한다.
+- LessonXxxServlet을 변경한다.
+    - 생성자에서 List 객체를 받는 대신에 LessonObjectFileDao 객체를 받는다.
+    - 데이터를 저장하고, 조회하고, 변경하고, 삭제할 때 LessonObjectFileDao 객체를 통해 처리한다.
+
+### 훈련4: 회원 데이터를 처리하는 DAO 클래스를 정의하고 적용하라.
+
+- com.eomcs.lms.MemberObjectFileDao 클래스를 정의한다.
+- com.eomcs.lms.DataLoaderListener를 변경한다.
+    - 회원 데이터를 로딩하고 저장하는 기존 코드를 제거한다.
+    - 대신에 MemberObjectFileDao 객체를 생성한다.
+- com.eomcs.lms.ServerApp을 변경한다.
+    - Map에서 MemberObjectFileDao를 꺼내 관련 커맨드 객체에 주입한다.
+- MemberXxxServlet을 변경한다.
+    - 생성자에서 List 객체를 받는 대신에 MemberObjectFileDao 객체를 받는다.
+    - 데이터를 저장하고, 조회하고, 변경하고, 삭제할 때 MemberObjectFileDao 객체를 통해 처리한다.

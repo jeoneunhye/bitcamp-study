@@ -2,26 +2,25 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
+import com.eomcs.lms.dao.BoardObjectFileDao;
 import com.eomcs.lms.domain.Board;
 
 public class BoardDetailServlet implements Servlet {
-  List<Board> boards;
+  // List<Board> boards;
+  BoardObjectFileDao boardDao;
 
-  // service()가 사용할 의존 객체를 생성자로부터 받아 온다.
-  // serverApp.processRequest()에서 servletMap.get("/board/detail");이 호출될 때
-  // 이 클래스의 객체가 servlet 레퍼런스에 담긴다.
-  public BoardDetailServlet(List<Board> boards) {
-    this.boards = boards;
+  public BoardDetailServlet(/*List<Board> boards*/BoardObjectFileDao boardDao) {
+    // this.boards = boards;
+    this.boardDao = boardDao;
   }
 
   @Override
   public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    // ServerApp에서 service()를 호출하면 예외를 받고, 그 예외를
-    // 처리하는 try문을 썼기 때문에 이 메서드에서 예외를 처리할 필요없다.
-    // try {
     int no = in.readInt();
 
+    // 입력받은 번호와 일치하는 board 객체의 존재 여부를 list에서 검사하고
+    // 있으면 그 board 객체를 리턴하는 코드 BoardObjectFileDao.findByNo(int)로 이동
+    /*
     Board board = null;
     for (Board b : boards) {
       if (b.getNo() == no) {
@@ -38,10 +37,18 @@ public class BoardDetailServlet implements Servlet {
       out.writeUTF("FAIL");
       out.writeUTF("해당 번호의 게시물이 없습니다.");
     }
+     */
 
-    // } catch (Exception e) {
-    // out.writeUTF("FAIL");
-    // out.writeUTF(e.getMessage());
-    // }
+    Board board = boardDao.findByNo(no); // BoardObjectFileDao.findByNo(int);
+
+    if (board != null) {
+      out.writeUTF("OK");
+      out.writeObject(board);
+      // 해당 번호의 board 객체의 데이터를 클라이언트쪽에서 꺼내 조회하기 위해 출력 필요!
+
+    } else {
+      out.writeUTF("FAIL");
+      out.writeUTF("해당 번호의 게시물이 없습니다.");
+    }
   }
 }
