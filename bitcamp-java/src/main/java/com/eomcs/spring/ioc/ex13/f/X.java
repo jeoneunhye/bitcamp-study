@@ -1,0 +1,17 @@
+package com.eomcs.spring.ioc.ex13.f;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class X {
+  public X() {
+    System.out.println("X 객체 생성됨");
+  }
+
+  public int m1(int a, int b) {
+    System.out.println("X.m1() 호출됨");
+
+    int result = a / b;
+    return result;
+  }
+}
