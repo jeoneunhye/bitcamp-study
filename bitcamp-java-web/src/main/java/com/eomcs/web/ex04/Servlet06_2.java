@@ -9,8 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/ex04/s6")
-public class Servlet06 extends GenericServlet {
+@WebServlet("/ex04/s6_2")
+public class Servlet06_2 extends GenericServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -22,38 +22,24 @@ public class Servlet06 extends GenericServlet {
     // - 웹 페이지의 폼(method='POST'일 때)에서 전송 버튼을 클릭하면 POST 요청을 보낸다.
 
     // 테스트
-    // http://localhost:9999/bitcamp-java-web/ex04/test06.html 실행
+    // http://localhost:9999/bitcamp-java-web/ex04/test06_2.html 실행
 
-    // 1) 서로 다른 이름으로 값을 보낼 경우
-    //    예) genre1=on&genre2=on&genre4=on
+    // 1) 같은 이름으로 값을 보낼 경우
+    //    예) genre=1&genre=2&genre=4
     // => 다음과 같이 각각의 이름에 대해 값을 꺼내 확인해야 한다.
-    String genre1 = req.getParameter("genre1");
-    String genre2 = req.getParameter("genre2");
-    String genre3 = req.getParameter("genre3");
-    String genre4 = req.getParameter("genre4");
-    String genre5 = req.getParameter("genre5");
-    String genre6 = req.getParameter("genre6");
+    String[] genres = req.getParameterValues("genre");
+    String[] genreData = {"", "로맨틱", "스릴러", "호러", "드라마", "액션", "SF"};
 
     res.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = res.getWriter();
     out.println("선택한 장르:");
-    if (genre1 != null) {
-      out.println("로맨틱");
+    for (String genre : genres) {
+      out.println(genreData[Integer.parseInt(genre)]);
     }
-    if (genre2 != null) {
-      out.println("스릴러");
-    }
-    if (genre3 != null) {
-      out.println("호러");
-    }
-    if (genre4 != null) {
-      out.println("드라마");
-    }
-    if (genre5 != null) {
-      out.println("액션");
-    }
-    if (genre6 != null) {
-      out.println("SF");
-    }
+
+    // 같은 값을 여러 개 입력받아야 하는 경우
+    // 같은 이름을 사용하라.
+    // 그러면 위와 같이 한 번에 배열로 그 값들을 받을 수 있다.
+    // 배열로 받으면 반복문을 이용하여 보다 쉽고 간결하게 처리할 수 있다.
   }
 }
