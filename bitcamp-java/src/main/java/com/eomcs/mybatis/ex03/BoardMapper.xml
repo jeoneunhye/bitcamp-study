@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="BoardMapper">
+
+  <!-- resultMap: 컬럼명과 자바 객체의 프로퍼티명을 미리 연결한다.
+       type: 자바 객체의 클래스명 또는 별명
+       id: 연결 정보를 가리키는 식별자를 정한다.
+  -->
+  <resultMap type="Board" id="BoardMap">
+  
+    <id column="board_id" property="no"/>
+    <result column="contents" property="content"/>
+    <result column="created_Date" property="registeredDate"/>
+    <result column="view_count" property="viewCount"/>
+  </resultMap>
+  
+  <select id="select1" resultMap="BoardMap" parameterType="int">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    where board_id=#{value}
+  </select>
+  
+  <select id="select2" resultMap="BoardMap" parameterType="string">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+  </select>
+  
+  <!-- if 조건문
+  => 조건에 따라 생성할 SQL문을 제어할 수 있다.
+  => 문법) <if test="조건">SQL문</if>
+  Exam0120 -->
+  <select id="select3" resultMap="BoardMap" parameterType="int">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <if test="no != null">
+      where board_id=#{no}
+    </if>
+  </select>
+  
+  <!-- Exam0130 Map으로 여러 개의 파라미터를 넘기기
+  문자열 keyword를 넘기더라도 별다른 처리 없이 정수 board_id와 비교할 수 있다. -->
+  <select id="select4" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <if test="item == 1">
+      where board_id=#{keyword}
+    </if>
+    <if test="item == 2">
+      where title like concat('%', #{keyword}, '%')
+    </if>
+    <if test="item == 3">
+      where contents like concat('%', #{keyword}, '%')
+    </if>
+    <!-- item에 1,2,3 외의 값을 넘기면 전체 목록을 준다. -->
+  </select>
+  
+  <!-- Exam0140 여러 개의 조건으로 검색 -->
+  <select id="select5" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    where
+    <if test="no != null">
+      board_id=#{no} <!-- no == null일 때 잘못된 SQL문 생성 -->
+    </if>
+    <if test="title != null">
+      or title like concat('%', #{title}, '%')
+    </if>
+    <if test="content != null">
+      or contents like concat('%', #{content}, '%')
+    </if>
+  </select>
+  
+  <!-- Exam0150 여러 개의 조건으로 검색 -->
+  <select id="select6" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    where 1=0 <!-- or 앞에 조건이 없을 경우를 대비하여 임의 조건을 삽입
+                   단 임의 조건은 실행에 영향을 끼치지 않아야 한다. -->
+    <if test="no != null">
+      or board_id=#{no} <!-- or 추가 -->
+    </if>
+    <if test="title != null">
+      or title like concat('%', #{title}, '%')
+    </if>
+    <if test="content != null">
+      or contents like concat('%', #{content}, '%')
+    </if>
+  </select>
+  
+  <!-- Exam0160 여러 개의 조건으로 검색 -->
+  <select id="select7" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <where> <!-- or/and 앞에 아무것도 없을 때, where절이 or/and를 자동으로 제거한다. -->
+    <if test="no != null">
+      board_id=#{no}
+    </if>
+    <if test="title != null">
+      or title like concat('%', #{title}, '%')
+    </if>
+    <if test="content != null">
+      or contents like concat('%', #{content}, '%')
+    </if>
+    </where>
+    <!-- 조건이 모두 null일 때는 where절을 생성하지 않는다.
+         전체 목록을 보낸다. -->
+  </select>
+  
+    <!-- Exam0170 여러 개의 조건으로 검색 -->
+  <select id="select8" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <trim prefix="where" prefixOverrides="OR | AND">
+    <!-- or/and 앞에 아무것도 없을 때 or/and를 자동으로 제거한다. -->
+    <if test="no != null">
+      board_id=#{no}
+    </if>
+    <if test="title != null">
+      or title like concat('%', #{title}, '%')
+    </if>
+    <if test="content != null">
+      or contents like concat('%', #{content}, '%')
+    </if>
+    </trim>
+  </select>
+  
+  <!-- Exam0210 자바의 switch-default문과 유사한 choose-otherwise -->
+  <select id="select21" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    where
+    <choose>
+	    <when test="item == 'no'">
+	      board_id=#{keyword}
+	    </when>
+	    <when test='item == "title"'>
+	      title like concat('%', #{keyword}, '%')
+	    </when>
+	    <otherwise>
+	      contents like concat('%', #{keyword}, '%')
+	    </otherwise>
+	  </choose>
+  </select>
+  
+  <!-- Exam0220 -->
+  <update id="update1" parameterType="map">
+    update x_board set
+      title=#{title}
+    where board_id=#{no}
+    </update>
+    
+  <update id="update2" parameterType="map">
+    update x_board set
+      contents=#{content}
+    where board_id=#{no}
+  </update>
+    
+  <update id="update3" parameterType="map">
+    update x_board set
+      title=#{title},
+      contents=#{content}
+    where board_id=#{no}
+  </update>
+    
+  <!-- Exam0230 -->
+  <update id="update4" parameterType="map">
+    update x_board
+    <set>
+      <if test="title != null">title=#{title},</if>
+      <if test="content != null">contents=#{content}</if>
+    </set>
+    where board_id=#{no}
+  </update>
+  
+  <select id="select22" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <where>
+    <if test="no0 != null">
+      board_id=#{no0}
+    </if>
+    <if test="no1 != null">
+      or board_id=#{no1}
+    </if>
+    <if test="no2 != null">
+      or board_id=#{no2}
+    </if>
+    <if test="no3 != null">
+      or board_id=#{no3}
+    </if>
+    <if test="no4 != null">
+      or board_id=#{no4}
+    </if>
+    </where>
+  </select>
+  
+  <!-- Exam0250 -->
+  <select id="select23" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <where>
+    <!-- noList에서 꺼낸 값을 no라고 하자 -->
+    <foreach collection="noList" item="no">
+      or board_id=#{no}
+    </foreach>
+    </where>
+  </select>
+  
+  <!-- Exam0260 -->
+  <select id="select24" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <where>
+      board_id in <!-- (1, 2, 11, 12) -->
+      <foreach collection="noList" item="no" open="(" separator="," close=")">
+        #{no}
+      </foreach>
+    </where>
+  </select>
+  
+  <!-- Exam0270 concat은 표준 문법이 아니기 때문에 oracle에서 사용 불가 -->
+  <select id="select25" resultMap="BoardMap" parameterType="map">
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <where> <!-- title like '%xx%' or title like '%ok%' -->
+      <foreach collection="words" item="word">
+        or title like concat('%', #{word}, '%')
+      </foreach>
+    </where>
+  </select>
+  
+  <!-- Exam0280 bind 사용법 -->
+  <select id="select26" resultMap="BoardMap" parameterType="map">
+    <bind name="titlePattern" value="'%' + _parameter.title + '%'"/>
+    <!-- map의 key인 title -->
+    select 
+      board_id,
+      title,
+      contents,
+      created_date,
+      view_count
+    from x_board
+    <where>
+      title like #{titlePattern}
+    </where>
+  </select>
+</mapper>
