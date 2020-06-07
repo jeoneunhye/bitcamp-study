@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery 만들기</title>
+</head>
+<body>
+<h1>jquery 사용</h1>
+<h1>AJAX POST 요청</h1>
+<input id="v1" type="text">
+<select id="op">
+  <option value="+">+</option>
+  <option value="-">-</option>
+  <option value="*">*</option>
+  <option value="/">/</option>
+</select>
+<input id="v2" type="text">
+<button id="computeBtn">=</button>
+<input id="result" type="text">
+
+<script src="jquery16.js"></script>
+<script>
+$('#computeBtn').click(function() {
+  $.ajax('test16.jsp', {
+    method: 'POST',
+    data: { // Ajax는 웹 브라우저와 같이 자동 인코딩하지 않는다.
+    	// '+', '/'가 공백 문자로 보내지지 않도록
+    	// 사용자가 입력한 값을 encoding해야 한다.
+    	// '+' -> %2B, '/' -> %2F
+      v1: encodeURIComponent($('#v1').val()),
+      v2: encodeURIComponent($('#v2').val()),
+      op: encodeURIComponent($('#op').val())
+    }, // 객체를 변수=값&변수=값 query string 형태로 바꿀 것
+    success: (data) => {
+    	$('#result').val(data); // input box에 받은 데이터를 넣음
+    }
+  });
+});
+</script>
+</body>
+</html>

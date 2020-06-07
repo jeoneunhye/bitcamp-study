@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AJAX 요청</title>
+</head>
+<body>
+<h1>자바스크립트로 만들기</h1>
+<button id="btn1">AJAX 요청</button>
+<div id="d1"></div>
+
+<script src="jquery15.js"></script>
+<script>
+var d1 = $('#d1')
+            .css('border', '2px dashed red')
+            .css('margin', '10px')
+            .css('min-height', '100px');
+
+/*
+$('#btn1').click(function() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                d1.html(xhr.responseText);
+            }
+        }
+    };
+    xhr.open("GET", "test14.jsp", true);
+    xhr.send();
+});
+*/
+/*
+$('#btn1').click(function() {
+  $.ajax('test14.jsp', {
+    method: 'GET', // 생략 가능
+    dataType: 'html', // 생략 가능
+    success: function(data) { // 서버에서 응답한 데이터를 파라미터로 넘겨서 함수를 호출해줘
+      d1.html(data); // 그럼 d1에 넣을게
+    }
+  });
+});
+*/
+$('#btn1').click(function() {
+  $.get('test14.jsp', (data) => { // 두번째 파라미터로 성공했을 때 호출할 함수를 등록 
+    d1.html(data);
+  })
+});
+</script>
+</body>
+</html>
